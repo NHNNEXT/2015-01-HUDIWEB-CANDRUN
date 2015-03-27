@@ -1,4 +1,4 @@
-package candrun;
+package candrun.controller;
 
 import java.io.IOException;
 
