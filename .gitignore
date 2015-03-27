@@ -1,3 +1,12 @@
+#Eclipse
 /target/
 .classpath
 .project
+.settings/
+lib/
+classes/
+tomcat.8080/
+
+#MAC OS
+.DS_Store
+
