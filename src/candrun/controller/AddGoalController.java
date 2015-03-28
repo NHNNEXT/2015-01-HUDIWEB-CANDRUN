@@ -16,9 +16,14 @@ public class AddGoalController extends HttpServlet{
 			throws ServletException, IOException {
 	
 		String goalContents = req.getParameter("goal_contents");
-		String taskContents = req.getParameter("task_contents");
+		String taskContents = req.getParameter("inputValues");
+		String[] taskContentsList = taskContents.split(",");
 		
-		System.out.println("goal: "+goalContents+" task: "+ taskContents);
+		
+		System.out.println("goal: "+goalContents);
+		for(int i=0; i<taskContentsList.length; i++){
+			System.out.println(taskContentsList[i]);
+		}
 		
 	}
 }
