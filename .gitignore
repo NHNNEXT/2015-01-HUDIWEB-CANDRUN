@@ -5,7 +5,7 @@
 lib/
 classes/
 tomcat.8080/
-
+.settings/
 #MAC OS
 .DS_Store
 

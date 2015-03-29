@@ -78,6 +78,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>gubagi</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
 		<outputDirectory>webapps/WEB-INF/classes</outputDirectory>
@@ -118,7 +119,7 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
-						
+						<webappDirectory>webapps</webappDirectory>
 					</configuration>
 				</plugin>
 			</plugins>
