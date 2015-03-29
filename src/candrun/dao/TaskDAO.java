@@ -5,10 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import candrun.model.Goal;
+import candrun.model.Task;
 
-public class GoalDAO {
-//connection을 만든다
+public class TaskDAO {
 	public Connection getConnection(){
 		String url = "jdbc:mysql://localhost:3306/gubagi";
 		String id = "jb";
@@ -24,18 +23,17 @@ public class GoalDAO {
 		}
 	}
 	
-//입력받은 goal을 db에 넣는다.
-	public void addGoal(Goal goal) throws SQLException{
-		String sql ="INSERT INTO GOAL(contents, user_email, start_date) VALUES(?, ?, ?)";
+	public void addTask(Task task) throws SQLException{
+		String sql ="INSERT INTO TASKS(contents, goal_id) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		System.out.println("!!!!!");
 		
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, goal.getContents());
-			pstmt.setString(2, goal.getEmail());
-			pstmt.setTimestamp(3, goal.getStartDate());			
+			pstmt.setString(1, task.getContents());
+			pstmt.setInt(2, task.getGoalId());
 			pstmt.executeUpdate();
 		} finally{
 			if(pstmt !=null){

@@ -22,7 +22,7 @@
 		var strInputValues = arrInputValues.toString();
 
 		var strContainer = document.createElement("input");
-		strContainer.setAttribute("name", "inputValues");
+		strContainer.setAttribute("name", "task_contents");
 		strContainer.setAttribute("type", "hidden");
 		strContainer.setAttribute("value", strInputValues);
 

@@ -36,5 +36,5 @@
 	</section>
 	<footer></footer>
 </body>
-<script src="/javascripts/addInputTag.js"></script>
+<script src="/js/addInputTag.js"></script>
 </html>

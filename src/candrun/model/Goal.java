@@ -2,9 +2,9 @@ package candrun.model;
 
 import java.sql.Timestamp;
 
-import org.joda.time.DateTime;
-
 public class Goal {
+	
+	private int id;
 	private String contents;
 	private String email;
 	private Timestamp startDate;
@@ -15,27 +15,21 @@ public class Goal {
 	private int maxCombo;
 	private int achievement;
 
-	DateTime dateTime = new DateTime();
-
 	public Goal(String contents, String email) {
 		this.contents = contents;
 		this.email = email;
 	}
-
-	public void setCreatedDate() {
-		createdDate = new Timestamp(dateTime.getMillis());
-	}
-
-	public void setModDate() {
-		modDate = new Timestamp(dateTime.getMillis());
-	}
-
-	public void setStart() {
-		startDate = new Timestamp(dateTime.getMillis());
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getContents() {
 		return contents;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 
 	public Timestamp getStartDate() {
@@ -65,13 +59,4 @@ public class Goal {
 	public int getAchievement() {
 		return achievement;
 	}
-
-	public DateTime getDateTime() {
-		return dateTime;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
 }
