@@ -37,6 +37,7 @@ public class AddGoalController extends HttpServlet{
 			goalDAO.addGoal(goal);
 			for(int i=0; i<arrTaskContents.length;i++){
 				taskDAO.addTask(new Task(arrTaskContents[i],goal.getId()));
+
 			}
 			
 		} catch (SQLException e) {
