@@ -1,4 +1,4 @@
-package candron.user;
+package candrun.user;
 
 public class User {
 	private String email;
