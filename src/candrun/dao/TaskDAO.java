@@ -27,7 +27,6 @@ public class TaskDAO {
 		String sql ="INSERT INTO TASKS(contents, goal_id) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		System.out.println("!!!!!");
 		
 		try{
 			conn = getConnection();

@@ -30,8 +30,6 @@ public class AddGoalController extends HttpServlet{
 		GoalDAO goalDAO = new GoalDAO();
 		TaskDAO taskDAO = new TaskDAO();
 		Goal goal = new Goal(goalContents, "email");		
-
-		//Connection con = goalDAO.getConnection();
 		
 		try {
 			goalDAO.addGoal(goal);
