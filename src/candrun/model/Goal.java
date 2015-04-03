@@ -20,12 +20,13 @@ public class Goal {
 		this.email = email;
 	}
 	
-	public Goal(String contents, Timestamp startDate) {
+	public Goal(int id, String contents, Timestamp startDate) {
+		this.id = id;
 		this.contents = contents;
 		this.startDate = startDate;
 	}
 
-	public int getId() {
+	public int getId() {  
 		return id;
 	}
 

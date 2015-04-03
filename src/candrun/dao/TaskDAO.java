@@ -7,13 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import candrun.model.Goal;
 import candrun.model.Task;
 
 public class TaskDAO {
 	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/mydb";
-		String id = "yskoh";
+		String url = "jdbc:mysql://localhost:3306/gubagi";
+		String id = "jb";
 		String pw ="1234";
 		
 		try{

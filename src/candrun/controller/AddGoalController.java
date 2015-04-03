@@ -30,14 +30,12 @@ public class AddGoalController extends HttpServlet{
 		GoalDAO goalDAO = new GoalDAO();
 		TaskDAO taskDAO = new TaskDAO();
 		Goal goal = new Goal(goalContents, "email");		
-
-		//Connection con = goalDAO.getConnection();
 		
 		try {
-			goalDAO.addGoal(goal);
+			
+			int returnedId = goalDAO.addGoal(goal);
 			for(int i=0; i<arrTaskContents.length;i++){
-				taskDAO.addTask(new Task(arrTaskContents[i],goal.getId()));
-
+				taskDAO.addTask(new Task(arrTaskContents[i],returnedId));
 			}
 			
 		} catch (SQLException e) {
