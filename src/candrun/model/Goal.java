@@ -20,7 +20,13 @@ public class Goal {
 		this.email = email;
 	}
 	
-	public int getId() {
+	public Goal(int id, String contents, Timestamp startDate) {
+		this.id = id;
+		this.contents = contents;
+		this.startDate = startDate;
+	}
+
+	public int getId() {  
 		return id;
 	}
 

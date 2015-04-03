@@ -80,6 +80,11 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -123,8 +128,9 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
-						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<failOnMissingWebXml>true</failOnMissingWebXml>
 						<webappDirectory>webapps</webappDirectory>
+						<webXml>WEB-INF/web.xml</webXml>
 					</configuration>
 				</plugin>
 			</plugins>
