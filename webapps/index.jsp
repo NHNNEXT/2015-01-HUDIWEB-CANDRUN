@@ -3,3 +3,4 @@
 <%
 	response.sendRedirect("/makeGoal.jsp");
 %>
+

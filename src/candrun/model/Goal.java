@@ -20,6 +20,11 @@ public class Goal {
 		this.email = email;
 	}
 	
+	public Goal(String contents, Timestamp startDate) {
+		this.contents = contents;
+		this.startDate = startDate;
+	}
+
 	public int getId() {
 		return id;
 	}

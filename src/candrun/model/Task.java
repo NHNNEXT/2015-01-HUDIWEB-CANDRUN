@@ -16,7 +16,7 @@ public class Task {
 		this.contents = contents;
 		this.goalId = goalId;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
