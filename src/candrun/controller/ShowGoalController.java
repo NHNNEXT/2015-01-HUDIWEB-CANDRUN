@@ -45,18 +45,18 @@ public class ShowGoalController extends HttpServlet{
 	}
 
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
-		System.out.println(tasksId + "");
-		TaskDAO taskDao = new TaskDAO();
-		try {
-			taskDao.addNudge(tasksId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+//	@Override
+//	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+//			throws ServletException, IOException {
+//		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
+//		System.out.println(tasksId + "");
+//		TaskDAO taskDao = new TaskDAO();
+//		try {
+//			taskDao.addNudge(tasksId);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//	}
 } 

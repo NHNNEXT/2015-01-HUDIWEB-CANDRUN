@@ -17,10 +17,11 @@ public class Task {
 		this.goalId = goalId;
 	}
 
-	public Task(String contents, int goalId, int id) {
+	public Task(String contents, int goalId, int id, int nudge) {
 		this.contents = contents;
 		this.goalId = goalId;
 		this.id = id;
+		this.nudge = nudge;
 	}
 
 	public int getId() {
