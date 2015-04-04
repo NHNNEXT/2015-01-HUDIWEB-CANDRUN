@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
+
 import candrun.model.Task;
 
 public class TaskDAO {
 	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/gubagi";
-		String id = "jb";
+		String url = "jdbc:mysql://localhost:3306/mydb";
+		String id = "yskoh";
 		String pw ="1234";
 		
 		try{
@@ -53,6 +55,7 @@ public class TaskDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		ResultSet gk = null;
 		
 		try{
 			conn = getConnection();
@@ -61,13 +64,13 @@ public class TaskDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			if(!rs.next()){
+			if(rs.isBeforeFirst() && rs.isAfterLast()){
 				return null;
 			}
 			else{
 				ArrayList<Task> tasks = new ArrayList<>();
-				while(rs.next()){
-					tasks.add(new Task(rs.getString("contents"), rs.getInt("goal_id")));
+				while(rs.next()){					
+						tasks.add(new Task(rs.getString("contents"), rs.getInt("goal_id"), rs.getInt("id")));
 				}
 				return tasks;
 			}

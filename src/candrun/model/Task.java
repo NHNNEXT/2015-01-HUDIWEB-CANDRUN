@@ -17,6 +17,12 @@ public class Task {
 		this.goalId = goalId;
 	}
 
+	public Task(String contents, int goalId, int id) {
+		this.contents = contents;
+		this.goalId = goalId;
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

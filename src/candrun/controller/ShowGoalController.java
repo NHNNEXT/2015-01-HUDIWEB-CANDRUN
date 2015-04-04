@@ -24,17 +24,17 @@ public class ShowGoalController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//db에 있는 goal의 내용을 모두 불러온다.
-		int goalId = 11;
-		Goal topGoal;
+		Goal topGoal= null;
 		ArrayList <Task> tasks;
 		GoalDAO goalDao = new GoalDAO();
 		TaskDAO taskDao = new TaskDAO();
 		try {
-			topGoal= goalDao.findGoalById(goalId);
-			tasks = taskDao.findTaskByGoalId(goalId);
+			topGoal= goalDao.findRecentGoal();
+			tasks = taskDao.findTaskByGoalId(topGoal.getId());
 			//forward하여 내용을 jsp에 뿌린다.
 			req.setAttribute("goal",topGoal);
 			req.setAttribute("tasks", tasks);
+			
 			RequestDispatcher rd = req.getRequestDispatcher("/showGoalAndTasks.jsp");
 			rd.forward(req, resp);
 			

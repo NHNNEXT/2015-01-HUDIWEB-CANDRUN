@@ -26,7 +26,8 @@
 			</ul>	
 	</nav>
 	<section id="showGoal">
-		<div class="form_wrapper">			
+		<div class="form_wrapper">		
+				
 			<div class="input_container">${goal.contents}</div>
 			<div>${goal.startDate}</div>
 			

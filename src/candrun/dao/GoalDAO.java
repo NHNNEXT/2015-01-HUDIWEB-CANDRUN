@@ -13,8 +13,8 @@ import candrun.model.Goal;
 public class GoalDAO {
 //connection을 만든다
 	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/gubagi";
-		String id = "jb";
+		String url = "jdbc:mysql://localhost:3306/mydb";
+		String id = "yskoh";
 		String pw ="1234";
 		
 		try{
@@ -95,4 +95,40 @@ public class GoalDAO {
 			}
 		}
 	}
+	
+//가장 최근 넣은 goal 하나만을 불러온다.
+	public Goal findRecentGoal() throws SQLException{
+		String sql ="SELECT * FROM goal ORDER BY created_date DESC LIMIT 1";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(!rs.next()){
+				return null;
+			}
+			else{
+				return new Goal(
+						rs.getInt("id"),
+						rs.getString("contents"),
+						rs.getTimestamp("start_date"));
+			}
+		} finally {
+			if(rs !=null){
+				rs.close();
+			}
+			if(pstmt !=null){
+				pstmt.close();
+			}
+			if(conn !=null){
+				conn.close();
+			}
+		}
+	}
+	
 }
