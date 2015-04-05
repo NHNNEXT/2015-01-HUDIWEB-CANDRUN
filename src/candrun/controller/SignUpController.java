@@ -27,8 +27,11 @@ public class SignUpController extends HttpServlet{
 		UserDAO userDAO = new UserDAO();
 		User user = new User(email, nickname, password);		
 
-		//Connection con = userDAO.getConnection();
+		//System.out.println(email + " " + nickname + " " + password);
 		
+		//Connection con = userDAO.getConnection();
+		resp.sendRedirect("signIn.jsp");
+
 
 	}
 }
