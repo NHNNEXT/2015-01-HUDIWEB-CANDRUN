@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>9bagi</title>
 </head>
 <body>
 <header></header>
 	<nav></nav>
 	<section id = "signUp">
 		<div class= "main">
-			<form name = "signUpForm" action="/form_action.jsp" method = "post">
+			<form name = "signUpForm" action="/addUser.cdr" method = "post">
 				<table>
 					<tr>
 						<td width="80"> 
@@ -26,7 +26,7 @@
 							닉네임 
 						</td>
 						<td>
-							<input type="text" name = "nickName">
+							<input type="text" name = "nickname">
 						</td>
 					</tr>
 					<tr>

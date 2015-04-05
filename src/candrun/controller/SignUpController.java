@@ -1,8 +1,7 @@
 package candrun.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,17 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import candrun.dao.GoalDAO;
-import candrun.dao.TaskDAO;
-import candrun.model.Goal;
-import candrun.model.Task;
 
+import candrun.dao.UserDAO;
+import candrun.user.User;
 
-public class SignUpController extends HttpServlet{ {
+@WebServlet("/addUser.cdr")
+public class SignUpController extends HttpServlet{ 
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-	
 		
+		String email  = req.getParameter("email");
+		String nickname = req.getParameter("nickname");
+		String password = req.getParameter("password");
+		
+		UserDAO userDAO = new UserDAO();
+		User user = new User(email, nickname, password);		
+
+		//Connection con = userDAO.getConnection();
+		
+
 	}
 }
