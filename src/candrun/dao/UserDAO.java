@@ -3,6 +3,7 @@ package candrun.dao;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import candrun.user.User;
@@ -21,20 +22,19 @@ public class UserDAO {
 			System.out.println(e.getMessage());
 			return null;
 		}
-	}
+	} 
 	
 	public void addUser(User user) throws SQLException{
 		String sql ="INSERT INTO user(email, nickname, password) VALUES(?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		System.out.println("!!!!!");
+		System.out.println("Success!");
 		
 		try{
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
+			pstmt = getConnection().prepareStatement(sql);
 			pstmt.setString(1, user.getEmail());
 			pstmt.setString(2, user.getNickname());
-			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getPassword());
 			pstmt.executeUpdate();
 		} finally{
 			if(pstmt !=null){
@@ -44,5 +44,27 @@ public class UserDAO {
 				conn.close();
 			}
 		}
+	}
+
+	public User findByEmail(String email) throws SQLException {
+		String sql = "select * from USERS where userId = ?";
+		PreparedStatement pstmt = getConnection().prepareStatement(sql);
+		pstmt.setString(1, email);
+		
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			User user = new User(
+					rs.getString("email"), 
+					rs.getString("nickname"),
+					rs.getString("password"));
+			return user;
+		}
+		
+		return null;
+	}
+
+	public void removeUser(String email) {
+		// TODO Auto-generated method stub
+		
 	}
 }
