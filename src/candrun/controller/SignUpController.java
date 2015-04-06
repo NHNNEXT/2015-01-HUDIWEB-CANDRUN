@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 import candrun.dao.UserDAO;
 import candrun.user.User;
 
-@WebServlet("/addUser.cdr")
+@WebServlet("addUser.cdr")
 public class SignUpController extends HttpServlet{ 
 	
 	@Override
@@ -27,8 +28,9 @@ public class SignUpController extends HttpServlet{
 		UserDAO userDAO = new UserDAO();
 		User user = new User(email, nickname, password);		
 
+		//resp.sendRedirect("makeGoal.jsp");
 		//Connection con = userDAO.getConnection();
-		
-
 	}
+	
+	
 }

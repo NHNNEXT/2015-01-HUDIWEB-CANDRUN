@@ -9,7 +9,7 @@ import candrun.user.User;
 
 public class UserDAO {
 	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/9bagi";
+		String url = "jdbc:mysql://localhost:3306/mydb";
 		String id = "ellen24h";
 		String pw ="1234";
 		
