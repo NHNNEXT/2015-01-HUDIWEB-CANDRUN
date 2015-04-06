@@ -6,7 +6,7 @@
 	<display-name>RUWORKING</display-name>
 
 	<welcome-file-list>
-		<welcome-file>showGoal.cdr</welcome-file>
+		<welcome-file>signUp.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>
 
