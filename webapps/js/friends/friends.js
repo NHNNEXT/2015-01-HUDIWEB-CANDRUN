@@ -7,7 +7,7 @@ var FRIENDS = FRIENDS || {};
 var CANDRUN = CANDRUN || {};
 
 CANDRUN.methods = {};
-CANDRUN.methods.ajax = function(sUrl, fSuccess) {
+CANDRUN.methods.ajax = function(sUrl, fOnready) {
 	if (window.XMLHttpRequest) {
 		var httpRequest = new XMLHttpRequest();
 	} else if (window.ActiveXObject) {
@@ -29,6 +29,19 @@ CANDRUN.methods.ajax = function(sUrl, fSuccess) {
 	}
 	httpRequest.open('GET', sUrl);
 	httpRequest.send();
+}
+
+CANDRUN.methods.onready = function(httpReq, fSuccess) {
+	if (httpRequest.readyState === 4) {
+		if (httpRequest.status === 200) {
+			oFriends = JSON.parse(httpRequest.responseText);
+			for ( var idx in fAfterCallEvents) {
+				fSuccess();
+			}
+		} else {
+			console.log('There was a problem with the request.');
+		}
+	}
 }
 
 // 구현부
