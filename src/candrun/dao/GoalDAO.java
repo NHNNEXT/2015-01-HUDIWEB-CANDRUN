@@ -14,7 +14,7 @@ public class GoalDAO {
 //connection을 만든다
 	public Connection getConnection(){
 		String url = "jdbc:mysql://localhost:3306/mydb";
-		String id = "yskoh";
+		String id = "ellen24h";
 		String pw ="1234";
 		
 		try{

@@ -19,17 +19,18 @@ public class UserDAOTest {
 		userDao = new UserDAO();
 	}
 	
-//	@Test
-//	public void connection() {
-//		Connection con = userDao.getConnection();
-//		assertNotNull(con);
-//	}
+	@Test
+	public void connection() {
+		Connection con = userDao.getConnection();
+		assertNotNull(con);
+	}
 	
 	@Test
 	public void addUser() throws Exception {
 		User user = new User("email3", "nickname3", "password3");
 		userDao.addUser(user);	 
 	}
+	
 	
 	
 }

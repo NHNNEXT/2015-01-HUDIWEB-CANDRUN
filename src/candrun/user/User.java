@@ -1,12 +1,39 @@
 package candrun.user;
 
+import java.sql.SQLException;
+
+import candrun.dao.UserDAO;
+
 public class User {
 	private String email;
 	private String nickname;
 	private String password;
 	
+	public static boolean login(String email, String password) throws UserNotFoundException, PasswordMismatchException, SQLException {
+		UserDAO userDAO = new UserDAO();
+		User user =  userDAO.findByEmail(email);
+		try {
+			userDAO.findByEmail(email);
+		} catch (SQLException e) {
+		}
+		
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		
+		if (!user.matchPassword(password)) {
+			throw new PasswordMismatchException();
+		}
+		return true;
+		
+	}
 	
 	
+	private boolean matchPassword(String newPassword) {
+		return this.password.equals(newPassword);
+	}
+
+
 	public User(String email, String nickname, String password) {
 		this.email = email;
 		this.nickname = nickname;

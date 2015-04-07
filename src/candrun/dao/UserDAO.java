@@ -11,8 +11,8 @@ import candrun.user.User;
 
 public class UserDAO {
 	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/gubagi";
-		String id = "jb";
+		String url = "jdbc:mysql://localhost:3306/mydb";
+		String id = "ellen24h";
 		String pw ="1234";
 		
 		try{
@@ -72,26 +72,21 @@ public class UserDAO {
 	}
 
 	public User findByEmail(String email) throws SQLException {
-		String sql = "select * from USERS where userId = ?";
+		String sql = "select * from USER where email = ?";
 		PreparedStatement pstmt = getConnection().prepareStatement(sql);
 		pstmt.setString(1, email);
 		
 		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			User user = new User(
+		if (!rs.next()) {
+			return null;
+		}
+		
+			return new User(
 					rs.getString("email"), 
 					rs.getString("nickname"),
 					rs.getString("password"));
-			return user;
-		}
-		
-		return null;
 	}
 
-	public void removeUser(String email) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public User findByVerifyKey(String verifyKey) throws SQLException {
 		String sql = "select * from preliminary_user where verify_key = ?";
