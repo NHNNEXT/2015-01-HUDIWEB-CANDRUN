@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 import candrun.model.Goal;
-import candrun.model.Task;
 
 @Controller
 public class ShowGoalController {

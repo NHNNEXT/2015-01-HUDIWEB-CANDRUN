@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 
 @Controller
@@ -19,6 +20,9 @@ public class AddNudgeController {
 
 	@Autowired
 	TaskDAO taskDao;
+	
+	@Autowired
+	GoalDAO goalDao;
 
 	@RequestMapping(value="/addNudge.cdr", method=RequestMethod.POST)
 	protected String doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,7 +36,7 @@ public class AddNudgeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return "showGoalAndTasks";
 	}
+
 }

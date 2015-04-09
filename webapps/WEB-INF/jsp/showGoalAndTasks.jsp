@@ -33,7 +33,7 @@
 			
 			<c:forEach items="${tasks}" var="tasks">
         		<div>${tasks.contents}</div>
-				<form class ="submit_nudge" action="/showGoal.cdr" method="post">
+				<form class ="submit_nudge" action="/addNudge.cdr" method="post">
 					<input name="tasksId" value="${tasks.id}"/>
 					<button>NUDGE</button>
 				</form>
