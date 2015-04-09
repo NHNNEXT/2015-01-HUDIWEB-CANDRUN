@@ -18,7 +18,6 @@ import candrun.model.Goal;
 
 public class GoalDAO extends JdbcDaoSupport{
 //connection을 만든다
-	
 	@PostConstruct
 	public void initialize(){
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -26,7 +25,7 @@ public class GoalDAO extends JdbcDaoSupport{
 		System.out.println("DB 초기화");
 	}
 	
-//입력받은 goal을 db에 넣는다.
+	//입력받은 goal을 db에 넣는다.
 	public int addGoal(Goal goal) throws SQLException{
 		String sql ="INSERT INTO GOAL(contents, user_email, start_date) VALUES(?, ?, ?)";
 		Connection conn = null;

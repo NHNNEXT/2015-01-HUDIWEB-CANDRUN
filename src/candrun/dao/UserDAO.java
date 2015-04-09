@@ -1,6 +1,5 @@
 package candrun.dao;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +7,6 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.catalina.session.JDBCStore;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -25,21 +22,6 @@ public class UserDAO extends JdbcDaoSupport{
 		DatabasePopulatorUtils.execute(populator, getDataSource());
 		System.out.println("DB 초기화");
 	}
-	
-//	public Connection getConnection(){
-//		String url = "jdbc:mysql://localhost:3306/gubagi";
-//		String id = "jb";
-//		String pw ="1234";
-//		
-//		try{
-//			Class.forName("com.mysql.jdbc.Driver");
-//			return DriverManager.getConnection(url, id, pw);
-//		}
-//		catch(Exception e){
-//			System.out.println(e.getMessage());
-//			return null;
-//		}
-//	} 
 	
 	public void addPreliminaryUser(PreliminaryUser user) throws SQLException{
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
@@ -88,26 +70,21 @@ public class UserDAO extends JdbcDaoSupport{
 	}
 
 	public User findByEmail(String email) throws SQLException {
-		String sql = "select * from USERS where userId = ?";
+		String sql = "select * from USER where email = ?";
 		PreparedStatement pstmt = getConnection().prepareStatement(sql);
 		pstmt.setString(1, email);
 		
 		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			User user = new User(
+		if (!rs.next()) {
+			return null;
+		}
+		
+			return new User(
 					rs.getString("email"), 
 					rs.getString("nickname"),
 					rs.getString("password"));
-			return user;
-		}
-		
-		return null;
 	}
 
-	public void removeUser(String email) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public User findByVerifyKey(String verifyKey) throws SQLException {
 		String sql = "select * from preliminary_user where verify_key = ?";

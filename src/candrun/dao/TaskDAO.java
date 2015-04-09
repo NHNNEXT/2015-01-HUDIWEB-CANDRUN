@@ -66,7 +66,7 @@ public class TaskDAO extends JdbcDaoSupport{
 			else{
 				ArrayList<Task> tasks = new ArrayList<>();
 				while(rs.next()){					
-						tasks.add(new Task(rs.getString("contents"), rs.getInt("goal_id"), rs.getInt("id")));
+						tasks.add(new Task(rs.getString("contents"), rs.getInt("goal_id"), rs.getInt("id"), rs.getInt("nudge")));
 				}
 				return tasks;
 			}
@@ -94,6 +94,7 @@ public class TaskDAO extends JdbcDaoSupport{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, taskId);
 			pstmt.executeUpdate();
+			System.out.println("success");
 		} finally{ 
 			if(pstmt !=null){
 				pstmt.close();

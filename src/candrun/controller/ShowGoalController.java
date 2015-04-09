@@ -54,7 +54,6 @@ public class ShowGoalController {
 	}
 
 	
-	@RequestMapping(method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));

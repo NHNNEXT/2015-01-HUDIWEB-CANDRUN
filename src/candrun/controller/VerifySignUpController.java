@@ -39,6 +39,6 @@ public class VerifySignUpController extends HttpServlet {
 			}
 		}
 		
-		resp.sendRedirect("showGoalAndTasks.jsp");	
+		resp.sendRedirect("signIn.jsp");	
 	}
 }

@@ -4,6 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<display-name>gubagi</display-name>
+	<servlet>
+		<description>
+		</description>
+		<display-name>GetFriendsController</display-name>
+		<servlet-name>GetFriendsController</servlet-name>
+		<servlet-class>candrun.controller.GetFriendsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetFriendsController</servlet-name>
+		<url-pattern>/GetFriendsController</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>signUp.jsp</welcome-file>
 	</welcome-file-list>

@@ -18,6 +18,7 @@ public class UserDAOTest {
 		userDao = new UserDAO();
 	}
 	
+// spring test로 바꾸어야 한다. 
 //	@Test
 //	public void connection() {
 //		Connection con = userDao.getConnection();
@@ -29,6 +30,7 @@ public class UserDAOTest {
 		User user = new User("email3", "nickname3", "password3");
 		userDao.addUser(user);	 
 	}
+	
 	
 	
 }

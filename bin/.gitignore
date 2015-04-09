@@ -9,3 +9,5 @@ tomcat.8080/
 #MAC OS
 .DS_Store
 
+/WEB-INF/
+/webapps/
