@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,10 +15,9 @@ import candrun.user.User;
 import candrun.user.UserNotFoundException;
 
 @WebServlet("/signin.cdr")
-public class SignInController extends HttpServlet {
+public class SignInController {
 	public static final String SESSION_email = "email";
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");

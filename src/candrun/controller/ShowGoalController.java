@@ -53,12 +53,11 @@ public class ShowGoalController {
 		return "showGoalAndTasks";
 	}
 
-	
+	@RequestMapping(method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
 		System.out.println(tasksId + "");
-		TaskDAO taskDao = new TaskDAO();
 		try {
 			taskDao.addNudge(tasksId);
 		} catch (SQLException e) {
