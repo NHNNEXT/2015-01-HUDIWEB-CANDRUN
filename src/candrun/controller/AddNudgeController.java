@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import candrun.dao.TaskDAO;
 
-@Controller("/addNudge.cdr")
+@Controller
 public class AddNudgeController {
 
 	@Autowired
 	TaskDAO taskDao;
 
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/addNudge.cdr", method=RequestMethod.POST)
 	protected String doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
 		System.out.println(tasksId + "");
+		
 		try {
 			taskDao.addNudge(tasksId);
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

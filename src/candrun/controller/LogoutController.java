@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("/logout.cdr")
+@Controller
 public class LogoutController {
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/logout.cdr", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();

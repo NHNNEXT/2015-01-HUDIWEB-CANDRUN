@@ -5,19 +5,23 @@ import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import candrun.user.PasswordMismatchException;
 import candrun.user.User;
 import candrun.user.UserNotFoundException;
 
-@WebServlet("/signin.cdr")
+@Controller
 public class SignInController {
 	public static final String SESSION_email = "email";
 
+	@RequestMapping(value="/signin.cdr", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");

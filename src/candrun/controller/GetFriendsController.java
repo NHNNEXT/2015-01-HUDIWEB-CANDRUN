@@ -18,11 +18,11 @@ import candrun.model.User;
 /**
  * Servlet implementation class GetFriendsController
  */
-@Controller("/getFriends.cdr")
+@Controller
 public class GetFriendsController {
 	private static final long serialVersionUID = 1L;
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		User user1 = new User("test01@test.com", "nick01");

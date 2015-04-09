@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,34 +15,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import candrun.dao.UserDAO;
 import candrun.user.User;
 
-@Controller("/VerifySignUp.cdr")
+@Controller
 public class VerifySignUpController {
 
-	@RequestMapping(method=RequestMethod.GET)
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	@Autowired
+	UserDAO userDao;
+
+	@RequestMapping(value="/VerifySignUp.cdr", method=RequestMethod.GET)
+	protected String doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String verifyKey = req.getParameter("verify_key");
 		
-		UserDAO userDao = new UserDAO();
-		User user = null;
 		try {
-			user = userDao.findByVerifyKey(verifyKey);
+			User user = userDao.findByVerifyKey(verifyKey);
+			if(user==null){
+				userDao.addUser(user);
+			}
+			//로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(user==null){
-			//exception처리 해주어야 한다.
-		} else {
-			try {
-				userDao.addUser(user);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		resp.sendRedirect("signIn.jsp");	
+		return "signIn.jsp";	
 	}
 }

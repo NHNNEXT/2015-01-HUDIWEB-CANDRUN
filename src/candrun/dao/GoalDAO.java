@@ -24,7 +24,6 @@ public class GoalDAO extends JdbcDaoSupport{
 		DatabasePopulatorUtils.execute(populator, getDataSource());
 		System.out.println("DB 초기화");
 	}
-	
 	//입력받은 goal을 db에 넣는다.
 	public int addGoal(Goal goal) throws SQLException{
 		String sql ="INSERT INTO GOAL(contents, user_email, start_date) VALUES(?, ?, ?)";

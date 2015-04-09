@@ -2,13 +2,9 @@ package candrun.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +18,7 @@ import candrun.dao.TaskDAO;
 import candrun.model.Goal;
 import candrun.model.Task;
 
-@Controller("/")
+@Controller
 public class ShowGoalController {
 
 	@Autowired
@@ -31,19 +27,17 @@ public class ShowGoalController {
 	@Autowired
 	TaskDAO taskDao;
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	protected String show(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		//db에 있는 goal의 내용을 모두 불러온다.
-		Goal topGoal= null;
-		ArrayList <Task> tasks;
 		try {
-			topGoal= goalDao.findRecentGoal();
-			tasks = taskDao.findTaskByGoalId(topGoal.getId());
+			Goal topGoal= goalDao.findRecentGoal();
+
 			//forward하여 내용을 jsp에 뿌린다.
-			req.setAttribute("goal",topGoal);
-			req.setAttribute("tasks", tasks);
+			req.setAttribute("goal", topGoal);
+			req.setAttribute("tasks", taskDao.findTaskByGoalId(topGoal.getId()));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +47,7 @@ public class ShowGoalController {
 		return "showGoalAndTasks";
 	}
 
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
