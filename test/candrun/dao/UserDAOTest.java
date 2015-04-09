@@ -1,4 +1,4 @@
-package test;
+package candrun.dao;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,6 @@ import java.sql.Connection;
 import org.junit.Before;
 import org.junit.Test;
 
-import candrun.dao.UserDAO;
 import candrun.user.User;
 
 public class UserDAOTest {

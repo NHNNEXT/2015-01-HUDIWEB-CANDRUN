@@ -1,30 +1,26 @@
 package candrun.dao;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
+import javax.annotation.PostConstruct;
+
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import candrun.model.Task;
 
-public class TaskDAO {
-	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/mydb";
-		String id = "yskoh";
-		String pw ="1234";
-		
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-			return null;
-		}
+public class TaskDAO extends JdbcDaoSupport{
+
+	@PostConstruct
+	public void initialize(){
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		DatabasePopulatorUtils.execute(populator, getDataSource());
+		System.out.println("DB 초기화");
 	}
 	
 	public void addTask(Task task) throws SQLException{

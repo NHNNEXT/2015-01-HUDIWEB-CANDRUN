@@ -6,24 +6,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.catalina.session.JDBCStore;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
 import candrun.user.PreliminaryUser;
 import candrun.user.User;
 
-public class UserDAO {
-	public Connection getConnection(){
-		String url = "jdbc:mysql://localhost:3306/gubagi";
-		String id = "jb";
-		String pw ="1234";
-		
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-			return null;
-		}
-	} 
+public class UserDAO extends JdbcDaoSupport{
+	
+	@PostConstruct
+	public void initialize(){
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		DatabasePopulatorUtils.execute(populator, getDataSource());
+		System.out.println("DB 초기화");
+	}
+	
+//	public Connection getConnection(){
+//		String url = "jdbc:mysql://localhost:3306/gubagi";
+//		String id = "jb";
+//		String pw ="1234";
+//		
+//		try{
+//			Class.forName("com.mysql.jdbc.Driver");
+//			return DriverManager.getConnection(url, id, pw);
+//		}
+//		catch(Exception e){
+//			System.out.println(e.getMessage());
+//			return null;
+//		}
+//	} 
 	
 	public void addPreliminaryUser(PreliminaryUser user) throws SQLException{
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
