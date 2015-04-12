@@ -16,11 +16,9 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import candrun.model.Goal;
 
-@Repository
 public class GoalDAO extends JdbcDaoSupport {
 	// connection을 만든다
 	
@@ -30,8 +28,6 @@ public class GoalDAO extends JdbcDaoSupport {
 		DatabasePopulatorUtils.execute(populator, getDataSource());
 	}
 
-	
-	
 	// 입력받은 goal을 db에 넣는다.
 	public int addGoal(Goal goal) throws SQLException {
 		String sql = "INSERT INTO goal(contents, user_email, start_date) VALUES(?, ?, ?)";

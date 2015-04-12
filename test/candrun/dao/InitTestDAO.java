@@ -11,7 +11,6 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class InitTestDAO extends JdbcDaoSupport{
 	
 	@Value("classpath:/initDb.sql")

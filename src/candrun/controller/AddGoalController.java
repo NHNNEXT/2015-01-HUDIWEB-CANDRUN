@@ -22,10 +22,10 @@ import candrun.model.Task;
 public class AddGoalController extends HttpServlet {
 
 	@Autowired
-	GoalDAO goalDAO;
+	GoalDAO goalDao;
 
 	@Autowired
-	TaskDAO taskDAO;
+	TaskDAO taskDao;
 
 	// goal 추가 후, 다음 페이지로 연결해주어야 한다.
 	@RequestMapping(value = "/addGoal.cdr", method = RequestMethod.POST)
@@ -39,9 +39,9 @@ public class AddGoalController extends HttpServlet {
 		Goal goal = new Goal(goalContents, "email");
 
 		try {
-			int returnedId = goalDAO.addGoal(goal);
+			int returnedId = goalDao.addGoal(goal);
 			for (int i = 0; i < arrTaskContents.length; i++) {
-				taskDAO.addTask(new Task(arrTaskContents[i], returnedId));
+				taskDao.addTask(new Task(arrTaskContents[i], returnedId));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
