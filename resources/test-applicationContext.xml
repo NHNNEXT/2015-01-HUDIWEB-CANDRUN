@@ -16,7 +16,14 @@
 		p:password="${database.password}"
 	></bean>
 	
-	
+	<bean id="mailService" class="candrun.mail.MailService">
+		<property name="mainSender" ref="mailSender"/>
+	</bean>
+
+	<bean id="mailSender" class="candrun.mail.DummyMailSender">
+		<property name="host" value="mail.server.com"/>
+	</bean>
+		
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource"/>
 	<bean id="goalDao" class="candrun.dao.GoalDAO" p:dataSource-ref="dataSource"/>	
 	<bean id="taskDao" class="candrun.dao.TaskDAO" p:dataSource-ref="dataSource"/>

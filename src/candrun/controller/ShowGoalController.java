@@ -30,8 +30,8 @@ public class ShowGoalController {
 	TaskDAO taskDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	protected String show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+	protected String show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+		
 		// db에 있는 goal의 내용을 모두 불러온다.
 		try {
 			Goal topGoal = goalDao.findRecentGoal();

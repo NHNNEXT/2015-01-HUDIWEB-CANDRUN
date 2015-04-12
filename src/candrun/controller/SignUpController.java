@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import candrun.dao.UserDAO;
-import candrun.email.EmailService;
-import candrun.email.SHA256Encrypt;
+import candrun.mail.MailService;
+import candrun.mail.SHA256Encrypt;
 import candrun.user.User;
 
 @Controller
@@ -23,6 +23,9 @@ public class SignUpController {
 	@Autowired
 	UserDAO userDao;
 	//이미 존재하는 회원일 때 exception처리 해주어야 한다. 
+
+	@Autowired
+	MailService mailService;
 	
 	@RequestMapping(value="/addUser.cdr", method=RequestMethod.POST)
 	protected String doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -41,11 +44,8 @@ public class SignUpController {
 			e.printStackTrace();
 		}	 
 		
-		EmailService emailservice = new EmailService();
-		emailservice.sendEmail(this.getClass().getSimpleName(), verifyKey, email);
+		mailService.sendMail(email, verifyKey);
 		
 		return "pleaseVerifyEmail";	
 	}
-	
-	
 }
