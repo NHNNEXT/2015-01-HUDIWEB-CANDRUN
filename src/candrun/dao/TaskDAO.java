@@ -27,7 +27,7 @@ public class TaskDAO extends JdbcDaoSupport{
 	}
 
 	//같은 goal아래 tasks을 불러온다
-	public List<Task> findTaskByGoalId(int goalId) throws SQLException{
+	public List<Task> findTasksByGoalId(int goalId) throws SQLException{
 		String sql ="SELECT * FROM tasks WHERE goal_id = ? LIMIT 3";
 
 		RowMapper<Task> rowMapper = new RowMapper<Task>() {

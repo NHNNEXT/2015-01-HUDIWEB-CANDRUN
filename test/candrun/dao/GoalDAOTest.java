@@ -19,6 +19,9 @@ public class GoalDAOTest {
 	@Autowired
 	private GoalDAO goalDao;
 	
+	@Autowired
+	private UserDAO userDao;
+	
 	@Test
 	public void addAndFindGoal() throws SQLException {
 		Goal goal = new Goal("goalContents", "email");
@@ -26,5 +29,11 @@ public class GoalDAOTest {
 		Goal dbGoal = goalDao.findGoalById(goalId);
 		assertEquals(dbGoal.getId(), goalId);
 	}
-
+	
+	@Test
+	public void findRecentGoal() throws SQLException {
+		int goalId = goalDao.addGoal(new Goal("recentGoal", "email"));
+		Goal recentGoal = goalDao.findRecentGoal();
+		assertEquals(goalId,recentGoal.getId());
+	}
 }

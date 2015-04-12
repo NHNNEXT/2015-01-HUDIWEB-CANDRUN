@@ -38,7 +38,7 @@ public class ShowGoalController {
 
 			// forward하여 내용을 jsp에 뿌린다.
 			req.setAttribute("goal", topGoal);
-			req.setAttribute("tasks", taskDao.findTaskByGoalId(topGoal.getId()));
+			req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

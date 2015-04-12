@@ -34,5 +34,4 @@ public class UserDAOTest {
 		User dbUser = userDao.findByVerifyKey("verifyKey");
 		assertEquals(user,dbUser);
 	}
-	
 }
