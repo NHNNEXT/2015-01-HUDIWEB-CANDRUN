@@ -2,6 +2,8 @@ package candrun.dao;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class UserDAOTest {
 	private UserDAO userDao;
 	
 	@Test
-	public void addUser() throws Exception {
+	public void addAndFindUser() throws SQLException {
 		User user = new User("candy@test.com", "nickname", "password");
 		userDao.addUser(user);
 		User dbUser = userDao.findByEmail("candy@test.com");
@@ -26,15 +28,11 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void addPreliminaryUser() throws Exception {
+	public void addAndFindPreliminaryUser() throws SQLException {
 		User user = new User("chocolate@test.com", "nickname", "password", "verifyKey");
 		userDao.addPreliminaryUser(user);
 		User dbUser = userDao.findByVerifyKey("verifyKey");
 		assertEquals(user,dbUser);
 	}
-	
-	
-	
-	
 	
 }
