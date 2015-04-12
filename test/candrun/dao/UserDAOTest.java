@@ -1,35 +1,44 @@
 package candrun.dao;
 
-import static org.junit.Assert.*;
 
-import java.sql.Connection;
+
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import candrun.user.PreliminaryUser;
 import candrun.user.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:/test-applicationContext.xml")
 public class UserDAOTest {
 
+	@Autowired
 	private UserDAO userDao;
-	
-	@Before
-	public void setup() {
-		userDao = new UserDAO();
-	}
-	
-// spring test로 바꾸어야 한다. 
-//	@Test
-//	public void connection() {
-//		Connection con = userDao.getConnection();
-//		assertNotNull(con);
-//	}
 	
 	@Test
 	public void addUser() throws Exception {
-		User user = new User("email3", "nickname3", "password3");
-		userDao.addUser(user);	 
+		User user = new User("candy@test.com", "nickname", "password");
+		userDao.addUser(user);
+		User dbUser = userDao.findByEmail("candy@test.com");
+		assertEquals(user,dbUser);
 	}
+
+	@Test
+	public void addPreliminaryUser() throws Exception {
+		User user = new User("chocolate@test.com", "nickname", "password", "verifyKey");
+		userDao.addPreliminaryUser(user);
+		User dbUser = userDao.findByVerifyKey("verifyKey");
+		assertEquals(user,dbUser);
+	}
+	
+	
 	
 	
 	

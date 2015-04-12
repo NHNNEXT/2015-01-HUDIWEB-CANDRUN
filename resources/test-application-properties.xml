@@ -4,7 +4,7 @@
 	<comment>application-properties</comment>
 	
 	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="database.url">jdbc:mysql://localhost:3306/mydb</entry>
+	<entry key="database.url">jdbc:mysql://localhost:3306/test</entry>
 	<entry key="database.username">jb</entry>
 	<entry key="database.password">1234</entry>
 	

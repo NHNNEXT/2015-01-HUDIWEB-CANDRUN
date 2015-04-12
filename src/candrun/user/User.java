@@ -8,31 +8,32 @@ public class User {
 	private String email;
 	private String nickname;
 	private String password;
-	
-	public static boolean login(String email, String password) throws UserNotFoundException, PasswordMismatchException, SQLException {
+	private String verifyKey;
+
+	public static boolean login(String email, String password)
+			throws UserNotFoundException, PasswordMismatchException,
+			SQLException {
 		UserDAO userDAO = new UserDAO();
-		User user =  userDAO.findByEmail(email);
+		User user = userDAO.findByEmail(email);
 		try {
 			userDAO.findByEmail(email);
 		} catch (SQLException e) {
 		}
-		
+
 		if (user == null) {
 			throw new UserNotFoundException();
 		}
-		
+
 		if (!user.matchPassword(password)) {
 			throw new PasswordMismatchException();
 		}
 		return true;
-		
+
 	}
-	
-	
+
 	private boolean matchPassword(String newPassword) {
 		return this.password.equals(newPassword);
 	}
-
 
 	public User(String email, String nickname, String password) {
 		this.email = email;
@@ -40,25 +41,28 @@ public class User {
 		this.password = password;
 	}
 
-
+	public User(String email, String nickname, String password, String verifyKey) {
+		this.email = email;
+		this.nickname = nickname;
+		this.password = password;
+		this.verifyKey = verifyKey;
+	}
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public String getNickname() {
 		return nickname;
 	}
-
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
+	public String getVerifyKey() {
+		return verifyKey;
+	}
 
 	@Override
 	public int hashCode() {
@@ -69,10 +73,10 @@ public class User {
 				+ ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((verifyKey == null) ? 0 : verifyKey.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -97,6 +101,11 @@ public class User {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (verifyKey == null) {
+			if (other.verifyKey != null)
+				return false;
+		} else if (!verifyKey.equals(other.verifyKey))
 			return false;
 		return true;
 	}

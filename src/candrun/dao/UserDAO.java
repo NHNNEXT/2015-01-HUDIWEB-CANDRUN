@@ -4,24 +4,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.stereotype.Repository;
 
 import candrun.user.PreliminaryUser;
 import candrun.user.User;
 
+@Repository
 public class UserDAO extends JdbcDaoSupport{
-	
+		
+
 	@PostConstruct
 	public void initialize(){
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 		DatabasePopulatorUtils.execute(populator, getDataSource());
 	}
 	
-	public void addPreliminaryUser(PreliminaryUser user) throws SQLException{
+	public void addPreliminaryUser(User user) throws SQLException{
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
 		getJdbcTemplate().update(sql,user.getEmail(), user.getNickname(), user.getPassword(), user.getVerifyKey());
 	}
@@ -42,7 +49,7 @@ public class UserDAO extends JdbcDaoSupport{
 						rs.getString("password"));
 			}
 		};
-		return getJdbcTemplate().queryForObject(sql, rowMapper);
+		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
 	}
 
 	public User findByVerifyKey(String verifyKey) throws SQLException {
@@ -53,9 +60,10 @@ public class UserDAO extends JdbcDaoSupport{
 				return new User(
 						rs.getString("email"), 
 						rs.getString("nickname"),
-						rs.getString("password"));
+						rs.getString("password"),
+						rs.getString("verify_key"));
 			}
 		};
-		return getJdbcTemplate().queryForObject(sql, rowMapper);
+		return getJdbcTemplate().queryForObject(sql, rowMapper, verifyKey);
 	}
 }

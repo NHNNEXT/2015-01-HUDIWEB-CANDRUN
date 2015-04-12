@@ -5,19 +5,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema test
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `test` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema test
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `test` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `test`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+DROP TABLE IF EXISTS `test`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `test`.`user` (
   `email` VARCHAR(255) NOT NULL,
   `nickname` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -26,9 +29,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`goal`
+-- Table `test`.`goal`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`goal` (
+DROP TABLE IF EXISTS `test`.`goal` ;
+
+CREATE TABLE IF NOT EXISTS `test`.`goal` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `contents` VARCHAR(255) NOT NULL,
   `user_email` VARCHAR(255) NOT NULL,
@@ -46,9 +51,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`tasks`
+-- Table `test`.`tasks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`tasks` (
+DROP TABLE IF EXISTS `test`.`tasks` ;
+
+CREATE TABLE IF NOT EXISTS `test`.`tasks` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `contents` VARCHAR(255) NOT NULL,
   `nudge` INT NOT NULL DEFAULT 0,
@@ -64,9 +71,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user_has_user`
+-- Table `test`.`user_has_user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user_has_user` (
+DROP TABLE IF EXISTS `test`.`user_has_user` ;
+
+CREATE TABLE IF NOT EXISTS `test`.`user_has_user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `requester` VARCHAR(255) NOT NULL,
   `receiver` VARCHAR(255) NOT NULL,
@@ -77,6 +86,19 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_has_user` (
   INDEX `fk_user_has_user_user1_idx` USING BTREE (`requester` ASC),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `test`.`user_has_user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `test`.`user_has_user` ;
+
+CREATE TABLE IF NOT EXISTS `test`.`preliminary_user` (
+  `email` varchar(255) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `verify_key` varchar(255) NOT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
