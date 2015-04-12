@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import candrun.dao.UserDAO;
 import candrun.email.EmailService;
 import candrun.email.SHA256Encrypt;
-import candrun.user.PreliminaryUser;
 import candrun.user.User;
 
 @Controller
@@ -34,10 +33,9 @@ public class SignUpController {
 		String password = req.getParameter("password");
 		String verifyKey = SHA256Encrypt.encrypt(nickname);
 
-		User user = new PreliminaryUser(email, nickname, password, verifyKey);		
+		User user = new User(email, nickname, password, verifyKey);		
 		try {
-			userDao.addPreliminaryUser((PreliminaryUser) user);
-			//interface로 바꾸어야 한다. 캐스팅은 좋지 않은 것 같다.
+			userDao.addPreliminaryUser(user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

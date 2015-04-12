@@ -15,7 +15,6 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
-import candrun.user.PreliminaryUser;
 import candrun.user.User;
 
 @Repository
