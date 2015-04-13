@@ -8,18 +8,15 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:/applicationContext.xml
-		</param-value>
+		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 
 	<servlet>
 		<servlet-name>candrun</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:candrun-servlet.xml</param-value>

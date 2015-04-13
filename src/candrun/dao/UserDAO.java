@@ -2,24 +2,13 @@ package candrun.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import candrun.user.User;
 
 public class UserDAO extends JdbcDaoSupport{
 		
-	@PostConstruct
-	public void initialize(){
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		DatabasePopulatorUtils.execute(populator, getDataSource());
-	}
-	
 	public void addPreliminaryUser(User user) throws SQLException{
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
 		getJdbcTemplate().update(sql,user.getEmail(), user.getNickname(), user.getPassword(), user.getVerifyKey());

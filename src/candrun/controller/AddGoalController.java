@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +18,7 @@ import candrun.model.Goal;
 import candrun.model.Task;
 
 @Controller
-public class AddGoalController extends HttpServlet {
+public class AddGoalController {
 
 	@Autowired
 	GoalDAO goalDao;

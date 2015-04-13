@@ -19,7 +19,6 @@ import candrun.model.User;
  */
 @Controller
 public class GetFriendsController {
-	private static final long serialVersionUID = 1L;
 
 	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

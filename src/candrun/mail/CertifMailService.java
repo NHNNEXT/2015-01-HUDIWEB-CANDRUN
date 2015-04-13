@@ -40,9 +40,4 @@ public class CertifMailService implements MailService{
 
 		mailSender.send(mimeMessage);
 	}
-
-	
-	
-	
-	
 }
