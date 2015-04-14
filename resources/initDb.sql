@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `test`.`user` (
   `email` VARCHAR(255) NOT NULL,
   `nickname` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `state` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`email`))
 ENGINE = InnoDB;
 
