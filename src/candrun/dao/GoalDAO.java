@@ -14,7 +14,12 @@ import candrun.model.Goal;
 
 public class GoalDAO extends JdbcDaoSupport {
 	// connection을 만든다
-	
+	private RowMapper<Goal> rowMapper = new RowMapper<Goal>() {
+		public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return new Goal(rs.getInt("id"), rs.getString("contents"),
+					rs.getTimestamp("start_date"));
+		}
+	};
 	// 입력받은 goal을 db에 넣는다.
 	public int addGoal(Goal goal) throws SQLException {
 		String sql = "INSERT INTO goal(contents, user_email, start_date) VALUES(?, ?, ?)";
@@ -38,13 +43,6 @@ public class GoalDAO extends JdbcDaoSupport {
 	// goalId와 일치하는 goal을 불러온다
 	public Goal findGoalById(int goalId) throws SQLException {
 		String sql = "SELECT * FROM goal WHERE id = ?";
-		RowMapper<Goal> rowMapper = new RowMapper<Goal>() {
-
-			public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new Goal(rs.getInt("id"), rs.getString("contents"),
-						rs.getTimestamp("start_date"));
-			}
-		};
 		return getJdbcTemplate().queryForObject(sql, rowMapper, goalId);
 	}
 		
@@ -52,13 +50,6 @@ public class GoalDAO extends JdbcDaoSupport {
 	// 가장 최근 넣은 goal 하나만을 불러온다.
 	public Goal findRecentGoal() throws SQLException {
 		String sql = "SELECT * FROM goal ORDER BY created_date DESC LIMIT 1";
-		RowMapper<Goal> rowMapper = new RowMapper<Goal>() {
-
-			public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new Goal(rs.getInt("id"), rs.getString("contents"),
-						rs.getTimestamp("start_date"));
-			}
-		};
 		return getJdbcTemplate().queryForObject(sql, rowMapper);
 	}
 }     
