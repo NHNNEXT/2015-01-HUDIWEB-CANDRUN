@@ -33,6 +33,7 @@ public class UserDAO extends JdbcDaoSupport{
 		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
 	}
 
+	//TODO: nickname으로 verifyKey 생성시 중복 가능성이 있다.
 	public User findByVerifyKey(String verifyKey) throws SQLException {
 		String sql = "SELECT * FROM preliminary_user WHERE verify_key = ?";
 		RowMapper<User> rowMapper = new RowMapper<User>() {

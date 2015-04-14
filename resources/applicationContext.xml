@@ -31,9 +31,12 @@
 		p:subject="${mailMessage.subject}" 
 		p:text="${mailMessage.text}" />
 
+	<bean id="mailContext" class="candrun.mail.MailContext"
+		p:mailMessage-ref="mailMessage"
+		p:mailSender-ref="mailSender"/>
+
 	<bean id="mailService" class="candrun.mail.CertifMailService" 
-	p:mailMessage-ref="mailMessage"
-	p:mailSender-ref="mailSender"/>
+		p:mailContext-ref="mailContext"/>
 
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />
 	<bean id="goalDao" class="candrun.dao.GoalDAO" p:dataSource-ref="dataSource" />
