@@ -31,7 +31,7 @@
 				<div class="input_container"></div>
 				<div class="add_input_btn"> + </div>
 				<div class ="submit_btn">확인</div>
-			</form>
+			</form> 
 		</div>
 	</section>
 	<footer></footer>

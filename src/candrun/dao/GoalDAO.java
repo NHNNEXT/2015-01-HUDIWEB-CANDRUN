@@ -23,7 +23,7 @@ public class GoalDAO extends JdbcDaoSupport {
 				return new Goal(rs.getInt("id"), rs.getString("contents"),
 						rs.getTimestamp("start_date"));
 			} catch (SQLException e) {
-				throw new BeanInstantiationException(Goal.class, e.getMessage(), e);
+				throw new BeanInstantiationException(Goal.class, e.getMessage(), e);   
 			}
 		}
 	};

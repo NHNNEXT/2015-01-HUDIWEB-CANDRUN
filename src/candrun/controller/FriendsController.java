@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
@@ -16,10 +16,10 @@ import candrun.model.User;
 /**
  * Servlet implementation class GetFriendsController
  */
-@Controller
-public class GetFriendsController {
+@RestController("/friends")
+public class FriendsController {
 
-	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		User user1 = new User("test01@test.com", "nick01");

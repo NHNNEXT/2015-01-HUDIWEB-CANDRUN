@@ -1,26 +1,28 @@
 package candrun.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import candrun.exception.PasswordMismatchException;
 import candrun.exception.UserNotFoundException;
 import candrun.user.User;
 
-@Controller
-public class SignInController {
+@RestController("/auth")
+public class AuthController {
 	public static final String SESSION_email = "email";
-	private static final Logger LOGGER = LoggerFactory.getLogger(SignInController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
-	@RequestMapping(value = "/signin.cdr", method = RequestMethod.POST)
-	protected String doPost(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.POST)
+	protected String signIn(HttpServletRequest request, HttpServletResponse response) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -38,5 +40,12 @@ public class SignInController {
 			request.setAttribute("errorMessage", "비밀번호가 틀립니다. 다시 로그인하세요.");
 			return "signIn";
 		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public void signOut(HttpServletRequest req, HttpServletResponse response) throws IOException {
+		HttpSession session = req.getSession();
+		session.removeAttribute("email");
+		response.sendRedirect("/signIn.jsp");
 	}
 }

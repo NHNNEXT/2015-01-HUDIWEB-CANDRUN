@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,21 +20,25 @@ public class GoalDAOTest {
 	@Autowired
 	private GoalDAO goalDao;
 	
-	@Autowired
-	private UserDAO userDao;
-	
 	@Test
-	public void addAndFindGoal() throws SQLException {
+	public void findGoal() throws SQLException {
 		Goal goal = new Goal("goalContents", "email");
 		int goalId = goalDao.addGoal(goal);
 		Goal dbGoal = goalDao.findGoalById(goalId);
+		
 		assertEquals(dbGoal.getId(), goalId);
 	}
 	
 	@Test
 	public void findRecentGoal() throws SQLException {
 		int goalId = goalDao.addGoal(new Goal("recentGoal", "email"));
-		Goal recentGoal = goalDao.findRecentGoal();
-		assertEquals(goalId,recentGoal.getId());
+		Goal dbGoal = goalDao.findRecentGoal();
+		
+		assertEquals(goalId, dbGoal.getId());
+	}	
+
+	@Test(expected=EmptyResultDataAccessException.class)
+	public void findUserByNotExistKey() throws SQLException {
+		goalDao.findGoalById(-1);
 	}
 }

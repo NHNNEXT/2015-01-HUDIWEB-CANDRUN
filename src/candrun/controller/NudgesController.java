@@ -6,16 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 
-@Controller
-public class AddNudgeController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AddNudgeController.class);
+@RestController("/nudges")
+public class NudgesController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(NudgesController.class);
 	
 	@Autowired
 	TaskDAO taskDao;
@@ -23,11 +23,10 @@ public class AddNudgeController {
 	@Autowired
 	GoalDAO goalDao;
 
-	@RequestMapping(value="/addNudge.cdr", method=RequestMethod.POST)
-	protected String doPost(HttpServletRequest req, HttpServletResponse resp) {
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(HttpServletRequest req, HttpServletResponse resp) {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
-		LOGGER.debug("taskId: {}", tasksId);
-				
+		LOGGER.debug("taskId: {}", tasksId);	
 		taskDao.addNudge(tasksId);
 
 		return "showGoalAndTasks";
