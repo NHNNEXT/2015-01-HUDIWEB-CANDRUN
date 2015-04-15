@@ -1,9 +1,5 @@
 package candrun.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,35 +26,22 @@ public class ShowGoalController {
 	TaskDAO taskDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	protected String show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+	protected String show(HttpServletRequest req, HttpServletResponse resp) {
 		
-		// db에 있는 goal의 내용을 모두 불러온다.
-		try {
-			Goal topGoal = goalDao.findRecentGoal();
+		Goal topGoal = goalDao.findRecentGoal();
 
-			// forward하여 내용을 jsp에 뿌린다.
-			req.setAttribute("goal", topGoal);
-			req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// forward하여 내용을 jsp에 뿌린다.
+		req.setAttribute("goal", topGoal);
+		req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
 
 		return "showGoalAndTasks";
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp){
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
 		LOGGER.debug("taskId: {}", tasksId);
 
-		try {
-			taskDao.addNudge(tasksId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		taskDao.addNudge(tasksId);
 	}
 }

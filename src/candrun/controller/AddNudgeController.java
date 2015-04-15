@@ -1,7 +1,6 @@
 package candrun.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +32,8 @@ public class AddNudgeController {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
 		LOGGER.debug("taskId: {}", tasksId);
 				
-		try {
-			taskDao.addNudge(tasksId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		taskDao.addNudge(tasksId);
+
 		return "showGoalAndTasks";
 	}
 

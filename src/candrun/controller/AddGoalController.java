@@ -1,7 +1,6 @@
 package candrun.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,15 +35,10 @@ public class AddGoalController {
 		String[] arrTaskContents = taskContents.split(",");
 
 		Goal goal = new Goal(goalContents, "email");
-
-		try {
-			int returnedId = goalDao.addGoal(goal);
-			for (int i = 0; i < arrTaskContents.length; i++) {
-				taskDao.addTask(new Task(arrTaskContents[i], returnedId));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int returnedId = goalDao.addGoal(goal);
+		
+		for (int i = 0; i < arrTaskContents.length; i++) {
+			taskDao.addTask(new Task(arrTaskContents[i], returnedId));
 		}
 	}
 }

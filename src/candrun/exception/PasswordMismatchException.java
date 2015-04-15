@@ -1,4 +1,4 @@
-package candrun.user;
+package candrun.exception;
 
 public class PasswordMismatchException extends Exception {
 

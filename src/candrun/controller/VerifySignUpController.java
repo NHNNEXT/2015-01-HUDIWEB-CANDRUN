@@ -1,9 +1,5 @@
 package candrun.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,23 +20,17 @@ public class VerifySignUpController {
 	@Autowired
 	UserDAO userDao;
 
-	@RequestMapping(value="/VerifySignUp.cdr", method=RequestMethod.GET)
-	protected String doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	@RequestMapping(value = "/VerifySignUp.cdr", method = RequestMethod.GET)
+	protected String doGet(HttpServletRequest req, HttpServletResponse resp) {
 		String verifyKey = req.getParameter("verify_key");
-		
-		try {
-			User user = userDao.findByVerifyKey(verifyKey);
-			
-			if(user!=null){
-				userDao.addUser(user);
-				LOGGER.info("user table으로 회원등록 완료.");
-			}
-			//로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		User user = userDao.findByVerifyKey(verifyKey);
+
+		if (user != null) {
+			userDao.addUser(user);
+			LOGGER.info("user table으로 회원등록 완료.");
 		}
-		return "signIn";	
+		// 로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
+		return "signIn";
 	}
 }

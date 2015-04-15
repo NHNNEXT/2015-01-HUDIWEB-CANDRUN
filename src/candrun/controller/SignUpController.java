@@ -1,7 +1,6 @@
 package candrun.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,13 +36,8 @@ public class SignUpController {
 		String verifyKey = SHA256Encrypt.encrypt(nickname);
 
 		User user = new User(email, nickname, password, verifyKey);		
-		try {
-			userDao.addPreliminaryUser(user);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	 
-		
+		userDao.addPreliminaryUser(user);
+	
 		mailService.sendMail(email, verifyKey);
 		
 		return "pleaseVerifyEmail";	

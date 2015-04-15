@@ -3,6 +3,8 @@ package candrun.user;
 import java.sql.SQLException;
 
 import candrun.dao.UserDAO;
+import candrun.exception.PasswordMismatchException;
+import candrun.exception.UserNotFoundException;
 
 public class User {
 	private String email;
@@ -15,10 +17,7 @@ public class User {
 			SQLException {
 		UserDAO userDAO = new UserDAO();
 		User user = userDAO.findByEmail(email);
-		try {
-			userDAO.findByEmail(email);
-		} catch (SQLException e) {
-		}
+		userDAO.findByEmail(email);
 
 		if (user == null) {
 			throw new UserNotFoundException();
