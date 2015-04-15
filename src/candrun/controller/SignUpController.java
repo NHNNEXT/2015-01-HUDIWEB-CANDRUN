@@ -27,8 +27,7 @@ public class SignUpController {
 	MailService mailService;
 	
 	@RequestMapping(value="/addUser.cdr", method=RequestMethod.POST)
-	protected String doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected String doPost(HttpServletRequest req, HttpServletResponse resp) {
 		
 		String email  = req.getParameter("email");
 		String nickname = req.getParameter("nickname");
@@ -37,7 +36,6 @@ public class SignUpController {
 
 		User user = new User(email, nickname, password, verifyKey);		
 		userDao.addPreliminaryUser(user);
-	
 		mailService.sendMail(email, verifyKey);
 		
 		return "pleaseVerifyEmail";	

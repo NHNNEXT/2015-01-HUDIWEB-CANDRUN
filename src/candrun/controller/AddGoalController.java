@@ -1,8 +1,5 @@
 package candrun.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,8 +24,7 @@ public class AddGoalController {
 
 	// goal 추가 후, 다음 페이지로 연결해주어야 한다.
 	@RequestMapping(value = "/addGoal.cdr", method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp){
 
 		String goalContents = req.getParameter("goal_contents");
 		String taskContents = req.getParameter("task_contents");

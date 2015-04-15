@@ -2,7 +2,6 @@ package candrun.controller;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +21,7 @@ public class GetFriendsController {
 
 	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws IOException {
 		User user1 = new User("test01@test.com", "nick01");
 		User user2 = new User("test02@test.com", "nick02");
 		User user3 = new User("test03@test.com", "nick03");

@@ -1,8 +1,5 @@
 package candrun.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,8 +24,7 @@ public class AddNudgeController {
 	GoalDAO goalDao;
 
 	@RequestMapping(value="/addNudge.cdr", method=RequestMethod.POST)
-	protected String doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected String doPost(HttpServletRequest req, HttpServletResponse resp) {
 		int tasksId = Integer.parseInt(req.getParameter("tasksId"));
 		LOGGER.debug("taskId: {}", tasksId);
 				
@@ -36,5 +32,4 @@ public class AddNudgeController {
 
 		return "showGoalAndTasks";
 	}
-
 }

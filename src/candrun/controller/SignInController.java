@@ -1,10 +1,5 @@
 package candrun.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,8 +20,7 @@ public class SignInController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignInController.class);
 
 	@RequestMapping(value = "/signin.cdr", method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected String doPost(HttpServletRequest request, HttpServletResponse response) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -34,24 +28,15 @@ public class SignInController {
 			User.login(email, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
-			response.sendRedirect("/showGoalAndTasks.jsp");
+			return "redirect: showGoalAndTasks";
 		} catch (UserNotFoundException e) {
 			LOGGER.debug("존재하지 않는 사용자 입니다. 다시 로그인하세요.");
-			forwardJSP(request, response, "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
+			request.setAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
+			return "signIn";
 		} catch (PasswordMismatchException e) {
 			LOGGER.debug("비밀번호가 틀립니다. 다시 로그인하세요.");
-			forwardJSP(request, response, "비밀번호가 틀립니다. 다시 로그인하세요.");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("errorMessage", "비밀번호가 틀립니다. 다시 로그인하세요.");
+			return "signIn";
 		}
 	}
-
-	private void forwardJSP(HttpServletRequest request, HttpServletResponse response, String errorMessage)
-			throws ServletException, IOException {
-		request.setAttribute("errorMessage", errorMessage);
-		RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
-		rd.forward(request, response);
-	}
-
 }

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.BeanInstantiationException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -17,9 +18,13 @@ import candrun.model.Goal;
 public class GoalDAO extends JdbcDaoSupport {
 	// connection을 만든다
 	private RowMapper<Goal> rowMapper = new RowMapper<Goal>() {
-		public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new Goal(rs.getInt("id"), rs.getString("contents"),
-					rs.getTimestamp("start_date"));
+		public Goal mapRow(ResultSet rs, int rowNum) {
+			try {
+				return new Goal(rs.getInt("id"), rs.getString("contents"),
+						rs.getTimestamp("start_date"));
+			} catch (SQLException e) {
+				throw new BeanInstantiationException(Goal.class, e.getMessage(), e);
+			}
 		}
 	};
 	// 입력받은 goal을 db에 넣는다.

@@ -2,7 +2,6 @@ package candrun.controller;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LogoutController {
 
 	@RequestMapping(value="/logout.cdr", method=RequestMethod.GET)
-	protected void doGet(HttpServletRequest req, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("email");
 		response.sendRedirect("/signIn.jsp");
