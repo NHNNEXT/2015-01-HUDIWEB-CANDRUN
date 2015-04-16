@@ -1,55 +1,16 @@
 /**
- * writer: cob first edited date: 2015.04.06 last edited date: 2015.04.06
- * related project: 9bagi by candrun made for control friends list
- */
+* writer: cob first edited date: 2015.04.06 last edited date: 2015.04.06
+* related project: 9bagi by candrun made for control friends list
+*/
 
 var FRIENDS = FRIENDS || {};
-var CANDRUN = CANDRUN || {};
-
-CANDRUN.methods = {};
-CANDRUN.methods.ajax = function(sUrl, fOnready) {
-	if (window.XMLHttpRequest) {
-		var httpRequest = new XMLHttpRequest();
-	} else if (window.ActiveXObject) {
-		try {
-			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			try {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			} catch (e) {
-			}
-		}
-	}
-	if (!httpRequest) {
-		console.log('Giving up :( Cannot create an XMLHTTP instance');
-		return false;
-	}
-	httpRequest.onreadystatechange = function() {
-		fSuccess(httpRequest);
-	}
-	httpRequest.open('GET', sUrl);
-	httpRequest.send();
-}
-
-CANDRUN.methods.onready = function(httpReq, fSuccess) {
-	if (httpRequest.readyState === 4) {
-		if (httpRequest.status === 200) {
-			oFriends = JSON.parse(httpRequest.responseText);
-			for ( var idx in fAfterCallEvents) {
-				fSuccess();
-			}
-		} else {
-			console.log('There was a problem with the request.');
-		}
-	}
-}
 
 // 구현부
 FRIENDS.run = function() {
 	var elBtn = document.querySelector("#btnLoadFriends");
 	var elUl = document.querySelector("#ulFriendsList");
 	var friendsCaller = new FRIENDS.classes.Caller(elBtn, elUl,
-			"/getFriends.cdr");
+	"/getFriends.cdr");
 	var fAfterEvents = [ function() {
 		FRIENDS.classes.ListMaker(elUl, friendsCaller.getFriends());
 	}, function() {
@@ -64,7 +25,7 @@ FRIENDS.classes.ListMaker = function(elUl, lists) {
 	if (lists && lists.length && lists.length > 0) {
 		for ( var idx in lists) {
 			htmlLists += "<li id=" + lists[idx].email + ">"
-					+ lists[idx].nickname + "</li>";
+			+ lists[idx].nickname + "</li>";
 		}
 		elUl.innerHTML = htmlLists;
 	}
@@ -115,10 +76,19 @@ FRIENDS.classes.Caller = function(elBtn, elUl, url, fAfterCallEvnts) {
 		}
 	}
 
+	var fSucces = function(sRespText) {
+		oFriends = JSON.parse(sRespText);
+		for ( var idx in fAfterCallEvents) {
+			fAfterCallEvents[idx]();
+		}
+	}
+
 	this.addEvent = function() {
 		if (elLoader && sUrl) {
+			var getFriendsAjax = new CANDRUN.util.ajax(sUrl, fSucces);
+			getFriendsAjax.setJson();
 			elLoader.addEventListener("click", function() {
-				CANDRUN.methods.ajax(sUrl, getResponse)
+				getFriendsAjax.send();
 			});
 			console.log("Event added.")
 		} else {

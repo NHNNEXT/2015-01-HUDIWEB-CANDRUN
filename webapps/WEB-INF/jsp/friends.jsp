@@ -10,5 +10,6 @@
 	<button id="btnLoadFriends">Load friends list</button>
 	<ul id="ulFriendsList"></ul>
 </body>
+<script src="/js/candrun.js"></script>
 <script src="/js/friends/friends.js"></script>
 </html>
