@@ -22,7 +22,7 @@ CANDRUN.util = {};
 //myAjax.setMethod("PUT");
 //Ajax 실행
 //myAjax.send();
-CANDRUN.util.ajax = function(sUrl, fSucces, fFail) {
+CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var httpRequest;
 	var method = 'GET';
 

@@ -61,20 +61,6 @@ FRIENDS.classes.Caller = function(elBtn, elUl, url, fAfterCallEvnts) {
 	var sUrl = url;
 	var oFriends = {};
 	var fAfterCallEvents = fAfterCallEvnts;
-	var httpRequest;
-
-	var getResponse = function(httpRequest) {
-		if (httpRequest.readyState === 4) {
-			if (httpRequest.status === 200) {
-				oFriends = JSON.parse(httpRequest.responseText);
-				for ( var idx in fAfterCallEvents) {
-					fAfterCallEvents[idx]();
-				}
-			} else {
-				console.log('There was a problem with the request.');
-			}
-		}
-	}
 
 	var fSucces = function(sRespText) {
 		oFriends = JSON.parse(sRespText);

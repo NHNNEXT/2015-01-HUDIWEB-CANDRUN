@@ -11,5 +11,5 @@
 	<ul id="ulFriendsList"></ul>
 </body>
 <script src="/js/candrun.js"></script>
-<script src="/js/friends/friends.js"></script>
+<script src="/js/friends.js"></script>
 </html>
