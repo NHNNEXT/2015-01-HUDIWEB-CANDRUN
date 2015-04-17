@@ -59,4 +59,11 @@ public class Task {
 	public int getAchievement() {
 		return achievement;
 	}
+
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", goalId=" + goalId + ", contents="
+				+ contents + "]";
+	}
+
 }

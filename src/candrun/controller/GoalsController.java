@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
@@ -51,7 +50,7 @@ public class GoalsController {
 		req.setAttribute("goal", topGoal);
 		req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
 		for(int i=0; i< task.size();i++){
-			System.out.println(task.get(i));
+			LOGGER.debug(task.get(i).toString());
 		}
 		return "addGoal";
 	}
