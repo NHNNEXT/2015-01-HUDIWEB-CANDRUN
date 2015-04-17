@@ -16,7 +16,9 @@ import candrun.exception.PasswordMismatchException;
 import candrun.exception.UserNotFoundException;
 import candrun.user.User;
 
-@RestController("/auth")
+
+@RequestMapping("/auth")
+@RestController
 public class AuthController {
 	public static final String SESSION_email = "email";
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -42,7 +44,7 @@ public class AuthController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.DELETE)
 	public void signOut(HttpServletRequest req, HttpServletResponse response) throws IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("email");

@@ -16,10 +16,12 @@ import candrun.model.User;
 /**
  * Servlet implementation class GetFriendsController
  */
-@RestController("/friends")
+
+@RequestMapping("/friends")
+@RestController
 public class FriendsController {
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		User user1 = new User("test01@test.com", "nick01");

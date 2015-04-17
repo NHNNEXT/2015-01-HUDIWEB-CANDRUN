@@ -31,11 +31,10 @@
 		submitForm.submit();
 	})
 
+	function makeInputTag(value) {
+		var input = document.createElement( 'input' );
+		input.value = value;
+		return input;
+	}
+
 })();
-
-
-function makeInputTag(value) {
-    var input = document.createElement( 'input' );
-    input.value = value;
-	return input;
-}

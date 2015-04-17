@@ -15,7 +15,8 @@ import candrun.mail.MailService;
 import candrun.mail.SHA256Encrypt;
 import candrun.user.User;
 
-@RestController("/users")
+@RequestMapping("/users")
+@RestController
 public class UsersController { 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
 
