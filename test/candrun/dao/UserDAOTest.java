@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,7 +22,7 @@ public class UserDAOTest {
 	private UserDAO userDao;
 	
 	@Test
-	public void addAndFindUser() throws SQLException {
+	public void findUser() throws SQLException {
 		User user = new User("candy@test.com", "nickname", "password");
 		userDao.addUser(user);
 		User dbUser = userDao.findByEmail("candy@test.com");
@@ -28,10 +30,23 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void addAndFindPreliminaryUser() throws SQLException {
+	public void findPreliminaryUser() throws SQLException {
 		User user = new User("chocolate@test.com", "nickname", "password", "verifyKey");
 		userDao.addPreliminaryUser(user);
 		User dbUser = userDao.findByVerifyKey("verifyKey");
 		assertEquals(user,dbUser);
 	}
+	
+	@Test(expected=DuplicateKeyException.class)
+	public void addUserByDuplicateKey(){
+		User user = new User("caramel@test.com", "nickname", "password");
+		userDao.addUser(user);
+		userDao.addUser(user);
+	}
+	
+	@Test(expected=EmptyResultDataAccessException.class)
+	public void findUserByNotExistKey() throws SQLException {
+		userDao.findByEmail("honey@test.com");
+	}
+	
 }

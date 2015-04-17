@@ -26,12 +26,12 @@
 	</nav>
 	<section id="makeGoal">
 		<div class="form_wrapper">
-			<form class ="submit_form" action="/addGoal.cdr" method="post">
+			<form class ="submit_form" action="/goals" method="post">
 				<input class="goal_contents" name="goal_contents" value=""/>
 				<div class="input_container"></div>
 				<div class="add_input_btn"> + </div>
 				<div class ="submit_btn">확인</div>
-			</form>
+			</form> 
 		</div>
 	</section>
 	<footer></footer>

@@ -31,10 +31,11 @@
 			<div class="input_container">${goal.contents}</div>
 			<div>${goal.startDate}</div>
 			
-			<c:forEach items="${tasks}" var="tasks">
-        		<div>${tasks.contents}</div>
+			<c:forEach items="${task}" var="tasks">
+        		<div>${task.contents}</div>
 				<form class ="submit_nudge" action="/addNudge.cdr" method="post">
 					<input name="tasksId" value="${tasks.id}"/>
+					<div>${task.nudge}</div>
 					<button>NUDGE</button>
 				</form>
 	      </c:forEach>
