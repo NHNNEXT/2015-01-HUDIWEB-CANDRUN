@@ -1,13 +1,11 @@
 package candrun.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.UserDAO;
@@ -28,14 +26,12 @@ public class UsersController {
 	MailService mailService;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	protected String create(HttpServletRequest req, HttpServletResponse resp) {
-		
-		String email  = req.getParameter("email");
-		String nickname = req.getParameter("nickname");
-		String password = req.getParameter("password");
-		String verifyKey = SHA256Encrypt.encrypt(nickname);
+	public String create(@RequestParam("email") String email, @RequestParam("nickname") String nickname, @RequestParam("password") String password) {
 
+		String verifyKey = SHA256Encrypt.encrypt(nickname);
 		User user = new User(email, nickname, password, verifyKey);		
+
+		//TODO: user 테이블에서 user를 상태값에 따라 관리하도록 바꾼다. 
 		userDao.addPreliminaryUser(user);
 		mailService.sendMail(email, verifyKey);
 		
@@ -43,8 +39,7 @@ public class UsersController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected String verify(HttpServletRequest req, HttpServletResponse resp) {
-		String verifyKey = req.getParameter("verify_key");
+	public String verify(@RequestParam("verify_key") String verifyKey) {
 
 		User user = userDao.findByVerifyKey(verifyKey);
 

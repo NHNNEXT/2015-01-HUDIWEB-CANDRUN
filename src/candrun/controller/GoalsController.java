@@ -3,13 +3,13 @@ package candrun.controller;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.GoalDAO;
@@ -29,9 +29,7 @@ public class GoalsController {
 	TaskDAO taskDao;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Object create(HttpServletRequest req, HttpServletResponse resp) {
-
-		String goalContents = req.getParameter("goal_contents");
+	public Object create(@RequestParam("goal_contents") String goalContents, HttpServletRequest req) {
 
 		ArrayList<String> arrTaskContents = new ArrayList<String>();
 
