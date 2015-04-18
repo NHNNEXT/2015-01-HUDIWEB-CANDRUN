@@ -61,7 +61,6 @@ GOALS.run = function() {
 	var showNewGoal = function(responseText) {
 		 var result = JSON.parse(responseText);
 		 var navGoal = makeNavGoal(result.contents);
-		 console.log(result.contents);
 		 navGoalContainer.appendChild(navGoal);
 	}
 
@@ -77,9 +76,9 @@ GOALS.run = function() {
 			params = params + "&task_contents_"+i+"="+elInputs[i].value;
 		}
 		
+		addGoalAjax.setMethod("POST");		
 		addGoalAjax.open();
 		addGoalAjax.setJson();
-		addGoalAjax.setMethod("POST");
 		addGoalAjax.send(params);  
 	});	
 }
@@ -87,6 +86,7 @@ GOALS.run = function() {
 function makeNavGoal(value){
 	var li = document.createElement( 'li' );
 	li.innerHTML = value;
+	li.setAttribute("class", "nav_goal");
 	return li;
 }
 

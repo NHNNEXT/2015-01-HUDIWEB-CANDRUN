@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 
-@RequestMapping("/nudges")
+@RequestMapping("/tasks")
 @RestController
-public class NudgesController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(NudgesController.class);
+public class TasksController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 	
 	@Autowired
 	TaskDAO taskDao;

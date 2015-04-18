@@ -5,7 +5,7 @@
 <head>
 	<title>9bagi</title>
 	<meta charset = "utf-8">
-	<link rel="stylesheet" type="text/css" href="/css/gubagi.css">
+	<link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 <body>
 	<header>

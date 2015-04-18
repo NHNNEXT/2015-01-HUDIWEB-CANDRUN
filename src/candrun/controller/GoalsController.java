@@ -20,7 +20,7 @@ import candrun.model.Task;
 @RequestMapping("/goals")
 @RestController
 public class GoalsController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(NudgesController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 
 	@Autowired
 	GoalDAO goalDao;
