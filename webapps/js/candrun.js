@@ -27,14 +27,19 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var method = 'GET';
 
 	this.setJson = function() {
-		httpRequest.setRequestHeader("Accept", "application/json");
+		 httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	}
 	this.setMethod = function(sMethod) {
 		method = sMethod;
 	}
-	this.send = function() {
-		httpRequest.send();
+	//send 메소드에 params 추가.
+	this.send = function(params) {
+		httpRequest.send(params);
+	}	
+	this.open = function() {
+		httpRequest.open(method, sUrl);
 	}
+	
 	if (window.XMLHttpRequest) {
 		httpRequest = new XMLHttpRequest();
 	} else if (window.ActiveXObject) {
