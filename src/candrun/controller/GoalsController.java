@@ -29,26 +29,26 @@ public class GoalsController {
 	TaskDAO taskDao;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Object create(HttpServletRequest req, HttpServletResponse resp){
+	public Object create(HttpServletRequest req, HttpServletResponse resp) {
 
 		String goalContents = req.getParameter("goal_contents");
-		
+
 		ArrayList<String> arrTaskContents = new ArrayList<String>();
-		
-		for(int i=0;i<5;i++){
-			String taskContents = req.getParameter("task_contents_"+i);
-			if(taskContents==null){
+
+		// TODO: 요청 보내는 front코드와 함께 리팩토링 필요,
+		for (int i = 0; i < 5; i++) {
+			String taskContents = req.getParameter("task_contents_" + i);
+			if (taskContents == null) {
 				break;
 			}
 			arrTaskContents.add(taskContents);
 		}
-		
 		Goal goal = new Goal(goalContents, "email");
 		int returnedId = goalDao.addGoal(goal);
-	
+
 		for (int i = 0; i < arrTaskContents.size(); i++) {
 			taskDao.addTask(new Task(arrTaskContents.get(i), returnedId));
-		}	
+		}
 		return goal;
 	}
 }
