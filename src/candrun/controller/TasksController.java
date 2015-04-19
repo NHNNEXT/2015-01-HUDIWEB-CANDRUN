@@ -1,15 +1,18 @@
 package candrun.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
+import candrun.model.Task;
 
 @RequestMapping("/tasks")
 @RestController
@@ -22,12 +25,14 @@ public class TasksController {
 	@Autowired
 	GoalDAO goalDao;
 
-	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public String update(@PathVariable String id) {
-		int taskId = Integer.parseInt(id);
+	@RequestMapping( method = RequestMethod.POST)
+	public Task update(HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println(req.getParameter("tasksId"));
+		int taskId = Integer.parseInt(req.getParameter("tasksId"));
 		LOGGER.debug("taskId: {}", taskId);	
 		taskDao.addNudge(taskId);
-
-		return "showGoalAndTasks";
+		Task task = taskDao.findTaskByTaskId(taskId);
+		
+		return task;
 	}
 }
