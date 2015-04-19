@@ -25,12 +25,13 @@ public class NudgesController {
 	@Autowired
 	GoalDAO goalDao;
 
-	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public String update(@PathVariable String id, HttpServletRequest req, HttpServletResponse resp) {
-		int taskId = Integer.parseInt(id);
+	@RequestMapping( method = RequestMethod.POST)
+	public String update(HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println(req.getParameter("tasksId"));
+		int taskId = Integer.parseInt(req.getParameter("tasksId"));
 		LOGGER.debug("taskId: {}", taskId);	
 		taskDao.addNudge(taskId);
 
-		return "showGoalAndTasks";
+		return model;
 	}
 }

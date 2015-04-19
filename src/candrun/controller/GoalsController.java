@@ -53,6 +53,6 @@ public class GoalsController {
 		for(int i=0; i< task.size();i++){
 			System.out.println(task.get(i));
 		}
-		return "addGoal";
+		return "showGoalAndTasks";
 	}
 }
