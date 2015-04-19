@@ -33,10 +33,10 @@
 			
 			<c:forEach items="${tasks}" var="tasks">
         		<div>${tasks.contents}</div>
-				<form class ="submit_nudge" action="/nudges" method="post">
+				<form class ="submit_nudge">
 					<input name="tasksId" value="${tasks.id}"/>
 					<div>${tasks.nudge}</div>
-					<button>NUDGE</button>
+					<input type="submit" class="nudge_btn" value="NUDGE"/>
 				</form>
 	      </c:forEach>
 		</div>
@@ -44,4 +44,5 @@
 	<footer></footer>
 </body>
 <script src="/js/addInputTag.js"></script>
+<script src="/js/addNudge.js"></script>
 </html>

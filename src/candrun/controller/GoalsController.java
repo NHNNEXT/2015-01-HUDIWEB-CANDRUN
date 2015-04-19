@@ -51,7 +51,7 @@ public class GoalsController {
 		req.setAttribute("goal", topGoal);
 		req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
 		for(int i=0; i< task.size();i++){
-			System.out.println(task.get(i));
+			System.out.println(task.get(i)+"nbhhhhhhhh");
 		}
 		return "showGoalAndTasks";
 	}
