@@ -8,15 +8,12 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailContext {
-	
+
 	public JavaMailSenderImpl mailSender;
 	public SimpleMailMessage mailMessage;
-
-	public void setMailSender(JavaMailSenderImpl mailSender) {
+	
+	public MailContext(JavaMailSenderImpl mailSender, SimpleMailMessage mailMessage) {
 		this.mailSender = mailSender;
-	}
-
-	public void setMailMessage(SimpleMailMessage mailMessage) {
 		this.mailMessage = mailMessage;
 	}
 	
