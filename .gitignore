@@ -15,6 +15,6 @@ tomcat.8080/
 .idea
 
 #properties
-local-properties/
+/resources/local-properties/
 
 
