@@ -1,5 +1,5 @@
 #Eclipse
-/target/
+target/
 .classpath
 .project
 lib/
@@ -10,3 +10,11 @@ tomcat.8080/
 .DS_Store
 #vim
 *.swp
+
+#WebStorm
+.idea
+
+#properties
+local-properties/
+
+
