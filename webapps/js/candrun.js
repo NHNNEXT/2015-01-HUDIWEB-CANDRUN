@@ -32,13 +32,13 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	this.setMethod = function(sMethod) {
 		method = sMethod;
 	}
+	this.open = function() {
+		httpRequest.open(method, sUrl);
+	}
 	//send 메소드에 params 추가.
 	this.send = function(params) {
 		httpRequest.send(params);
 	}	
-	this.open = function() {
-		httpRequest.open(method, sUrl);
-	}
 	
 	if (window.XMLHttpRequest) {
 		httpRequest = new XMLHttpRequest();
@@ -67,7 +67,6 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 			}
 		}
 	}
-	httpRequest.open(method, sUrl);
 }
 CANDRUN.util.querySelector = function(el) {
 	return document.querySelector(el);
