@@ -87,7 +87,7 @@ GOAL.nav.makeNavGoal= function (value) {
 	li.innerHTML = value;
 	li.setAttribute("class", "nav_goal");
 	return li;
-}
+};
 
 document.addEventListener("DOMContentLoaded", function() {
 	GOAL.init();
