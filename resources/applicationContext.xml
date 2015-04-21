@@ -32,9 +32,10 @@
 		p:subject="${mailMessage.subject}" 
 		p:text="${mailMessage.text}" />
 
-	<bean id="mailContext" class="candrun.mail.MailContext"
-		p:mailMessage-ref="mailMessage"
-		p:mailSender-ref="mailSender"/>
+	<bean id="mailContext" class="candrun.mail.MailContext">
+		<constructor-arg type ="org.springframework.mail.SimpleMailMessage" ref="mailMessage" />
+		<constructor-arg type ="org.springframework.mail.javamail.JavaMailSenderImpl" ref="mailSender" />
+	</bean>
 
 	<bean id="mailService" class="candrun.mail.CertifMailService" 
 		p:mailContext-ref="mailContext"/>
