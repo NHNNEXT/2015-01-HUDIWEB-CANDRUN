@@ -31,6 +31,7 @@ public class GoalsController {
 	@RequestMapping(method = RequestMethod.POST)
 	public Object create(@RequestParam("goal_contents") String goalContents, HttpServletRequest req) {
 
+		System.out.println("!!!");
 		ArrayList<String> arrTaskContents = new ArrayList<String>();
 
 		// TODO: 요청 보내는 front코드와 함께 리팩토링 필요,

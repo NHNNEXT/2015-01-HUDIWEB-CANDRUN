@@ -1,95 +1,94 @@
 
-//TODO: 이전 버전 코드와 통합하지 아직 못함 리팩토링 필요.
+var GOAL = GOAL || {};
+GOAL.methods = {};
+GOAL.elements = {};
+GOAL.form = {};
+GOAL.nav = {};
 
-(function (){
+GOAL.init = function() {
+	var methods = GOAL.methods;
+	methods.getElements();
+	methods.addEvents();
+};
+GOAL.methods.getElements = function() {
+	var querySelector = CANDRUN.util.querySelector;
+	var querySelectorAll = CANDRUN.util.querySelectorAll;
+	var elements = GOAL.elements;
+	elements.goalInput = querySelector("#goal-input");
+	elements.goalSubmit = querySelector("#goal-form-submit");
+	elements.navGoalContainer = querySelector("#goal-container");
+	elements.taskInput = querySelector(".task-input");
+	elements.taskInputs = querySelectorAll(".task-input");
+	elements.taskInputContainer = querySelector("#input-container");
+	elements.taskInputAdd = querySelector("#task-input-add");
+};
 
-	var inputContainer = document.querySelector(".input_container");
-	var addInputTagBtn = document.querySelector(".add_input_btn");
-	var submitBtn = document.querySelector(".submit_btn");
-	var submitForm = document.querySelector(".submit_form")
-	var taskInput = document.querySelector(".task_contents");
-	var taskInputCount = 0;
+GOAL.methods.addEvents = function() {
+	var elements = GOAL.elements;
+	var form = GOAL.form;
+	elements.goalSubmit.addEventListener("click", form.send);
+	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
+	elements.taskInputAdd.addEventListener("click", form.makeNextInput);
+};
 
+GOAL.form.send = function () {
+	var nav = GOAL.nav;
+	var elements = GOAL.elements;
 
-	function enterKeyDown(e){
-    	if(e.keyCode == 13){
-  	   		addTaskIputTag(e);
-  	   	}
-	}
-
-	function addTaskIputTag(e){
-		
-		if(taskInputCount > 3){
-			addInputTagBtn.innerHTML = "그만 추가하세요";
-			addInputTagBtn.removeEventListener("click", addTaskIputTag);
-			return;
-		}
-		
-		//input tag를 만들어, event 추가
-		var inputTag= makeInputTag("");
-		inputTag.setAttribute("class", "task_contents");
-		inputTag.addEventListener("keydown", enterKeyDown);
-		inputContainer.appendChild(inputTag);
-		
-		//맨 마지막 input tag를 제외하고 이벤트 제거
-		e.target.removeEventListener("keydown",enterKeyDown);
-		taskInputCount++;
-	}
-
-	function makeInputTag(value) {
-		var input = document.createElement( 'input' );
-		input.value = value;
-		return input;
-	}
-
-	taskInput.addEventListener("keydown", enterKeyDown);
-	addInputTagBtn.addEventListener("click", addTaskIputTag);
-
-})();
-
-
-
-var GOALS = GOALS || {};
-
-GOALS.run = function() {
-	var elBtn = document.querySelector("#btnAddGoal");
-	var navGoalContainer = document.querySelector(".nav_goal_container");
-	var goalInput = document.querySelector(".goal_contents");
-	var taskInputs = document.querySelectorAll(".task_contents");
 	var sUrl = "/goals";
+	var params = "goal_contents="+elements.goalInput.value;
 
-	var showNewGoal = function(responseText) {
-		 var result = JSON.parse(responseText);
-		 var navGoal = makeNavGoal(result.contents);
-		 navGoalContainer.appendChild(navGoal);
+	//nav.appendNewNavGoal를 nav.appendNewNavGoal()로 써서 함수 실행시 에러 발생했음
+	//error code: unexpected token u
+	var addGoalAjax = new CANDRUN.util.ajax(sUrl, nav.appendNewNavGoal);
+
+	for(var i =0 ; i<elements.taskInputs.length; i++){
+		params = params + "&task_contents_"+i+"="+elements.taskInputs[i].value;
 	}
 
-	var addGoalAjax = new CANDRUN.util.ajax(sUrl, showNewGoal);
+	addGoalAjax.setMethod("POST");
+	addGoalAjax.open();
+	addGoalAjax.setJson();
+	addGoalAjax.send(params);
+};
 
-	elBtn.addEventListener("click", function(){
-		var elInputs = document.querySelectorAll(".input_container input");
-		var params = "goal_contents="+goalInput.value;
-		
-		//TODO: 리팩토링 필요, param이 아닌 json혹은 list 형태로 요청을 보내야 한다. 
-		alert(elInputs.length);
-		for(var i =0 ; i<elInputs.length; i++){
-			params = params + "&task_contents_"+i+"="+elInputs[i].value;
-		}
-		
-		addGoalAjax.setMethod("POST");		
-		addGoalAjax.open();
-		addGoalAjax.setJson();
-		addGoalAjax.send(params);  
-	});	
-}
+GOAL.form.makeNextInputWithEnter = function(e){
+	var form = GOAL.form;
+	if(e.keyCode === 13){
+		form.makeNextInput();
+	}
+};
 
-function makeNavGoal(value){
+GOAL.form.makeNextInput = function(){
+	var form = GOAL.form;
+	var elements = GOAL.elements;
+	var input = document.createElement('input');
+
+	//마지막 inputTag의 이벤트를 제거
+	var inputNodes = document.querySelectorAll(".task-input");
+	var lastTaskInput = inputNodes[inputNodes.length-1];
+	lastTaskInput.removeEventListener("keydown", form.makeNextInputWithEnter);
+
+	//inputTag를 만들어 InputContainer의 자식으로 등록
+	input.setAttribute("class", "task-input");
+	input.addEventListener("keydown", form.makeNextInputWithEnter);
+	elements.taskInputContainer.appendChild(input);
+};
+
+GOAL.nav.appendNewNavGoal = function (responseText) {
+	var nav = GOAL.nav;
+	var navGoal = nav.makeNavGoal(JSON.parse(responseText).contents);
+	var elements = GOAL.elements;
+	elements.navGoalContainer.appendChild(navGoal);
+};
+
+GOAL.nav.makeNavGoal= function (value) {
 	var li = document.createElement( 'li' );
 	li.innerHTML = value;
 	li.setAttribute("class", "nav_goal");
 	return li;
 }
 
-document.addEventListener("DOMContentLoaded", function(e) {
-	GOALS.run();
+document.addEventListener("DOMContentLoaded", function() {
+	GOAL.init();
 });

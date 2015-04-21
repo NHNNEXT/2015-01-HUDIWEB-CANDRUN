@@ -11,13 +11,13 @@
 	<header>
 	</header>
 			<nav>
-		<div class="profile_wrapper">
-			<div class="profile_picture"></div>
+		<div class="profile-wrapper">
+			<div class="profile-picture"></div>
 			<div class="nick">nickname</div>
 		</div>
-		<div id="goal_groups">
+		<div id="goal-groups">
 		<div class="label">List of goals & people in group</div>
-			<ul class="nav_goal_container">
+			<ul id="goal-container">
 				<li class="nav_goal">살빼기</li>
 				<li class="nav_goal">밥먹기</li>
 				<li class="nav_goal">잠자기</li>
@@ -25,14 +25,14 @@
 		</div>
 	</nav>
 	<section id="makeGoal">
-		<div class="form_wrapper">
-			<form class ="submit_form" >
-				<input class="goal_contents" name="goal_contents">
-				<div class="input_container">
-					<input class="task_contents">
+		<div class="form-wrapper">
+			<form class ="submit-form" >
+				<input id="goal-input" name="goal_contents">
+				<div id="input-container">
+					<input class="task-input">
 				</div>
-				<div class="add_input_btn"> + </div>
-				<div id = "btnAddGoal" class ="submit_btn">확</div>
+				<div id="task-input-add"> + </div>
+				<div id = "goal-form-submit">확인</div>
 			</form> 
 		</div>
 	</section>

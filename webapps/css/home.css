@@ -59,11 +59,11 @@ nav {
 	float:left;
 }
 
-nav .profile_wrapper {
+nav .profile-wrapper {
 	height: 300px;
 }
 
-nav .profile_picture {
+nav .profile-picture {
 	height: 200px;
 	width: 200px;
 	margin: 0px auto;
@@ -120,20 +120,20 @@ footer {
 	background-color: #ABBEB7;
 }
 
-#makeGoal .form_wrapper{
+#makeGoal .form-wrapper{
 	background-color: #ABBEB7;
 	width: 95%;
 	height: 1200px;
 	margin: 0px auto;
 }
 
-#makeGoal .submit_form{
+#makeGoal .submit-form{
 	width: 85%;
 	margin: 0px auto;
 	padding:10px;
 }
 
-#makeGoal .goal_contents {
+#makeGoal #goal-input {
 	width: 100%;
 	height: 100px;
 	margin: 10px;
@@ -144,7 +144,7 @@ footer {
 
 }
 
-#makeGoal .input_container input {
+#makeGoal .task-input {
 	width: 85%;
 	height: 50px;
 	display: block;
@@ -154,7 +154,7 @@ footer {
 	border-radius: 10px;
 }
 
-#makeGoal .add_input_btn {
+#makeGoal #task-input-add {
 	width: 85%;
 	height: 50px;
 	background-color: #BCCCCB;
@@ -167,7 +167,7 @@ footer {
 
 }
 
-#makeGoal .submit_btn {
+#makeGoal #goal-form-submit {
 	float: right;
 	width: 80px;
 	height: 30px;
