@@ -16,28 +16,26 @@
 		location="classpath:java-mail-properties.properties" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
-		p:username="${database.username}" p:password="${database.password}" />
+		destroy-method="close" p:driverClassName="${database.driverClassName}"
+		p:url="${database.url}" p:username="${database.username}" p:password="${database.password}" />
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
-		p:host="${mailSender.host}"
-		p:port="${mailSender.port}"
-		p:username="${mailSender.username}"
-		p:password="${mailSender.password}"
-		p:javaMailProperties-ref="javaMailPropertiesSmtp" />
+		p:host="${mailSender.host}" p:port="${mailSender.port}" p:username="${mailSender.username}"
+		p:password="${mailSender.password}" p:javaMailProperties-ref="javaMailPropertiesSmtp" />
 
 	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"
-		p:from="${mailMessage.from}" 
-		p:subject="${mailMessage.subject}" 
+		p:from="${mailMessage.from}" p:subject="${mailMessage.subject}"
 		p:text="${mailMessage.text}" />
 
 	<bean id="mailContext" class="candrun.mail.MailContext">
-		<constructor-arg type ="org.springframework.mail.SimpleMailMessage" ref="mailMessage" />
-		<constructor-arg type ="org.springframework.mail.javamail.JavaMailSenderImpl" ref="mailSender" />
+		<constructor-arg type="org.springframework.mail.SimpleMailMessage"
+			ref="mailMessage" />
+		<constructor-arg
+			type="org.springframework.mail.javamail.JavaMailSenderImpl" ref="mailSender" />
 	</bean>
 
-	<bean id="mailService" class="candrun.mail.CertifMailService" 
-		p:mailContext-ref="mailContext"/>
+	<bean id="mailService" class="candrun.mail.CertifMailService"
+		p:mailContext-ref="mailContext" />
 
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />
 	<bean id="goalDao" class="candrun.dao.GoalDAO" p:dataSource-ref="dataSource" />
