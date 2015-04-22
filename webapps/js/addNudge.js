@@ -12,7 +12,7 @@ function addNudge(e) {
 	 e.preventDefault();
 	 var answerForm = e.currentTarget.form;
 	 
-	 var url = "/nudges";
+	 var url = "/tasks";
 	 var params = "tasksId=" + answerForm[0].value;
 
 	 var request = new XMLHttpRequest();
@@ -22,9 +22,7 @@ function addNudge(e) {
 	 request.onreadystatechange = function() {
 		 if(request.readyState == 4 && request.status == 200) {
 			var task = JSON.parse(request.responseText);
-//			alert(task.nudge);
-//			console.log(e.target.parentNode.childNodes[1]);
-			 e.target.parentNode.childNodes[3].innerHTML = task.nudge;
+			 e.target.parentNode.parentNode.querySelector('.tabs__stats .number').innerHTML = task.nudge;
 		 }
 	 }
 	 
