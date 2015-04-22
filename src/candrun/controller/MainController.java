@@ -1,7 +1,13 @@
 package candrun.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
+import candrun.dao.UserDAO;
 import candrun.model.Goal;
 import candrun.model.Task;
+import candrun.user.User;
 
 @RequestMapping("/")
 @Controller
 public class MainController {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
 	GoalDAO goalDao;
@@ -24,17 +32,31 @@ public class MainController {
 	@Autowired
 	TaskDAO taskDao;
 	
+	@Autowired
+	UserDAO userDao;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model, HttpSession session) {
 		
-		Goal topGoal = goalDao.findRecentGoal();
+		String email = (String) session.getAttribute("email");
+		email = "test@email.com";
+		
+		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
+		Goal topGoal = goals.get(0);
+		
 		List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
+		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
+		
+		for( int i=0 ; i<goals.size();i++){
+			Goal goal = goals.get(i);
+			LOGGER.info("{}",goal.getId());
+			
+			friendsListGroupByGoal.put("friends"+i, (userDao.findUsersByGoalId(goal.getId(),email)));
+		}
+	
+		model.addAllAttributes(friendsListGroupByGoal);
 		model.addAttribute("goal", topGoal);
 		model.addAttribute("tasks", tasks);
-
-//		모델을 이용하여 attribute 더해준다. 아래는 이전 코드
-//		req.setAttribute("goal", topGoal);
-//		req.setAttribute("tasks", taskDao.findTasksByGoalId(topGoal.getId()));
 
 		return "home";
 	}

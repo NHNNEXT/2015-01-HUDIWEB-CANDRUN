@@ -2,6 +2,7 @@ package candrun.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,6 +11,19 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import candrun.user.User;
 
 public class UserDAO extends JdbcDaoSupport{
+	private RowMapper<User> rowMapper = new RowMapper<User>() {
+		
+		public User mapRow(ResultSet rs, int rowNum) {
+			try {
+				return new User(
+						rs.getString("email"), 
+						rs.getString("nickname"),
+						rs.getString("password"));
+			} catch (SQLException e) {
+				throw new BeanInstantiationException(User.class, e.getMessage(), e);
+			}
+		}
+	};
 		
 	public void addPreliminaryUser(User user) {
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
@@ -23,19 +37,6 @@ public class UserDAO extends JdbcDaoSupport{
 
 	public User findByEmail(String email) {
 		String sql = "SELECT * FROM user WHERE email = ?";
-		RowMapper<User> rowMapper = new RowMapper<User>() {
-
-			public User mapRow(ResultSet rs, int rowNum) {
-				try {
-					return new User(
-							rs.getString("email"), 
-							rs.getString("nickname"),
-							rs.getString("password"));
-				} catch (SQLException e) {
-					throw new BeanInstantiationException(User.class, e.getMessage(), e);
-				}
-			}
-		};
 		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
 	}
 
@@ -57,5 +58,11 @@ public class UserDAO extends JdbcDaoSupport{
 			}
 		};
 		return getJdbcTemplate().queryForObject(sql, rowMapper, verifyKey);
+	}
+
+	public List<User> findUsersByGoalId(int goalId, String email) {
+//		String sql = "select * from (select * from goal_has_user inner join user on goal_has_user.email = user.email) where NOT(email = ?) AND goal_id = ? LIMIT 5";
+		String sql = "select * from (select * from goal_has_user inner join user on goal_has_user.user_email = user.email) temp where NOT(email = ?) AND goal_id = ? LIMIT 5";
+		return getJdbcTemplate().query(sql, rowMapper, email, goalId);
 	}
 }

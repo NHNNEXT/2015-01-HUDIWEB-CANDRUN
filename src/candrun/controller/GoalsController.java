@@ -41,7 +41,7 @@ public class GoalsController {
 			}
 			arrTaskContents.add(taskContents);
 		}
-		Goal goal = new Goal(goalContents, "email");
+		Goal goal = new Goal(goalContents, "test@email.com");
 		int returnedId = goalDao.addGoal(goal);
 
 		for (int i = 0; i < arrTaskContents.size(); i++) {
