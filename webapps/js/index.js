@@ -1,5 +1,10 @@
 var INDEX = INDEX || {};
 
+INDEX.init = function() {
+	var methods = INDEX.methods;
+	methods.getElements();
+	methods.addEvents();
+}
 INDEX.elements = {};
 INDEX.methods = {};
 INDEX.methods.getElements = function() {
@@ -47,12 +52,6 @@ INDEX.methods.addEvents = function() {
 	elements.signupFormFields.addEventListener("blur", form.validateSignUpForm, true);
 	elements.signinFormFields.addEventListener("keyup", form.confirmSigninSubmittable);
 	elements.signinFormFields.addEventListener("blur", form.confirmSigninSubmittalble, true);
-}
-
-INDEX.init = function() {
-	var methods = INDEX.methods;
-	methods.getElements();
-	methods.addEvents();
 }
 INDEX.form = INDEX.form || {};
 INDEX.form.validateSignUpForm = function(e) {
