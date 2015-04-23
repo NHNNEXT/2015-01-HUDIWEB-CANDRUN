@@ -10,8 +10,7 @@ for ( var j=0 ; j < nudgeList.length ; j++) {
 
 function addNudge(e) {
 	 e.preventDefault();
-	 var answerForm = e.currentTarget.form;
-	 
+	 var answerForm = e.currentTarget.form;	 
 	 var url = "/tasks";
 	 var params = "tasksId=" + answerForm[0].value;
 
@@ -20,11 +19,11 @@ function addNudge(e) {
 	 request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	 
 	 request.onreadystatechange = function() {
-		 if(request.readyState == 4 && request.status == 200) {
+		 if(request.readyState === 4 && request.status === 200) {
 			var task = JSON.parse(request.responseText);
 			 e.target.parentNode.querySelector('.task-nudge').innerHTML = task.nudge;
 		 }
-	 }
+	 };
 	 
 	 request.send(params);
 }
