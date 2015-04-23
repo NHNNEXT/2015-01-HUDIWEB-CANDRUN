@@ -37,7 +37,7 @@
 					<p class="tabs__stats">${goal.contents}</p>
 					<p class="tabs__stats">${tasks.contents}
 					<form class="submit_nudge">
-						<input name="tasksId" id="taskId" value="${tasks.id}" />
+						<input name="tasksId" class="tasksId" value="${tasks.id}" />
 						<div>
 						<p class="tabs__stats">
 							<span class="number">${tasks.nudge}</span>
@@ -59,5 +59,6 @@
 	<footer></footer>
 	<script src="/js/addNudge.js"></script>
 	<script src="/js/tabMenu.js"></script>
+	<script src="/js/candrun.js"></script>
 </body>
 </html>
