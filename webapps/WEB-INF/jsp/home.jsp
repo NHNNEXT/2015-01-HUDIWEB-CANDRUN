@@ -43,14 +43,14 @@
 	</nav>
 
 	<section id="make-goal">
-		<div class="form_wrapper">
-			<form class="submit_form">
-				<input class="goal_contents" name="goal_contents">
-					<div class="input_container">
-						<input class="task_contents">
+		<div class="form-wrapper">
+			<form class="submit-form">
+				<input class="goal-input" name="goal_contents">
+					<div class="input-container">
+						<input class="task-input">
 					</div>
-				<div class="add_input_btn">+</div>
-				<div id="btnAddGoal" class="submit_btn">확인</div>
+				<div class="task-input-add">+</div>
+				<div class="goal-form-submit">확인</div>
 			</form>
 		</div>
 	</section>
@@ -64,7 +64,12 @@
 			<c:forEach items="${tasks}" var="tasks">
 				<div class="task-title">${tasks.contents}
 				<form class="submit_nudge">
-					<div class="task-nudge">${tasks.nudge}</div>
+				
+				<div class="tabs__stats">
+					<div class="number">${tasks.nudge}</div>
+					<input name="tasksId" class="tasksId" value="${tasks.id}"/>
+				</div>
+					
 					<input type="submit" class="nudge_btn" value="NUDGE" />
 				</form>
 				</div>

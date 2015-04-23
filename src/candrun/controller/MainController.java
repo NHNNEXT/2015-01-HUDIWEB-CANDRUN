@@ -58,6 +58,7 @@ public class MainController {
 	
 		model.addAllAttributes(friendsListGroupByGoal);
 		model.addAttribute("goals", goals);
+		LOGGER.info("size: {}", tasks.size());
 		model.addAttribute("tasks", tasks);
 
 		return "home";		

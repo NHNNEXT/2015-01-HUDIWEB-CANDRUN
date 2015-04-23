@@ -36,9 +36,11 @@ public class GoalsController {
 		// TODO: 요청 보내는 front코드와 함께 리팩토링 필요,
 		for (int i = 0; i < 5; i++) {
 			String taskContents = req.getParameter("task_contents_" + i);
+			LOGGER.info("task: {}",taskContents);
 			if (taskContents == null) {
 				break;
 			}
+			
 			arrTaskContents.add(taskContents);
 		}
 		Goal goal = new Goal(goalContents, "test@email.com");

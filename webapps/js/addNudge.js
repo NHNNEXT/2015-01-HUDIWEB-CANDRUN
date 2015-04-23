@@ -42,8 +42,6 @@ NUDGE.methods.addNudge = function (e) {
 	var sUrl = "/tasks";
 	var params = "&tasksId=" + elements.lastSelectedForm.value;
 
-	//nav.appendNewNavGoal를 nav.appendNewNavGoal()로 써서 함수 실행시 에러 발생했음
-	//error code: unexpected token u
 	var addNudgeAjax = new CANDRUN.util.ajax(sUrl, NUDGE.methods.refreshNumber);
 
 	addNudgeAjax.setMethod("POST");
@@ -58,4 +56,3 @@ NUDGE.methods.refreshNumber = function (responseText) {
 document.addEventListener("DOMContentLoaded", function() {
 	NUDGE.init();
 });
->>>>>>> ajaxNudge

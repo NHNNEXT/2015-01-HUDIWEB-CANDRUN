@@ -26,13 +26,13 @@ public class TasksController {
 	GoalDAO goalDao;
 
 	@RequestMapping( method = RequestMethod.POST)
-	public void update(HttpServletRequest req, HttpServletResponse resp) {
+	public Task update(HttpServletRequest req, HttpServletResponse resp) {
 		LOGGER.info(req.getParameter("tasksId"));
-//		int taskId = Integer.parseInt(req.getParameter("tasksId"));
-//		LOGGER.debug("taskId: {}", taskId);	
-//		taskDao.addNudge(taskId);
-//		Task task = taskDao.findTaskByTaskId(taskId);
-//		Task task = new Task();
-//		return task;
+		int taskId = Integer.parseInt(req.getParameter("tasksId"));
+		LOGGER.debug("taskId: {}", taskId);	
+		
+		taskDao.addNudge(taskId);
+		Task task = taskDao.findTaskByTaskId(taskId);
+		return task;
 	}
 }

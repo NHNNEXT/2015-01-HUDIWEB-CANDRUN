@@ -14,13 +14,14 @@ GOAL.methods.getElements = function() {
 	var querySelector = CANDRUN.util.querySelector;
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
 	var elements = GOAL.elements;
-	elements.goalInput = querySelector("#goal-input");
-	elements.goalSubmit = querySelector("#goal-form-submit");
-	elements.navGoalContainer = querySelector("#goal-container");
+	elements.goalInput = querySelector("#make-goal .goal-input");
+	elements.goalSubmit = querySelector("#make-goal .goal-form-submit");
+	elements.navGoalContainer = querySelector(".nav-goal-container");
 	elements.taskInput = querySelector(".task-input");
 	elements.taskInputs = querySelectorAll(".task-input");
-	elements.taskInputContainer = querySelector("#input-container");
-	elements.taskInputAdd = querySelector("#task-input-add");
+	elements.taskInputContainer = querySelector("#make-goal .input-container");
+	elements.taskInputAdd = querySelector("#make-goal .task-input-add");
+	
 };
 
 GOAL.methods.addEvents = function() {
@@ -41,10 +42,14 @@ GOAL.form.send = function () {
 	//nav.appendNewNavGoal를 nav.appendNewNavGoal()로 써서 함수 실행시 에러 발생했음
 	//error code: unexpected token u
 	var addGoalAjax = new CANDRUN.util.ajax(sUrl, nav.appendNewNavGoal);
+	var inputs = document.querySelectorAll(".task-input");
 
-	for(var i =0 ; i<elements.taskInputs.length; i++){
-		params = params + "&task_contents_"+i+"="+elements.taskInputs[i].value;
+	for(var i =0 ; i<inputs.length; i++){
+		alert(i);
+		params = params + "&task_contents_"+i+"="+inputs[i].value;
 	}
+	
+	alert(params);
 
 	addGoalAjax.setMethod("POST");
 	addGoalAjax.open();
@@ -85,7 +90,7 @@ GOAL.nav.appendNewNavGoal = function (responseText) {
 GOAL.nav.makeNavGoal= function (value) {
 	var li = document.createElement( 'li' );
 	li.innerHTML = value;
-	li.setAttribute("class", "nav_goal");
+	li.setAttribute("class", "nav-goal");
 	return li;
 };
 
