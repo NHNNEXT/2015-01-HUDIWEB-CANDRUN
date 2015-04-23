@@ -22,7 +22,7 @@ function addNudge(e) {
 	 request.onreadystatechange = function() {
 		 if(request.readyState == 4 && request.status == 200) {
 			var task = JSON.parse(request.responseText);
-			 e.target.parentNode.parentNode.querySelector('.tabs__stats .number').innerHTML = task.nudge;
+			 e.target.parentNode.querySelector('.task-nudge').innerHTML = task.nudge;
 		 }
 	 }
 	 

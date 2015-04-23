@@ -57,7 +57,7 @@ public class MainController {
 		}
 	
 		model.addAllAttributes(friendsListGroupByGoal);
-		model.addAttribute("goal", topGoal);
+		model.addAttribute("goals", goals);
 		model.addAttribute("tasks", tasks);
 
 		return "home";		
