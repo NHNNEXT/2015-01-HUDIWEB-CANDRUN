@@ -42,24 +42,23 @@ public class MainController {
 		
 		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
 		
-		//recent goal
+		//recent goals and tasks
 		if(goals.size() > 0){
 			Goal topGoal = goals.get(0);
 			List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
 			model.addAttribute("tasks", tasks);
 		}
 		
-		//nav 
+		//friends in nav  
 		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
 		for(int i=0 ; i<goals.size();i++){
 			Goal goal = goals.get(i);
-			LOGGER.info("goal id: {}",goal.getId());
+			LOGGER.info("recent goal's id: {}",goal.getId());
 			friendsListGroupByGoal.put("friends"+i, (userDao.findUsersByGoalId(goal.getId(),email)));
 		}
-		System.out.println(friendsListGroupByGoal.get("friends0"));
 		model.addAllAttributes(friendsListGroupByGoal);
 		model.addAttribute("goals", goals);		
-
+		
 		return "home";		
 	}
 }

@@ -34,7 +34,7 @@ public class UserDAO extends JdbcDaoSupport {
 	}
 	
 	public List<User> findUsersByGoalId(int goalId, String email) {
-		String sql = "select * from (select g.id as goal_id, u.email as email, u.nickname as nickname, u.state as state, gg.receiver as receiver from goal_has_goal gg inner join goal g inner join user u on (gg.receiver = g.id) AND g.user_email = u.email) temp  where !(temp.goal_id = ?) and !(temp.email = ?)";
+		String sql = "SELECT DISTINCT u.* FROM (SELECT gg.requester, gg.receiver, g.id, g.user_email FROM goal_has_goal gg INNER JOIN goal g ON (gg.receiver = g.id || gg.requester = g.id)) temp INNER JOIN user u ON u.email = user_email WHERE (requester = ? || receiver = ?) AND !(email = ?)";  
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 
 			public User mapRow(ResultSet rs, int rowNum) {
@@ -46,7 +46,7 @@ public class UserDAO extends JdbcDaoSupport {
 			}
 		};
 		
-		return getJdbcTemplate().query(sql, rowMapper, goalId, email);
+		return getJdbcTemplate().query(sql, rowMapper, goalId, goalId, email);
 	}
 
 	public void changeState(String email) {
