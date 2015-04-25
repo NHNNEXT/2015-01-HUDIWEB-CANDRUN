@@ -11,7 +11,7 @@
 	<nav></nav>
 	<section id = "signUp">
 		<div class= "main">
-			<form name = "signUpForm" action="/addUser.cdr" method = "post">
+			<form name = "signUpForm" action="/users" method = "post">
 				<table>
 					<tr>
 						<td width="80"> 

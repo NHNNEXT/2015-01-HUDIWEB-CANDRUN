@@ -43,7 +43,6 @@ public class GoalDAO extends JdbcDaoSupport {
 						ps.setString(1, goal.getContents());
 						ps.setString(2, goal.getEmail());
 						ps.setTimestamp(3, goal.getStartDate());
-						System.out.println(goal.getStartDate());
 						return ps;
 					} catch (SQLException e) {
 						throw new PreparedStatementException();

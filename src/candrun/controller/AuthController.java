@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import candrun.exception.PasswordMismatchException;
 import candrun.exception.UserNotFoundException;
-import candrun.user.User;
+import candrun.model.User;
 
 @RequestMapping("/auth")
 @RestController

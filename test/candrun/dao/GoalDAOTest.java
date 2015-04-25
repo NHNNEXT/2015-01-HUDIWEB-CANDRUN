@@ -28,14 +28,6 @@ public class GoalDAOTest {
 		
 		assertEquals(dbGoal.getId(), goalId);
 	}
-	
-	@Test
-	public void findRecentGoal() throws SQLException {
-		int goalId = goalDao.addGoal(new Goal("recentGoal", "email"));
-		Goal dbGoal = goalDao.findRecentGoal();
-		
-		assertEquals(goalId, dbGoal.getId());
-	}	
 
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void findUserByNotExistKey() throws SQLException {
