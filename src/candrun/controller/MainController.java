@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import candrun.model.Goal;
 import candrun.model.Task;
 import candrun.model.User;
 
+
 @RequestMapping("/")
 @Controller
 public class MainController {
@@ -33,7 +35,6 @@ public class MainController {
 	@Autowired UserDAO userDao;
 	
 	@RequestMapping(method = RequestMethod.GET)
-
 	public String list(Model model, HttpSession session) {
 		
 		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
@@ -58,6 +59,12 @@ public class MainController {
 		}
 		model.addAllAttributes(friendsListGroupByGoal);
 		model.addAttribute("goals", goals);		
+		
+
+		List<User> friends = userDao.findFriendsAsRequester(email);
+
+		model.addAttribute("friends", friends);
+
 		
 		return "home";		
 	}
