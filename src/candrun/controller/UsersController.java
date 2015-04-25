@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.UserDAO;
 import candrun.mail.CryptoUtil;
@@ -28,12 +27,10 @@ public class UsersController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@RequestParam("email") String email, @RequestParam("nickname") String nickname, @RequestParam("password") String password) {
 
-		User user = new User(email, nickname, password);		
-		userDao.addUser(user);
-		String key;
+		userDao.addUser(new User(email, nickname, password));
+
 		try {
-			key = CryptoUtil.encrypt(email);
-			LOGGER.info(key);
+			String key = CryptoUtil.encrypt(email);
 			mailService.sendMail(email, key);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -50,18 +47,18 @@ public class UsersController {
 		try {
 			email = CryptoUtil.decrypt(key);
 			LOGGER.info("{} 회원등록 완료", email);
-
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		User user = userDao.findByEmail(email);
 
 		if (user != null && user.getState() == 0) {
 			userDao.changeState(user.getEmail());
 		}
+		//user의 state 값 1로 증가
 		// 로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
+		
 		return "index";
 	}
 	

@@ -10,6 +10,7 @@ GOAL.init = function() {
 	methods.getElements();
 	methods.addEvents();
 };
+
 GOAL.methods.getElements = function() {
 	var querySelector = CANDRUN.util.querySelector;
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
@@ -33,24 +34,19 @@ GOAL.methods.addEvents = function() {
 };
 
 GOAL.form.send = function () {
-	var nav = GOAL.nav;
-	var elements = GOAL.elements;
 
 	var sUrl = "/goals";
-	var params = "goal_contents="+elements.goalInput.value;
+	var params = "goal_contents="+GOAL.elements.goalInput.value;
 
 	//nav.appendNewNavGoal를 nav.appendNewNavGoal()로 써서 함수 실행시 에러 발생했음
 	//error code: unexpected token u
-	var addGoalAjax = new CANDRUN.util.ajax(sUrl, nav.appendNewNavGoal);
+	var addGoalAjax = new CANDRUN.util.ajax(sUrl, GOAL.nav.appendNewNavGoal);
 	var inputs = document.querySelectorAll(".task-input");
 
 	for(var i =0 ; i<inputs.length; i++){
-		alert(i);
 		params = params + "&task_contents_"+i+"="+inputs[i].value;
 	}
 	
-	alert(params);
-
 	addGoalAjax.setMethod("POST");
 	addGoalAjax.open();
 	addGoalAjax.setJson();
@@ -58,15 +54,12 @@ GOAL.form.send = function () {
 };
 
 GOAL.form.makeNextInputWithEnter = function(e){
-	var form = GOAL.form;
 	if(e.keyCode === 13){
-		form.makeNextInput();
+		GOAL.form.makeNextInput();
 	}
 };
 
 GOAL.form.makeNextInput = function(){
-	var form = GOAL.form;
-	var elements = GOAL.elements;
 	var input = document.createElement('input');
 
 	//마지막 inputTag의 이벤트를 제거
@@ -76,15 +69,13 @@ GOAL.form.makeNextInput = function(){
 
 	//inputTag를 만들어 InputContainer의 자식으로 등록
 	input.setAttribute("class", "task-input");
-	input.addEventListener("keydown", form.makeNextInputWithEnter);
-	elements.taskInputContainer.appendChild(input);
+	input.addEventListener("keydown", GOAL.form.makeNextInputWithEnter);
+	GOAL.elements.taskInputContainer.appendChild(input);
 };
 
 GOAL.nav.appendNewNavGoal = function (responseText) {
-	var nav = GOAL.nav;
-	var navGoal = nav.makeNavGoal(JSON.parse(responseText).contents);
-	var elements = GOAL.elements;
-	elements.navGoalContainer.appendChild(navGoal);
+	var navGoal = GOAL.nav.makeNavGoal(JSON.parse(responseText).contents);
+	GOAL.elements.navGoalContainer.appendChild(navGoal);
 };
 
 GOAL.nav.makeNavGoal= function (value) {

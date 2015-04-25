@@ -41,16 +41,19 @@ public class MainController {
 		//String email = (String) session.getAttribute("email");
 		String email = "wq1021@naver.com";
 		
-		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
 		
-		//recent goals and tasks
+		//get goals
+		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
+		model.addAttribute("goals", goals);		
+
+		//get recent goal and tasks
 		if(goals.size() > 0){
 			Goal topGoal = goals.get(0);
 			List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
 			model.addAttribute("tasks", tasks);
 		}
 		
-		//friends in nav  
+		//get friends in nav  
 		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
 		for(int i=0 ; i<goals.size();i++){
 			Goal goal = goals.get(i);
@@ -58,14 +61,11 @@ public class MainController {
 			friendsListGroupByGoal.put("friends"+i, (userDao.findUsersByGoalId(goal.getId(),email)));
 		}
 		model.addAllAttributes(friendsListGroupByGoal);
-		model.addAttribute("goals", goals);		
 		
-
+		//get friends in sidebar
 		List<User> friends = userDao.findFriendsAsRequester(email);
-
 		model.addAttribute("friends", friends);
 
-		
 		return "home";		
 	}
 }

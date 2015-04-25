@@ -22,11 +22,9 @@ import candrun.model.Task;
 public class GoalsController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 
-	@Autowired
-	GoalDAO goalDao;
+	@Autowired GoalDAO goalDao;
 
-	@Autowired
-	TaskDAO taskDao;
+	@Autowired TaskDAO taskDao;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Object create(@RequestParam("goal_contents") String goalContents, HttpServletRequest req) {

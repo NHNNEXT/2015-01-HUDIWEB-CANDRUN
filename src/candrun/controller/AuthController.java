@@ -32,12 +32,10 @@ public class AuthController {
 		} catch (UserNotFoundException e) {
 			LOGGER.debug("존재하지 않는 사용자 입니다. 다시 로그인하세요.");
 			model.addAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
-			//request.setAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
 			return "signIn";
 		} catch (PasswordMismatchException e) {
 			LOGGER.debug("비밀번호가 틀립니다. 다시 로그인하세요.");
 			model.addAttribute("errorMessage", "비밀번호가 틀립니다. 다시 로그인하세요.");
-			//request.setAttribute("errorMessage", "비밀번호가 틀립니다. 다시 로그인하세요.");
 			return "signIn";
 		}
 	}
@@ -45,7 +43,6 @@ public class AuthController {
 	@RequestMapping(method = RequestMethod.DELETE)
 	public String signOut(HttpSession session) throws IOException {
 		session.removeAttribute("email");
-//		response.sendRedirect("/signIn.jsp");
 		return "redirect: signIn";
 	}
 }
