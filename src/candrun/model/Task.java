@@ -2,15 +2,15 @@ package candrun.model;
 
 public class Task {
 
-	private int id;
+	private Integer id;
 	private String contents;
-	private int nudge;
-	private int praise;
-	private int combo;
-	private int successDays;
-	private int maxCombo;
-	private int goalId;
-	private int achievement;
+	private Integer nudge;
+	private Integer praise;
+	private Integer combo;
+	private Integer successDays;
+	private Integer maxCombo;
+	private Integer goalId;
+	private Integer achievement;
 
 	public Task(String contents, int goalId) {
 		this.contents = contents;

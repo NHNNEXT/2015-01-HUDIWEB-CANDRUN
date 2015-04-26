@@ -71,6 +71,9 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 CANDRUN.util.querySelector = function(el) {
 	return document.querySelector(el);
 }
+CANDRUN.util.querySelectorAll = function(el){
+	return document.querySelectorAll(el);
+}
 CANDRUN.util.addClass = function(elTarget, sClass) {
 	elTarget.className += " " + sClass;
 }

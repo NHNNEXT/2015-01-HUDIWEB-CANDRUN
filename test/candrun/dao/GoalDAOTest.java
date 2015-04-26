@@ -28,7 +28,7 @@ public class GoalDAOTest {
 		
 		assertEquals(dbGoal.getId(), goalId);
 	}
-	
+
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void findUserByNotExistKey() throws SQLException {
 		goalDao.findGoalById(-1);

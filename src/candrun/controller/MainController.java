@@ -20,45 +20,51 @@ import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
 import candrun.model.Goal;
 import candrun.model.Task;
-import candrun.user.User;
+import candrun.model.User;
+
 
 @RequestMapping("/")
 @Controller
 public class MainController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
-	@Autowired
-	GoalDAO goalDao;
+	@Autowired GoalDAO goalDao;
 
-	@Autowired
-	TaskDAO taskDao;
+	@Autowired TaskDAO taskDao;
 	
-	@Autowired
-	UserDAO userDao;
+	@Autowired UserDAO userDao;
 	
 	@RequestMapping(method = RequestMethod.GET)
-
 	public String list(Model model, HttpSession session) {
 		
-		String email = (String) session.getAttribute("email");
-		email = "test@email.com";
+		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
+		//String email = (String) session.getAttribute("email");
+		String email = "wq1021@naver.com";
 		
+		
+		//get goals
 		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
-		Goal topGoal = goals.get(0);
+		model.addAttribute("goals", goals);		
+
+		//get recent goal and tasks
+		if(goals.size() > 0){
+			Goal topGoal = goals.get(0);
+			List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
+			model.addAttribute("tasks", tasks);
+		}
 		
-		List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
+		//get friends in nav  
 		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
-		
-		for( int i=0 ; i<goals.size();i++){
+		for(int i=0 ; i<goals.size();i++){
 			Goal goal = goals.get(i);
-			LOGGER.info("{}",goal.getId());
-			
+			LOGGER.info("recent goal's id: {}",goal.getId());
 			friendsListGroupByGoal.put("friends"+i, (userDao.findUsersByGoalId(goal.getId(),email)));
 		}
-	
 		model.addAllAttributes(friendsListGroupByGoal);
-		model.addAttribute("goal", topGoal);
-		model.addAttribute("tasks", tasks);
+		
+		//get friends in sidebar
+		List<User> friends = userDao.findFriendsAsRequester(email);
+		model.addAttribute("friends", friends);
 
 		return "home";		
 	}

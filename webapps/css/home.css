@@ -59,11 +59,11 @@ nav {
 	float:left;
 }
 
-nav .profile_wrapper {
+nav .profile-wrapper {
 	height: 300px;
 }
 
-nav .profile_picture {
+nav .profile-picture {
 	height: 200px;
 	width: 200px;
 	margin: 0px auto;
@@ -93,7 +93,7 @@ nav .label {
 	font-size: 15px;
 }
 
-nav .nav_goal {
+nav .nav-goal {
 	text-align: left;
 	margin: 0px auto;
 	padding: 20px;
@@ -114,26 +114,27 @@ footer {
 /** end layout **/
 
 /** start makeGoal **/
-#makeGoal {
+#make-goal {
 	float: left;
 	width: 75%;
 	background-color: #ABBEB7;
 }
 
-#makeGoal .form_wrapper{
+#make-goal .form-wrapper{
 	background-color: #ABBEB7;
 	width: 95%;
 	height: 1200px;
 	margin: 0px auto;
 }
 
-#makeGoal .submit_form{
+#make-goal .submit-form{
 	width: 85%;
 	margin: 0px auto;
 	padding:10px;
 }
 
-#makeGoal .goal_contents {
+#make-goal .goal-input {
+
 	width: 100%;
 	height: 100px;
 	margin: 10px;
@@ -144,7 +145,7 @@ footer {
 
 }
 
-#makeGoal .input_container input {
+#make-goal .task-input {
 	width: 85%;
 	height: 50px;
 	display: block;
@@ -154,7 +155,8 @@ footer {
 	border-radius: 10px;
 }
 
-#makeGoal .add_input_btn {
+#make-goal .task-input-add {
+
 	width: 85%;
 	height: 50px;
 	background-color: #BCCCCB;
@@ -167,7 +169,8 @@ footer {
 
 }
 
-#makeGoal .submit_btn {
+#make-goal .goal-form-submit {
+
 	float: right;
 	width: 80px;
 	height: 30px;
@@ -182,4 +185,48 @@ footer {
 }
 
 /** end makeGoal **/
+
+/** start show-goal **/
+
+#show-goal {
+	float: right;
+	width: 75%;
+	background-color: #ABBEB7;
+}
+
+#show-goal .goal-wrapper {
+	width: 85%;
+	height: 100px;
+	margin: 10px;
+	margin-top: 30px;
+	background-color: #A5B3B2;
+	border-radius: 10px;
+	float: right;
+}
+
+#show-goal .task-title {
+	width: 85%;
+	height: 50px;
+	display: block;
+	margin:10px;
+	float: right;
+	background-color: #BCCCCB;
+	border-radius: 10px;
+}
+
+#show-goal .submit_nudge {
+	float: right;
+	width: 80px;
+	height: 30px;
+	margin: 10px;
+	margin-right: 40px;
+	background-color: #A5B3B2;
+	text-align: center;
+	line-height: 30px;
+	font-size: 25px;
+	border-radius: 10px;
+}
+
+
+
 

@@ -140,6 +140,6 @@ body {
   .tabs__num {
     font-size: 120px; } 
     }
-#taskId{
+.tasksId {
 	visibility: hidden;
 }

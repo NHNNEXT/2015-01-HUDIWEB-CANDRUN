@@ -19,20 +19,16 @@ import candrun.model.Task;
 public class TasksController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 	
-	@Autowired
-	TaskDAO taskDao;
+	@Autowired TaskDAO taskDao;
 	
-	@Autowired
-	GoalDAO goalDao;
+	@Autowired GoalDAO goalDao;
 
-	@RequestMapping( method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public Task update(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println(req.getParameter("tasksId"));
+		LOGGER.info("add Nudge: task Id = { }", req.getParameter("tasksId"));
 		int taskId = Integer.parseInt(req.getParameter("tasksId"));
-		LOGGER.debug("taskId: {}", taskId);	
 		taskDao.addNudge(taskId);
-		Task task = taskDao.findTaskByTaskId(taskId);
-		
-		return task;
+
+		return taskDao.findTaskByTaskId(taskId);
 	}
 }
