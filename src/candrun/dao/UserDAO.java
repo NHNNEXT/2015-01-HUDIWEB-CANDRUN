@@ -11,9 +11,11 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import candrun.user.User;
 
 public class UserDAO extends JdbcDaoSupport{
-	private RowMapper<User> rowMapper = new RowMapper<User>() {
-		
-		public User mapRow(ResultSet rs, int rowNum) {
+	
+	private static final class UserMapper implements RowMapper<User> {
+
+		@Override
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			try {
 				return new User(
 						rs.getString("email"), 
@@ -23,7 +25,8 @@ public class UserDAO extends JdbcDaoSupport{
 				throw new BeanInstantiationException(User.class, e.getMessage(), e);
 			}
 		}
-	};
+		
+	}
 		
 	public void addPreliminaryUser(User user) {
 		String sql ="INSERT INTO preliminary_user(email, nickname, password, verify_key) VALUES(?, ?, ?, ?)";
@@ -37,7 +40,7 @@ public class UserDAO extends JdbcDaoSupport{
 
 	public User findByEmail(String email) {
 		String sql = "SELECT * FROM user WHERE email = ?";
-		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
+		return getJdbcTemplate().queryForObject(sql, new UserMapper(), email);
 	}
 
 	//TODO: nickname으로 verifyKey 생성시 중복 가능성이 있다.
@@ -63,6 +66,6 @@ public class UserDAO extends JdbcDaoSupport{
 	public List<User> findUsersByGoalId(int goalId, String email) {
 //		String sql = "select * from (select * from goal_has_user inner join user on goal_has_user.email = user.email) where NOT(email = ?) AND goal_id = ? LIMIT 5";
 		String sql = "select * from (select * from goal_has_user inner join user on goal_has_user.user_email = user.email) temp where NOT(email = ?) AND goal_id = ? LIMIT 5";
-		return getJdbcTemplate().query(sql, rowMapper, email, goalId);
+		return getJdbcTemplate().query(sql, new UserMapper(), email, goalId);
 	}
 }
