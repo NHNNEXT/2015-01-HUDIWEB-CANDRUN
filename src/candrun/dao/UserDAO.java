@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.BeanInstantiationException;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -23,12 +25,12 @@ public class UserDAO extends JdbcDaoSupport {
 		}
 	};
 
-	public void addUser(User user) {
+	public void addUser(User user) throws DuplicateKeyException {
 		String sql = "INSERT INTO user(email, nickname, password) VALUES(?, ?, ?)";
 		getJdbcTemplate().update(sql, user.getEmail(), user.getNickname(), user.getPassword());
 	}
 
-	public User findByEmail(String email) {
+	public User findByEmail(String email) throws EmptyResultDataAccessException {
 		String sql = "SELECT * FROM user WHERE email = ?";
 		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
 	}

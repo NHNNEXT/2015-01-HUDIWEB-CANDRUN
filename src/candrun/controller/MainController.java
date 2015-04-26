@@ -37,6 +37,10 @@ public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, HttpSession session) {
 		
+		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
+			return "welcome";
+		}
+		
 		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
 		//String email = (String) session.getAttribute("email");
 		String email = "wq1021@naver.com";

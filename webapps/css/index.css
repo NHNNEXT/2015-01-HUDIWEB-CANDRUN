@@ -15,35 +15,59 @@ input[type=submit][disabled] {
 	background: rgba(0, 0, 0, 0.6);
 }
 .index-body {
-	background-image: url("../img/home-bg.jpg");
-	background-position: center top;
+	/*background-image: url("../img/home-bg.jpg");*/
+	/*background-position: center top;*/
 	margin: 0px;
+	overflow: hidden;
 }
+.videobg {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	height: auto;
+	width: auto;
+	min-height: 100%;
+	min-width: 100%;
+	opacity: .8;
+	z-index: 0;
+}
+
 .title {
 	position: absolute;
 	width: 100%;
 	margin-top: 70px;
 	font-size: 5rem;
-	color: #FFBE81;
+	color: #fff;
 	text-align: center;
 }
 .sign-link-wrapper {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	margin-top: 170px;
+	margin-top: 270px;
+	font-size: 1.5rem;
+	color: #fff;
+}
+.sign-link-border {
+	display: inline;
+	border: 3px solid;
+	padding: 5px 10px;
+}	
+.sign-link-wrapper span {
+	vertical-align: middle;
 }
 .sign-link-wrapper a:link,
 .sign-link-wrapper a:visited,
 .sign-link-wrapper a:hover,
 .sign-link-wrapper a:active {
 	text-decoration: none;
-	font-size: 1.5rem;
+	color: #fff;
 	position: relative;
 	z-index: 10;
-}
-#signin-link {
-	margin-right: 200px;
+	vertical-align: middle;
 }
 .form-wrapper {
 	width: 100%;

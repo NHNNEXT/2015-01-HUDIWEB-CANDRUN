@@ -27,6 +27,9 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var method = 'GET';
 
 	this.setJson = function() {
+		 httpRequest.setRequestHeader('Accept', 'application/json');
+	}
+	this.readyParam = function() {
 		 httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	}
 	this.setMethod = function(sMethod) {
@@ -124,4 +127,7 @@ CANDRUN.util.getKeyCode = function(e) {
 		return e.which;
 	}
 	return keyCode = e.keyCode;
+}
+CANDRUN.util.replacePage = function(sUrl) {
+	location.replace(sUrl);
 }

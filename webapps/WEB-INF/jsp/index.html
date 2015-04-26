@@ -6,10 +6,15 @@
 		<link rel="stylesheet" href="../../css/index.css" media="all">
 	</head>
 	<body class="index-body">
-		<div class="title">Welcome I'm GUBAGI</div>
+		<video class="videobg" src="http://www.trippeo.com/assets/video/1--receptor.webm" preload="auto" autoplay loop></video>
+		<div class="title">Welcome<br/>
+			I'm GUBAGI</div>
 		<div class="sign-link-wrapper">
-			<a id="signin-link" href="javascript:void(0);">SING IN</a>
-			<a id="signup-link" href="javascript:void(0);">SIGN UP</a>
+			<div class="sign-link-border">
+				<a id="signin-link" href="javascript:void(0);">SING IN</a>
+				<span>/</span>
+				<a id="signup-link" href="javascript:void(0);">SIGN UP</a>
+			</div>
 		</div>
 		<div class="form-wrapper">
 			<form id="signup-form" action="" method="post" class="dp-none">
@@ -69,4 +74,7 @@
 	</body>
 	<script src="../../js/candrun.js" type="text/javascript"></script>
 	<script src="../../js/index.js" type="text/javascript"></script>
+	<!--암호화를 위한 js-->
+	<script src="../../js/aes.js"></script>
+	<script src="../../js/aesCtr.js"></script>
 </html>

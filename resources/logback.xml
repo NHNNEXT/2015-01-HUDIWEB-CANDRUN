@@ -10,9 +10,9 @@
 		</encoder>
 	</appender>
 
-	<logger name="candrun.support" level="DEBUG" />
+	<!-- <logger name="candrun.support" level="DEBUG" /> -->
 
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

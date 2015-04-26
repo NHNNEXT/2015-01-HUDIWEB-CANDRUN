@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import candrun.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/test-applicationContext.xml")
+@ContextConfiguration("classpath:/applicationContext.xml")
 public class UserDAOTest {
 
 	@Autowired
