@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +36,7 @@ public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, HttpSession session) {
 		
+		LOGGER.debug((String) session.getAttribute("email"));
 		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
 			return "welcome";
 		}

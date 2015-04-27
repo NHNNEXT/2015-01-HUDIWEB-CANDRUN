@@ -41,7 +41,7 @@ public class UserService {
 		}
 		if (userState == 1) {
 			logger.debug("password is right.");
-			session.setAttribute(email, email);
+			session.setAttribute("email", email);
 			return CommonInvar.SUCCESS.getValue();
 		}
 		return CommonInvar.DEFAULT.getValue();

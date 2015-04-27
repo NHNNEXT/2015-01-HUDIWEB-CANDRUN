@@ -15,6 +15,6 @@ public class MailServiceTest {
 
 	@Test
 	public void test() {
-		mailService.sendMail("wq1021@naver.com", "verifyKey");
+		mailService.sendMail("wq1021@naver.com");
 	}
 }
