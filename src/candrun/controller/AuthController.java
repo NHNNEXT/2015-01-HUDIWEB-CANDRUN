@@ -33,6 +33,7 @@ public class AuthController {
 	public Map<String, String> signIn(@RequestParam("email") String email,
 			@RequestParam("password") String password, HttpSession session) {
 		
+		LOGGER.debug("요청");
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
 

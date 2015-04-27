@@ -1,3 +1,4 @@
+<%@page import="candrun.support.enums.Security"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,6 +9,7 @@
 <link rel="stylesheet" href="/css/index.css" media="all">
 </head>
 <body class="index-body">
+	<input type="hidden" id="<%=Security.RSA_PUB_KEY.getValue()%>" value="${rsaPubKey}" />
 	<video class="videobg"
 		src="http://www.trippeo.com/assets/video/1--receptor.webm"
 		preload="auto" autoplay loop></video>
@@ -72,8 +74,7 @@
 		</form>
 	</div>
 </body>
+<script src="/js/rsa/jsencrypt.min.js" type="text/javascript"></script>
 <script src="/js/candrun.js" type="text/javascript"></script>
 <script src="/js/index.js" type="text/javascript"></script>
-<script src="/js/aes.js" type="text/javascript"></script>
-<script src="/js/aesCtr.js" type="text/javascript"></script>
 </html>

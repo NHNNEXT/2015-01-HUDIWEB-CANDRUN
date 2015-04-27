@@ -1,5 +1,6 @@
 package candrun.controller;
 
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,8 @@ import candrun.dao.UserDAO;
 import candrun.model.Goal;
 import candrun.model.Task;
 import candrun.model.User;
+import candrun.service.user.UserService;
+import candrun.support.enums.Security;
 
 
 @RequestMapping("/")
@@ -34,12 +36,24 @@ public class MainController {
 	
 	@Autowired UserDAO userDao;
 	
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, HttpSession session) {
 		
 		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
+			try {
+				userService.setRAS(session, model);
+			} catch (GeneralSecurityException e) {
+				LOGGER.error(e.toString());
+				return "errPage";
+			}
 			return "welcome";
 		}
+		
+		//로긴/회원가입 시 사용했던 비공개 키 삭제
+		session.removeAttribute(Security.RSA_PRI_KEY.getValue());
 		
 		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
 		//String email = (String) session.getAttribute("email");

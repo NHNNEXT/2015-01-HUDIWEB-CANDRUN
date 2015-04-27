@@ -33,6 +33,7 @@ INDEX.methods.getElements = function() {
 	elements.signinEmailRep = querySelector("#signin-email-responser");
 	elements.signinPwRep = querySelector("#signin-pw-responser");
 	elements.signinSubmit = querySelector("#signin-form-submit");
+	elements.pubKeyInput = querySelector("#rsaPubKey");
 }
 INDEX.methods.addEvents = function() {
 	var elements = INDEX.elements;
@@ -65,15 +66,25 @@ INDEX.methods.addEvents = function() {
 	elements.signupForm.addEventListener("submit", form.submitSignupForm);
 }
 INDEX.form = INDEX.form || {};
+INDEX.form.encryptInput = function(sValue, sPubKey) {
+	var encrypt = new JSEncrypt();
+	encrypt.setPublicKey(sPubKey);
+	return encrypt.encrypt(sValue);
+}
 INDEX.form.submitSignupForm = function(e) {
 	e.preventDefault();
 	var util = CANDRUN.util;
 	var form = INDEX.form;
 	var elements = INDEX.elements;
+	var sPubKey = elements.pubKeyInput.value;
+	var fEncryptor = INDEX.form.encryptInput;
+	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey).replace(/\+/g, '%2B');
+	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey).replace(/\+/g, '%2B');
 	var ajax = new util.ajax("/users", form.checkSignUpResult);
-	var params = "email=" + elements.signupEmailInput.value + "&password="
-			+ elements.signupPwInput.value + "&nickname="
-			+ elements.signupNickInput.value;
+	var params = "email="
+			+ sEncryptedEmail
+			+ "&password=" + sEncryptedPw
+			+ "&nickname=" + elements.signupNickInput.value;
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setJson();
@@ -98,9 +109,14 @@ INDEX.form.submitSigninForm = function(e) {
 	var util = CANDRUN.util;
 	var form = INDEX.form;
 	var elements = INDEX.elements;
+	var sPubKey = elements.pubKeyInput.value;
+	var fEncryptor = INDEX.form.encryptInput;
+	var sEncryptedEmail = fEncryptor(elements.signinEmailInput.value, sPubKey).replace(/\+/g, '%2B');
+	var sEncryptedPw = fEncryptor(elements.signinPwInput.value, sPubKey).replace(/\+/g, '%2B');
 	var ajax = new util.ajax("/auth", form.checkLoginResult);
-	var params = "email=" + elements.signinEmailInput.value + "&password="
-			+ elements.signinPwInput.value;
+	var params = "email="
+			+ sEncryptedEmail
+			+ "&password=" + sEncryptedPw;
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setJson();
