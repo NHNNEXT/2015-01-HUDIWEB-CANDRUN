@@ -41,7 +41,7 @@ public class GoalsController {
 			
 			arrTaskContents.add(taskContents);
 		}
-		Goal goal = new Goal(goalContents, "wq1021@naver.com");
+		Goal goal = new Goal(goalContents, "javajava@naver.com");
 		int returnedId = goalDao.addGoal(goal);
 
 		for (int i = 0; i < arrTaskContents.size(); i++) {

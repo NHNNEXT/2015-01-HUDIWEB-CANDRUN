@@ -39,7 +39,7 @@ public class MainController {
 		
 		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
 		//String email = (String) session.getAttribute("email");
-		String email = "wq1021@naver.com";
+		String email = "javajava@naver.com";
 		
 		
 		//get goals

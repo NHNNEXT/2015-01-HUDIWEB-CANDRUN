@@ -10,79 +10,68 @@
 	<link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 <body>
-	<header> </header>
-
 	<nav>
 	<div class="profile-wrapper">
 		<div class="profile-picture"></div>
-		<div class="nick">nickname</div>
+		<div class="nick">pobi</div>
 	</div>
+	<!-- id로 되어있는 friend 부분은 DB에서 받아오면서 class로 바꾸어야 한다. -->
 	<div id="goal-groups">
-		<div class="label">List of goals & people in group</div>
 		<ul class="nav-goal-container">
 			<li class="nav-goal">${goals[0].contents} 
-				<c:forEach items="${friends0}" var="friends0">
+				<div class="nav-friends-container">
+					<div class="nigayo"></div>
+				</div>
+<!-- 				<c:forEach items="${friends0}" var="friends0">
 					<div>${friends0.nickname}</div>
-					<div>111</div>
-				</c:forEach>
+					<li></li>
+					<li></li>
+					<li></li>
+				</c:forEach> -->
 			</li>
 			<li class="nav-goal">${goals[1].contents}
-				<c:forEach items="${friends1}" var="friends1">
-					<div>${friends1.nickname}</div>
-					<div>222</div>
-				</c:forEach>
+				<div class="nav-friends-container">
+					<div class="kdj"></div>
+					<div class="hsj"></div>
+				</div>
 			</li>
 			<li class="nav-goal">${goals[2].contents}
-				<c:forEach items="${friends2}" var="friends2">
-					<div>${friends2.nickname}</div>
-					<div>333</div>
-				</c:forEach>
+				<div class="nav-friends-container">
+					<div class="nigayo"></div>
+					<div class="hsj"></div>
+					<div class="kdj"></div>
+				</div>
 			</li>
 		</ul>
 	</div>
 	</nav>
 
-	<section id="make-goal">
-		<div class="form-wrapper">
-			<form class="submit-form">
-				<input class="goal-input" name="goal_contents">
-					<div class="input-container">
-						<input class="task-input">
-					</div>
-				<div class="task-input-add">+</div>
-				<div class="goal-form-submit">확인</div>
-			</form>
-		</div>
-	</section>
-
 	<section id="show-goal">
 		<div class="goal-wrapper">
-			<div class = "title">${goals[0].contents}</div>
+			<div class = "goal-title">${goals[0].contents}</div>
 			<div class = "startdate">${goals[0].startDate}</div>
 		</div>
-		<div class="task-wrapper">
-			<c:forEach items="${tasks}" var="tasks">
-				<div class="task-title">${tasks.contents}
+		<c:forEach items="${tasks}" var="tasks">
+			<div class="task-wrapper">
 				<form class="submit_nudge">
-				
-				<div class="tabs__stats">
-					<div class="number">${tasks.nudge}</div>
-					<input name="tasksId" class="tasksId" value="${tasks.id}"/>
-				</div>
-					
-					<input type="submit" class="nudge_btn" value="NUDGE" />
+					<input type="submit" class="btn-nudge" value="${tasks.contents}" />
+					<input type="hidden" class="task-id" value="${tasks.id}" />
+					<div class="nudge-number">${tasks.nudge}</div>
 				</form>
-				</div>
-			</c:forEach>
-		</div>
+			</div>
+		</c:forEach>
+	</section>	
+
+	<section id="make-goal">
+			<form class="submit-form">
+				<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
+					<div class="input-container">
+						<input class="task-input"/>
+					</div>
+				<div class="task-input-add">+</div>
+				<div class="goal-form-submit">submit</div>
+			</form>
 	</section>
-	
-	<section>
-		
-		
-	</section>
-	
-	<footer></footer>
 </body>
 <script src="/js/addGoal.js"></script>
 <script src="/js/addNudge.js"></script>
