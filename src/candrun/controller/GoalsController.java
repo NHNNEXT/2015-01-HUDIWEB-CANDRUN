@@ -37,8 +37,7 @@ public class GoalsController {
 			LOGGER.info("task: {}",taskContents);
 			if (taskContents == null) {
 				break;
-			}
-			
+			}	
 			arrTaskContents.add(taskContents);
 		}
 		Goal goal = new Goal(goalContents, "javajava@naver.com");

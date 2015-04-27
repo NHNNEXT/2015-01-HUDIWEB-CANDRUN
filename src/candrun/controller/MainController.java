@@ -43,6 +43,7 @@ public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, HttpSession session) {
 		
+		LOGGER.debug((String) session.getAttribute("email"));
 		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
 			try {
 				SecurityService.setRAS(session, model);

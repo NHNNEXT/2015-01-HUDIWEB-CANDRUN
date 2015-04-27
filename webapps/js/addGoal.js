@@ -49,7 +49,7 @@ GOAL.form.send = function () {
 	
 	addGoalAjax.setMethod("POST");
 	addGoalAjax.open();
-	addGoalAjax.setJson();
+	addGoalAjax.readyParam();
 	addGoalAjax.send(params);
 };
 

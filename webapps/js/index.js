@@ -140,7 +140,7 @@ INDEX.form.checkLoginResult = function(sResp) {
 		return;
 	}
 	if (oReturnMsg.returnMsg === "success") {
-		location.replace("/home");
+		location.replace("/");
 	}
 }
 INDEX.form.validateSignUpForm = function(e) {

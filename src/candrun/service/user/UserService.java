@@ -54,7 +54,8 @@ public class UserService {
 			return UserErrorcode.NOT_YET_CERTI.getValue();
 		}
 		if (userState == 1) {
-			session.setAttribute(email, email);
+
+			session.setAttribute("email", email);
 			return CommonInvar.SUCCESS.getValue();
 		}
 		return CommonInvar.DEFAULT.getValue();

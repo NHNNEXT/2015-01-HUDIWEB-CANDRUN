@@ -8,10 +8,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import candrun.dao.UserDAO;
@@ -22,7 +24,7 @@ import candrun.service.user.UserService;
 import candrun.support.enums.CommonInvar;
 
 @RequestMapping("/users")
-@RestController
+@Controller
 public class UsersController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(UsersController.class);
@@ -38,6 +40,7 @@ public class UsersController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
 	public Map<String, String> create(@RequestParam("email") String email,
 			@RequestParam("nickname") String nickname,
 			@RequestParam("password") String password, HttpSession session) {
@@ -47,6 +50,9 @@ public class UsersController {
 		
 		msg = userService.register(email, nickname, password, session);
 		LOGGER.debug(msg);
+		
+		mailService.putMailBodyElement(email);
+		mailService.sendMail(email);
 		
 		returnMsg.put(CommonInvar.RETURNMSG.getValue(), msg);
 		return returnMsg;
@@ -71,7 +77,7 @@ public class UsersController {
 	// }
 	//
 	@RequestMapping(value = "/{key}/verify", method = RequestMethod.GET)
-	public String verify(@PathVariable("key") String key) {
+	public String verify(@PathVariable("key") String key, HttpSession session) {
 
 		String email = null;
 		try {
@@ -85,11 +91,12 @@ public class UsersController {
 
 		if (user != null && user.getState() == 0) {
 			userDao.changeState(user.getEmail());
+			session.setAttribute("verified", "success");
 		}
 		// user의 state 값 1로 증가
 		// 로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
 
-		return "index";
+		return "redirect";
 	}
 
 }
