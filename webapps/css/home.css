@@ -47,16 +47,76 @@ table {
 /** end initialization **/
 
 /** start layout **/
-header {
-	background-color: #5E6964;
-	height: 50px;
+section {
+	float: right;
+	width: calc(100% - 360px);
+	height: 1300px;
+	background-color: #f3f3f3;
+
 }
 
 nav {
-	background-color: #A3B5AE;
-	width:25%;
+	padding-top: 100px;
+	background-color: #610A1D;
+	width:360px;
 	height:1200px;
 	float:left;
+	color: #DFCED2;
+	position: absolute;
+}
+
+nav .nigayo {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	background-image: url("../img/nigayo.jpg");
+	background-size: 50px 50px;
+	border-radius: 25px;
+	margin: 3px;
+}
+
+nav .kdj {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	background-image: url("../img/kdj.jpg");
+	background-size: 50px 50px;
+	border-radius: 25px;
+	margin: 3px;
+}
+
+nav .hsj {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	background-image: url("../img/hsj.jpg");
+	background-size: 50px 50px;
+	border-radius: 25px;
+	margin: 3px;
+}
+
+nav .hth {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	background-image: url("../img/hth.png");
+	background-size: 50px 50px;
+	border-radius: 25px;
+	margin: 3px;
+}
+
+nav .cob {
+		width: 50px;
+	height: 50px;
+	display: inline-block;
+	background-image: url("../img/cob.png");
+	background-size: 50px 50px;
+	border-radius: 25px;
+	margin: 3px;
+}
+nav .nav-friends-container {
+	display: block;
+	margin-top: 7px;
 }
 
 nav .profile-wrapper {
@@ -64,18 +124,16 @@ nav .profile-wrapper {
 }
 
 nav .profile-picture {
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 	margin: 0px auto;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	background-color: #C8B9A7;
     border-radius: 100px;
-    background-image: url("../img/user.png");
-    background-size: 200px 200px;
-    background-position: center 18px;
+    background-image: url("../img/javajigi.jpg");
+    background-size: 150px 150px;
+    background-position: center 0px;
     background-repeat: no-repeat;
-
 }
 
 nav .nick {
@@ -84,103 +142,72 @@ nav .nick {
 	text-align: center;
 }
 
-nav .label {
-	text-align: center;
-	margin: 0px auto;
-	margin-top: 10px;
-	padding: 10px;
-	height: 30px;
-	font-size: 15px;
-}
-
 nav .nav-goal {
 	text-align: left;
 	margin: 0px auto;
 	padding: 20px;
 	padding-left: 50px;
-	background-color: #99A4A7;
+	background-color: #610A1D;
 	height: 70px;
-	font-size: 15px;
+	font-size: 20px;
+	margin-top: 20px;
 }
-
-footer {
-	height: 50px;
-	background-color: green;
-	clear: both;
-	background-color: #5E6964;
-}
-
 
 /** end layout **/
 
-/** start makeGoal **/
-#make-goal {
-	float: left;
-	width: 75%;
-	background-color: #ABBEB7;
-}
-
-#make-goal .form-wrapper{
-	background-color: #ABBEB7;
-	width: 95%;
-	height: 1200px;
-	margin: 0px auto;
-}
+/** start make-goal **/
 
 #make-goal .submit-form{
+	padding-top: 150px;
 	width: 85%;
+	color: #707070;
 	margin: 0px auto;
-	padding:10px;
 }
 
 #make-goal .goal-input {
-
 	width: 100%;
 	height: 100px;
-	margin: 10px;
 	margin-top: 30px;
-	background-color: #A5B3B2;
-	border-radius: 10px;
-	float: right;
+	background: #f3f3f3;
+	font-size: 45px;
+	text-align: center;
+	color: #707070;
 
 }
 
 #make-goal .task-input {
-	width: 85%;
-	height: 50px;
-	display: block;
+	width: 100%;
+	height: 120px;
 	margin:10px;
 	float: right;
-	background-color: #BCCCCB;
-	border-radius: 10px;
+	background-color: #e6e6e6;
+	text-align: center;
 }
 
 #make-goal .task-input-add {
-
-	width: 85%;
-	height: 50px;
-	background-color: #BCCCCB;
+	width: 100%;
+	height: 60px;
+	background-color: #d9d9d9;
 	margin:10px;
 	text-align: center;
-	line-height: 50px;
-	font-size: 35px;
+	line-height: 60px;
+	font-size: 60px;
 	float: right;
-	border-radius: 10px;
-
 }
 
 #make-goal .goal-form-submit {
 
 	float: right;
-	width: 80px;
-	height: 30px;
+	width: 120px;
+	height: 40px;
 	margin: 10px;
-	margin-right: 40px;
-	background-color: #A5B3B2;
 	text-align: center;
-	line-height: 30px;
+	line-height: 40px;
 	font-size: 25px;
-	border-radius: 10px;
+	border: solid 2px;
+	border-radius: 30px;
+	border-color: #d9d9d9;
+	color: #610A1D;
 
 }
 
@@ -190,41 +217,46 @@ footer {
 
 #show-goal {
 	float: right;
-	width: 75%;
-	background-color: #ABBEB7;
+	width: calc(100% - 360px);
+	background-color: #f3f3f3;
 }
 
 #show-goal .goal-wrapper {
-	width: 85%;
+	padding-top: 150px;
+	width: 100%;
 	height: 100px;
-	margin: 10px;
-	margin-top: 30px;
-	background-color: #A5B3B2;
-	border-radius: 10px;
-	float: right;
+	color: #707070;
+	font-size: 50px;
+  	font-family: sans-serif;
+  	font-size: 60px;
+  	font-weight: 200;
+	text-align: center;	
 }
 
-#show-goal .task-title {
+#show-goal .task-wrapper{
+	background-color: #e6e6e6;
 	width: 85%;
-	height: 50px;
-	display: block;
-	margin:10px;
-	float: right;
-	background-color: #BCCCCB;
-	border-radius: 10px;
+	height: 120px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	color: #707070;
+	position: relative;
 }
 
-#show-goal .submit_nudge {
-	float: right;
-	width: 80px;
-	height: 30px;
-	margin: 10px;
-	margin-right: 40px;
-	background-color: #A5B3B2;
-	text-align: center;
-	line-height: 30px;
-	font-size: 25px;
-	border-radius: 10px;
+
+#show-goal .btn-nudge {
+	background-color: #e6e6e6;
+	font-size: 35px;
+	line-height: 120px;
+	width: 100%;
+	color: #707070;
+}
+
+#show-goal .nudge-number {
+	position: absolute;
+	right: 40px;
+	top: 50px;
 }
 
 
