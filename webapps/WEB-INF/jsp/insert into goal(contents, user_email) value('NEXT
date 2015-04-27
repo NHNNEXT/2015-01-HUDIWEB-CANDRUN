@@ -1,3 +1,0 @@
-insert into goal(contents, user_email) value('NEXT 정상화', 'javajigi@nhn.com');
-
-insert into user(email, nickname, password) value('javajava@naver.com', 'Pobi', '1234');
