@@ -21,6 +21,8 @@
 			<li class="nav-goal">${goals[0].contents} 
 				<div class="nav-friends-container">
 					<div class="nigayo"></div>
+					<div class="cob"></div>
+					<div class="hth"></div>
 				</div>
 <!-- 				<c:forEach items="${friends0}" var="friends0">
 					<div>${friends0.nickname}</div>
