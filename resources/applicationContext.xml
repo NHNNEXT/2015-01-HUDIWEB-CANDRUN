@@ -36,8 +36,14 @@
 
 	<bean id="mailService" class="candrun.mail.CertifMailService"
 		p:mailContext-ref="mailContext" />
-	<bean id="userService" class="candrun.service.user.UserService"
+	<bean id="userService" class="candrun.service.UserService"
 		c:userDao-ref="userDao" />
+	<bean id="homeService" class="candrun.service.HomeService"
+		c:userDao-ref="userDao" c:goalDao-ref="goalDao" c:taskDao-ref="taskDao" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+		p:maxUploadSize="1000000" />
 
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />
 	<bean id="goalDao" class="candrun.dao.GoalDAO" p:dataSource-ref="dataSource" />

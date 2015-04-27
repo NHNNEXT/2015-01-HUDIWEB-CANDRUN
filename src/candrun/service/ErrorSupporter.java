@@ -1,4 +1,4 @@
-package candrun.service.error;
+package candrun.service;
 
 import javax.servlet.http.HttpSession;
 

@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="/css/index.css" media="all">
 </head>
 <body class="index-body">
-	<input type="hidden" id="<%=Security.RSA_PUB_KEY.getValue()%>" value="${rsaPubKey}" />
+	<input type="hidden" id="<%=Security.RSA_PUB_KEY.getValue()%>"
+		value="${rsaPubKey}" />
 	<video class="videobg"
 		src="http://www.trippeo.com/assets/video/1--receptor.webm"
 		preload="auto" autoplay loop></video>
@@ -23,7 +24,8 @@
 		</div>
 	</div>
 	<div class="form-wrapper">
-		<form id="signup-form" action="" method="post" class="dp-none">
+		<form id="signup-form" action="/" method="post" class="dp-none"
+			enctype="multipart/form-data">
 			<div class="form-dody">
 				<div id="signup-close-mark" class="close-mark">&#10006</div>
 				<div class="form-title">회원가입</div>
@@ -33,6 +35,10 @@
 							<input id="input-1-1" type="email" name="email">
 						</div>
 						<p class="responser" id="signup-email-responser"></p> <br /></li>
+					<li><label for="input-1-5">Picture</label>
+						<div class="input-container">
+							<input id="input-1-5" type="file" name="pic">
+						</div> <br /></li>
 					<li><label for="input-1-2">Nick</label>
 						<div class="input-container">
 							<input id="input-1-2" type="text" name="nick">

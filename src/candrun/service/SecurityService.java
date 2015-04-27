@@ -1,4 +1,4 @@
-package candrun.service.security;
+package candrun.service;
 
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;

@@ -1,4 +1,4 @@
-package candrun.service.user;
+package candrun.service;
 
 import java.security.PrivateKey;
 
@@ -11,7 +11,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import candrun.dao.UserDAO;
 import candrun.model.User;
-import candrun.service.security.SecurityService;
 import candrun.support.enums.CommonError;
 import candrun.support.enums.CommonInvar;
 import candrun.support.enums.Security;
@@ -61,15 +60,16 @@ public class UserService {
 		return CommonInvar.DEFAULT.getValue();
 	}
 
-	public String register(String eEmail, String nick, String ePw,
+	public String register(String email, String nick, String pw,
 			HttpSession session) {
-		String email;
-		String pw;
-		PrivateKey privateKey = (PrivateKey) session
-				.getAttribute(Security.RSA_PRI_KEY.getValue());
+//		String email;
+//		String pw;
+//		PrivateKey privateKey = (PrivateKey) session
+//				.getAttribute(Security.RSA_PRI_KEY.getValue());
 		try {
-			email = SecurityService.decrytRsa(privateKey, eEmail);
-			pw = SecurityService.decrytRsa(privateKey, ePw);
+//			email = SecurityService.decrytRsa(privateKey, eEmail);
+//			pw = SecurityService.decrytRsa(privateKey, ePw);
+			logger.debug(email + "/" + pw);
 			userDAO.addUser(new User(email, nick, SecurityService.encrypt(pw, pw)));
 		} catch (DuplicateKeyException e) {
 			logger.error(e.toString());

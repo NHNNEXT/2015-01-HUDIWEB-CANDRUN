@@ -1,8 +1,13 @@
 package candrun.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,14 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import candrun.dao.UserDAO;
 import candrun.mail.CryptoUtil;
 import candrun.mail.MailService;
 import candrun.model.User;
-import candrun.service.user.UserService;
+import candrun.service.SecurityService;
+import candrun.service.UserService;
 import candrun.support.enums.CommonInvar;
+import candrun.support.enums.Security;
 
 @RequestMapping("/users")
 @Controller
@@ -35,7 +42,6 @@ public class UsersController {
 
 	@Autowired
 	private MailService mailService;
-
 	@Autowired
 	private UserService userService;
 
@@ -43,17 +49,35 @@ public class UsersController {
 	@ResponseBody
 	public Map<String, String> create(@RequestParam("email") String email,
 			@RequestParam("nickname") String nickname,
-			@RequestParam("password") String password, HttpSession session) {
-
+			@RequestParam("password") String password,
+			@RequestParam("pic") MultipartFile file, HttpSession session, HttpServletRequest request) throws Exception {
+		
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
 		
+		PrivateKey privateKey = (PrivateKey) session
+				.getAttribute(Security.RSA_PRI_KEY.getValue());
+		email = SecurityService.decrytRsa(privateKey, email);
+		password = SecurityService.decrytRsa(privateKey, password);
+		
+		if (!file.isEmpty()) {
+			byte[] bytes = file.getBytes();
+			String filePath = request.getServletContext().getRealPath("/");
+			File tempFile = new File(filePath + "/img/pics/"+ email + ".jpg");
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			BufferedOutputStream bos = new BufferedOutputStream(fos);
+			bos.write(bytes);
+			bos.close();
+			fos.close();
+		}
+		
+
 		msg = userService.register(email, nickname, password, session);
 		LOGGER.debug(msg);
-		
+
 		mailService.putMailBodyElement(email);
 		mailService.sendMail(email);
-		
+
 		returnMsg.put(CommonInvar.RETURNMSG.getValue(), msg);
 		return returnMsg;
 	}

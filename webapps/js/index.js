@@ -34,6 +34,7 @@ INDEX.methods.getElements = function() {
 	elements.signinPwRep = querySelector("#signin-pw-responser");
 	elements.signinSubmit = querySelector("#signin-form-submit");
 	elements.pubKeyInput = querySelector("#rsaPubKey");
+	elements.signFileInput = querySelector("#input-1-5");
 }
 INDEX.methods.addEvents = function() {
 	var elements = INDEX.elements;
@@ -78,18 +79,33 @@ INDEX.form.submitSignupForm = function(e) {
 	var elements = INDEX.elements;
 	var sPubKey = elements.pubKeyInput.value;
 	var fEncryptor = INDEX.form.encryptInput;
-	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey).replace(/\+/g, '%2B');
-	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey).replace(/\+/g, '%2B');
-	var ajax = new util.ajax("/users", form.checkSignUpResult);
-	var params = "email="
-			+ sEncryptedEmail
-			+ "&password=" + sEncryptedPw
-			+ "&nickname=" + elements.signupNickInput.value;
-	ajax.setMethod("POST");
+	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey);
+	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);
+//	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey).replace(/\+/g, '%2B');
+//	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey).replace(/\+/g, '%2B');
+//	var ajax = new util.ajax("/users", form.checkSignUpResult);
+//	var params = "email="
+//			+ sEncryptedEmail
+//			+ "&password=" + sEncryptedPw
+//			+ "&nickname=" + elements.signupNickInput.value;
+//	ajax.setMethod("POST");
+//	ajax.open();
+//	ajax.setJson();
+//	ajax.readyParam();
+//	ajax.send(params);
+	
+	
+	var ajax = new util.ajaxFormData("/users", form.checkSignUpResult);
+	var formData = new FormData();
+	formData.append("pic", elements.signFileInput.files[0]);
+	formData.append("email", sEncryptedEmail);
+	formData.append("password", sEncryptedPw);
+	formData.append("nickname", elements.signupNickInput.value);
+	ajax.setMethod("post");
 	ajax.open();
 	ajax.setJson();
-	ajax.readyParam();
-	ajax.send(params);
+	ajax.send(formData);
+	
 }
 INDEX.form.checkSignUpResult = function(sResp) {
 	var oReturnMsg = {};
@@ -121,7 +137,7 @@ INDEX.form.submitSigninForm = function(e) {
 	ajax.open();
 	ajax.setJson();
 	ajax.readyParam();
-	ajax.send(params);
+	ajax.send(params);	
 }
 INDEX.form.checkLoginResult = function(sResp) {
 	var oReturnMsg = {};
@@ -174,11 +190,6 @@ INDEX.form.validateSignUpForm = function(e) {
 		form.confirmSignupSubmittable();
 		return;
 	}
-//	if (keyCode != 13) {
-//		form.validateInput(elTarget, e.target.value, fValidator);
-//		form.confirmSignupSubmittable();
-//		return;
-//	}
 		form.validateInput(elTarget, e.target.value, fValidator);
 		form.confirmSignupSubmittable();
 		return;
