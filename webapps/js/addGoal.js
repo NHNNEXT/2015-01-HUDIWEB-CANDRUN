@@ -65,7 +65,7 @@ GOAL.form.makeNextInput = function(){
 	//마지막 inputTag의 이벤트를 제거
 	var inputNodes = document.querySelectorAll(".task-input");
 	var lastTaskInput = inputNodes[inputNodes.length-1];
-	lastTaskInput.removeEventListener("keydown", form.makeNextInputWithEnter);
+	lastTaskInput.removeEventListener("keydown", GOAL.form.makeNextInputWithEnter);
 
 	//inputTag를 만들어 InputContainer의 자식으로 등록
 	input.setAttribute("class", "task-input");

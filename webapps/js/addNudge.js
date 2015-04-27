@@ -15,7 +15,7 @@ NUDGE.methods.getElements = function() {
 	var querySelector = CANDRUN.util.querySelector;
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
 	var elements = NUDGE.elements;
-	elements.nudgeList = querySelectorAll(".nudge_btn");
+	elements.nudgeList = querySelectorAll(".btn-nudge");
 	elements.lastSelectedTabNumber;
 	elements.lastSelectedForm;
 };
@@ -36,8 +36,8 @@ NUDGE.methods.addNudge = function (e) {
 	
 	var elements = NUDGE.elements;
 
-	elements.lastSelectedTabNumber = e.target.parentNode.parentNode.querySelector('.tabs__stats .number');
-	elements.lastSelectedForm = e.target.parentNode.parentNode.parentNode.querySelector('.tasksId');
+	elements.lastSelectedTabNumber = e.target.parentNode.parentNode.querySelector('.nudge-number');
+	elements.lastSelectedForm = e.target.parentNode.querySelector('.task-id');
 
 	var sUrl = "/tasks";
 	var params = "&tasksId=" + elements.lastSelectedForm.value;
