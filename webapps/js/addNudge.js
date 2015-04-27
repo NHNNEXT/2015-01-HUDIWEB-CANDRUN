@@ -37,16 +37,15 @@ NUDGE.methods.addNudge = function (e) {
 	var elements = NUDGE.elements;
 
 	elements.lastSelectedTabNumber = e.target.parentNode.parentNode.querySelector('.nudge-number');
-	elements.lastSelectedForm = e.target.parentNode.querySelector('.task-id');
+	elements.lastSelectedForm = e.target.parentNode.querySelector('.tasksId');
 
 	var sUrl = "/tasks";
 	var params = "&tasksId=" + elements.lastSelectedForm.value;
-
 	var addNudgeAjax = new CANDRUN.util.ajax(sUrl, NUDGE.methods.refreshNumber);
 
 	addNudgeAjax.setMethod("POST");
 	addNudgeAjax.open();
-	addNudgeAjax.setJson();
+	addNudgeAjax.readyParam();
 	addNudgeAjax.send(params);
 };
 
