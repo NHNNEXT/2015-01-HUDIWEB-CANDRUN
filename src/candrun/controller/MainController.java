@@ -21,6 +21,7 @@ import candrun.dao.UserDAO;
 import candrun.model.Goal;
 import candrun.model.Task;
 import candrun.model.User;
+import candrun.service.security.SecurityService;
 import candrun.service.user.UserService;
 import candrun.support.enums.Security;
 
@@ -44,7 +45,7 @@ public class MainController {
 		
 		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
 			try {
-				userService.setRAS(session, model);
+				SecurityService.setRAS(session, model);
 			} catch (GeneralSecurityException e) {
 				LOGGER.error(e.toString());
 				return "errPage";

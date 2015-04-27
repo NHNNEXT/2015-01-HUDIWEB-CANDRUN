@@ -159,6 +159,10 @@ INDEX.form.validateSignUpForm = function(e) {
 	case "input-1-3":
 		elTarget = elements.signupPwRep;
 		fValidator = util.isValidatePW;
+		if (elements.signupConPwInput.value) {
+			form.validateConPW(elements.signupConPwRep, elements.signupConPwInput.value,
+					e.target.value);
+		}
 		break;
 	case "input-1-4":
 		elTarget = elements.signupConPwRep;
@@ -167,13 +171,17 @@ INDEX.form.validateSignUpForm = function(e) {
 		form.confirmSignupSubmittable();
 		return;
 	default:
-		return;
-	}
-	if (keyCode != 13) {
-		form.validateInput(elTarget, e.target.value, fValidator);
 		form.confirmSignupSubmittable();
 		return;
 	}
+//	if (keyCode != 13) {
+//		form.validateInput(elTarget, e.target.value, fValidator);
+//		form.confirmSignupSubmittable();
+//		return;
+//	}
+		form.validateInput(elTarget, e.target.value, fValidator);
+		form.confirmSignupSubmittable();
+		return;
 }
 INDEX.form.confirmSignupSubmittable = function() {
 	var elements = INDEX.elements;

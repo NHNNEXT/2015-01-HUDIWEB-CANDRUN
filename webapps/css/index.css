@@ -74,6 +74,7 @@ input[type=submit][disabled] {
 	height: 100%;
 	display: table;
 	position: absolute;
+	color: #610A1D;
 }
 .form-wrapper input {
 	width: 100%;
@@ -125,7 +126,7 @@ input[type=submit][disabled] {
 #signup-form-submit,
 #signin-form-submit {
 	color: #fff;
-	background-color: #000;
-	border-color: #000;
+	background-color: #610A1D;
+	border-color: #610A1D;
 	cursor: pointer;
 }
