@@ -31,7 +31,9 @@ public class MailContext {
 			helper.setText(body);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
+			// 로거를 사용하시길..
 			e.printStackTrace();
+			 
 		}
 		mailSender.send(mimeMessage);
 	}

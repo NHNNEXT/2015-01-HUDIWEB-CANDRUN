@@ -12,6 +12,13 @@ public class User {
 
 	public static boolean login(String email, String password) throws UserNotFoundException, PasswordMismatchException
 			{
+		
+		/*
+		 * 지금 User객체 내부에서 UserDao를 가져와서 사용하고 있는데 좋지 않은 방법 같습니다.
+		 * 
+		 * UserDao는 Repository 레벨인데 POJO인 User를 사용하려면 무조건 Repository와 엮기게 되는 상황이 발생하기 때문입니다.
+		 * 따라서 login을 처리하는 로직을 다른 방식으로 처리해야할 것 같아요.
+		 */
 		UserDAO userDAO = new UserDAO();
 		User user = userDAO.findByEmail(email);
 		userDAO.findByEmail(email);

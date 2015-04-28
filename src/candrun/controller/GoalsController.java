@@ -25,7 +25,7 @@ public class GoalsController {
 	@Autowired GoalDAO goalDao;
 
 	@Autowired TaskDAO taskDao;
-
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public Object create(@RequestParam("goal_contents") String goalContents, HttpServletRequest req) {
 
