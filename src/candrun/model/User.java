@@ -1,45 +1,20 @@
  package candrun.model;
 
-import candrun.dao.UserDAO;
-import candrun.exception.PasswordMismatchException;
-import candrun.exception.UserNotFoundException;
-
 public class User {
 	private String email;
 	private String nickname;
 	private String password;
+	private String picPath;
 	private int state;
 
-	public static boolean login(String email, String password) throws UserNotFoundException, PasswordMismatchException
-			{
-		UserDAO userDAO = new UserDAO();
-		User user = userDAO.findByEmail(email);
-		userDAO.findByEmail(email);
-
-		if (user == null) {
-			throw new UserNotFoundException();
-		}
-
-		if (!user.matchPassword(password)) {
-			throw new PasswordMismatchException();
-		}
-		return true;
-
-	}
-
-	private boolean matchPassword(String newPassword) {
-		return this.password.equals(newPassword);
-	}
-
-	public User(String email, String nickname, String password) {
+	public User(String email, String nickname, String password, String picPath) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
+		this.picPath = picPath;
 	}
-	public User(String email, String nickname, String password, int state) {
-		this.email = email;
-		this.nickname = nickname;
-		this.password = password;
+	public User(String email, String nickname, String password, String picPath, int state) {
+		this(email, nickname, password, picPath);
 		this.state = state;
 	}
 	public User(String email, String nickname) {
@@ -61,5 +36,9 @@ public class User {
 
 	public int getState() {
 		return state;
+	}
+	
+	public String getPicPath() {
+		return picPath;
 	}
 }

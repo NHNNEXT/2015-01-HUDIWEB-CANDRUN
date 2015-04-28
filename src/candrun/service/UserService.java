@@ -1,19 +1,20 @@
 package candrun.service;
 
-import java.security.PrivateKey;
+import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.web.multipart.MultipartFile;
 
 import candrun.dao.UserDAO;
 import candrun.model.User;
 import candrun.support.enums.CommonError;
 import candrun.support.enums.CommonInvar;
-import candrun.support.enums.Security;
 import candrun.support.enums.UserErrorcode;
 
 public class UserService {
@@ -26,17 +27,10 @@ public class UserService {
 		this.userDAO = userDao;
 	}
 
-	public String login(String eEmail, String ePw, HttpSession session)
+	public String login(String email, String pw, HttpSession session)
 			throws Exception {
 		User user;
 		int userState;
-		String email;
-		String pw;
-		PrivateKey privateKey = (PrivateKey) session
-				.getAttribute(Security.RSA_PRI_KEY.getValue());
-
-		email = SecurityService.decrytRsa(privateKey, eEmail);
-		pw = SecurityService.decrytRsa(privateKey, ePw);
 
 		try {
 			user = userDAO.findByEmail(email);
@@ -60,55 +54,32 @@ public class UserService {
 		return CommonInvar.DEFAULT.getValue();
 	}
 
-	public String register(String email, String nick, String pw,
-			HttpSession session) {
-//		String email;
-//		String pw;
-//		PrivateKey privateKey = (PrivateKey) session
-//				.getAttribute(Security.RSA_PRI_KEY.getValue());
+	public String register(String email, String pw, String nick,
+			MultipartFile file, HttpServletRequest req) {
+		String picPath = "";
 		try {
-//			email = SecurityService.decrytRsa(privateKey, eEmail);
-//			pw = SecurityService.decrytRsa(privateKey, ePw);
+			if (file != null) {
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(
+						originalFilename.lastIndexOf('.'),
+						originalFilename.length());
+				String pathName = IoService.makePicPathName(email, extension, req);
+				IoService.saveMultipartFile(file, pathName);
+				picPath = email + extension;
+			}
 			logger.debug(email + "/" + pw);
-			userDAO.addUser(new User(email, nick, SecurityService.encrypt(pw, pw)));
+			userDAO.addUser(new User(email, nick, SecurityService.encrypt(pw,
+					pw), picPath));
 		} catch (DuplicateKeyException e) {
 			logger.error(e.toString());
 			return UserErrorcode.DUP.getValue();
-		} catch (Exception e) {
+		} catch (IOException e) {
+			logger.error(e.toString());
+			return CommonError.UPLOAD.getValue();
+		}catch (Exception e) {
 			logger.error(e.toString());
 			return CommonError.SERVER.getValue();
 		}
 		return CommonInvar.SUCCESS.getValue();
 	}
-
-	// public void setRAS(HttpSession session, Model model)
-	// throws GeneralSecurityException {
-	// KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-	// keyPairGenerator.initialize(1024);
-	// KeyPair keyPair = keyPairGenerator.generateKeyPair();
-	// PublicKey publicKey = keyPair.getPublic();
-	// PrivateKey privateKey = keyPair.getPrivate();
-	//
-	// String pubKey = Base64.encode(publicKey.getEncoded());
-	// String priKey = Base64.encode(privateKey.getEncoded());
-	//
-	// logger.debug("PublicKey:" + pubKey);
-	// logger.debug("PrivateKey:" + priKey);
-	//
-	// session.setAttribute(Security.RSA_PRI_KEY.getValue(), privateKey);
-	// model.addAttribute(Security.RSA_PUB_KEY.getValue(), pubKey);
-	// }
-
-	// public String decrytRsa(PrivateKey privateKey, String encryptedValue)
-	// throws Exception {
-	// Cipher cipher = Cipher.getInstance("RSA");
-	// byte[] decryptedBytes = null;
-	// byte[] encryptedBytes = Base64.decode(encryptedValue);
-	//
-	// cipher.init(Cipher.DECRYPT_MODE, privateKey);
-	// decryptedBytes = cipher.doFinal(encryptedBytes);
-	// return new String(decryptedBytes, "utf-8");
-	// }
-	//
-	//
 }

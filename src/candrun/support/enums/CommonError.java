@@ -1,7 +1,8 @@
 package candrun.support.enums;
 
 public enum CommonError {
-	SERVER ("serverError");
+	SERVER ("serverError"),
+	UPLOAD ("uploadError");
 	
 	private final String value;
 	

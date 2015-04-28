@@ -28,10 +28,9 @@ public class AuthController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, String> signIn(@RequestParam("email") String email,
-			@RequestParam("password") String password, HttpSession session) {
+	public Map<String, String> signIn(HttpSession session, @RequestParam("email") String email,
+			@RequestParam("password") String password) {
 		
-		LOGGER.debug("요청");
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
 

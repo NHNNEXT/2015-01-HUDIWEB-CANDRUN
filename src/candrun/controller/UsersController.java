@@ -1,9 +1,6 @@
 package candrun.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.security.PrivateKey;
+import java.beans.PropertyEditorSupport;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,21 +11,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import candrun.dao.UserDAO;
 import candrun.mail.CryptoUtil;
 import candrun.mail.MailService;
 import candrun.model.User;
-import candrun.service.SecurityService;
 import candrun.service.UserService;
 import candrun.support.enums.CommonInvar;
-import candrun.support.enums.Security;
 
 @RequestMapping("/users")
 @Controller
@@ -39,67 +38,38 @@ public class UsersController {
 	@Autowired
 	private UserDAO userDao;
 	// 이미 존재하는 회원일 때 exception처리 해주어야 한다.
-
 	@Autowired
 	private MailService mailService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CommonsMultipartResolver multipartResolver;
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> create(@RequestParam("email") String email,
-			@RequestParam("nickname") String nickname,
+	public Map<String, String> create(HttpSession session, @RequestParam("email") String email,
 			@RequestParam("password") String password,
-			@RequestParam("pic") MultipartFile file, HttpSession session, HttpServletRequest request) throws Exception {
-		
+			@RequestParam("nickname") String nickname, HttpServletRequest request) throws Exception {
+		MultipartFile file = null;
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
 		
-		PrivateKey privateKey = (PrivateKey) session
-				.getAttribute(Security.RSA_PRI_KEY.getValue());
-		email = SecurityService.decrytRsa(privateKey, email);
-		password = SecurityService.decrytRsa(privateKey, password);
-		
-		if (!file.isEmpty()) {
-			byte[] bytes = file.getBytes();
-			String filePath = request.getServletContext().getRealPath("/");
-			File tempFile = new File(filePath + "/img/pics/"+ email + ".jpg");
-			FileOutputStream fos = new FileOutputStream(tempFile);
-			BufferedOutputStream bos = new BufferedOutputStream(fos);
-			bos.write(bytes);
-			bos.close();
-			fos.close();
+		if (!request.getParameter("pic").toString().equals("undefined")) {
+			MultipartHttpServletRequest multipartReq = multipartResolver.resolveMultipart(request);
+			file = multipartReq.getFile("pic");
 		}
 		
-
-		msg = userService.register(email, nickname, password, session);
+		msg = userService.register(email, password, nickname, file, request);
 		LOGGER.debug(msg);
-
+		
 		mailService.putMailBodyElement(email);
 		mailService.sendMail(email);
-
+		
 		returnMsg.put(CommonInvar.RETURNMSG.getValue(), msg);
 		return returnMsg;
 	}
+	
 
-	// @RequestMapping(method = RequestMethod.POST)
-	// public String create(@RequestParam("email") String email,
-	// @RequestParam("nickname") String nickname,
-	// @RequestParam("password") String password) {
-	//
-	// userDao.addUser(new User(email, nickname, password));
-	//
-	// try {
-	// String key = CryptoUtil.encrypt(email);
-	// mailService.sendMail(email, key);
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// return "pleaseVerifyEmail";
-	// }
-	//
 	@RequestMapping(value = "/{key}/verify", method = RequestMethod.GET)
 	public String verify(@PathVariable("key") String key, HttpSession session) {
 
@@ -121,6 +91,19 @@ public class UsersController {
 		// 로직이 불완전하다. userDB에 있을 때 등의 예외처리가 필요
 
 		return "redirect";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) throws Exception {
+	    binder.registerCustomEditor(MultipartFile.class, new PropertyEditorSupport() {
+
+	        @Override
+	        public void setAsText(String text) {
+	            LOGGER.debug("initBinder MultipartFile.class: {}; set null;", text);
+	            setValue(null);
+	        }
+
+	    });
 	}
 
 }

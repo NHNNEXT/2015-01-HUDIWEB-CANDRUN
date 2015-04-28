@@ -80,21 +80,7 @@ INDEX.form.submitSignupForm = function(e) {
 	var sPubKey = elements.pubKeyInput.value;
 	var fEncryptor = INDEX.form.encryptInput;
 	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey);
-	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);
-//	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey).replace(/\+/g, '%2B');
-//	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey).replace(/\+/g, '%2B');
-//	var ajax = new util.ajax("/users", form.checkSignUpResult);
-//	var params = "email="
-//			+ sEncryptedEmail
-//			+ "&password=" + sEncryptedPw
-//			+ "&nickname=" + elements.signupNickInput.value;
-//	ajax.setMethod("POST");
-//	ajax.open();
-//	ajax.setJson();
-//	ajax.readyParam();
-//	ajax.send(params);
-	
-	
+	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);	
 	var ajax = new util.ajaxFormData("/users", form.checkSignUpResult);
 	var formData = new FormData();
 	formData.append("pic", elements.signFileInput.files[0]);

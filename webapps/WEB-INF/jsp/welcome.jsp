@@ -37,7 +37,7 @@
 						<p class="responser" id="signup-email-responser"></p> <br /></li>
 					<li><label for="input-1-5">Picture</label>
 						<div class="input-container">
-							<input id="input-1-5" type="file" name="pic">
+							<input id="input-1-5" type="file" name="pic" accept="image/jpeg, image/pjpeg, image/png, image/gif, image/bmp, image/x-windows-bmp">
 						</div> <br /></li>
 					<li><label for="input-1-2">Nick</label>
 						<div class="input-container">

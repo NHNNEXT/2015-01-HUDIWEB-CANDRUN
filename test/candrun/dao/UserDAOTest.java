@@ -21,20 +21,20 @@ public class UserDAOTest {
 	@Autowired
 	private UserDAO userDao;
 	
-	@Test
-	public void findUser() throws SQLException {
-		User user = new User("candy@test.com", "nickname", "password");
-		userDao.addUser(user);
-		User dbUser = userDao.findByEmail("candy@test.com");
-		assertEquals(user,dbUser);
-	}
-	
-	@Test(expected=DuplicateKeyException.class)
-	public void addUserByDuplicateKey(){
-		User user = new User("caramel@test.com", "nickname", "password");
-		userDao.addUser(user);
-		userDao.addUser(user);
-	}
+//	@Test
+//	public void findUser() throws SQLException {
+//		User user = new User("candy@test.com", "nickname", "password");
+//		userDao.addUser(user);
+//		User dbUser = userDao.findByEmail("candy@test.com");
+//		assertEquals(user,dbUser);
+//	}
+//	
+//	@Test(expected=DuplicateKeyException.class)
+//	public void addUserByDuplicateKey(){
+//		User user = new User("caramel@test.com", "nickname", "password");
+//		userDao.addUser(user);
+//		userDao.addUser(user);
+//	}
 	
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void findUserByNotExistKey() throws SQLException {

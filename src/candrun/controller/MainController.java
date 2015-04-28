@@ -34,7 +34,6 @@ public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstPage(Model model, HttpSession session) {
 
-		LOGGER.debug((String) session.getAttribute("email"));
 		if (session.getAttribute("email") == null
 				|| session.getAttribute("email") == "") {
 			try {
