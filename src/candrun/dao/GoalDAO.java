@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import candrun.exception.PreparedStatementException;
 import candrun.model.Goal;
+import candrun.support.enums.GoalState;
 
 public class GoalDAO extends JdbcDaoSupport {
 	// connection을 만든다
@@ -30,7 +31,7 @@ public class GoalDAO extends JdbcDaoSupport {
 	};
 	// 입력받은 goal을 db에 넣는다.
 	public int addGoal(Goal goal) {
-		String sql = "INSERT INTO goal(contents, user_email, start_date) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO goal(contents, user_email) VALUES(?, ?)";
 	    KeyHolder keyHolder = new GeneratedKeyHolder();      
 	    
 		getJdbcTemplate().update(new PreparedStatementCreator() {
@@ -42,7 +43,7 @@ public class GoalDAO extends JdbcDaoSupport {
 								new String[] { "id" });
 						ps.setString(1, goal.getContents());
 						ps.setString(2, goal.getEmail());
-						ps.setTimestamp(3, goal.getStartDate());
+
 						return ps;
 					} catch (SQLException e) {
 						throw new PreparedStatementException();
@@ -51,6 +52,21 @@ public class GoalDAO extends JdbcDaoSupport {
 		}, keyHolder);
 	 
 	    return keyHolder.getKey().intValue(); 
+	}
+	
+	public void modifyGoal(Goal goal) {
+		String sql = "UPDATE goal SET contents = ?, mod_date = NOW() WHERE id = ?";
+		getJdbcTemplate().update(sql, goal.getContents(), goal.getId());
+	}
+	
+	public void startGoal(int id) {
+		String sql = "UPDATE goal SET state = ?, start_date = NOW() WHERE id = ?";
+		getJdbcTemplate().update(sql, GoalState.STARTED.getValue(), id);
+	}
+	
+	public void finishGoal(int id) {
+		String sql = "UPDATE goal SET state = ?, end_date = NOW() WHERE id = ?";
+		getJdbcTemplate().update(sql, GoalState.FINISHED.getValue(), id);
 	}
 
 	// goalId와 일치하는 goal을 불러온다
@@ -65,5 +81,14 @@ public class GoalDAO extends JdbcDaoSupport {
 		String sql = "SELECT * FROM goal WHERE user_email = ? ORDER BY created_date DESC LIMIT 5";
 		return getJdbcTemplate().query(sql, rowMapper, email);
 	}
-
+	/**
+	 * 최신 순으로 지정한 수만큼 Goal list를 반환 
+	 * @param email 자신의 email 
+	 * @param max 가져올 goal의 갯수
+	 * @see candrun.dao.GoalDAO#findRecentGoalsByEmail(String)
+	 */
+	public List<Goal> findRecentGoalsByEmail(String email, int max) {
+		String sql = "SELECT * FROM goal WHERE user_email = ? ORDER BY created_date DESC LIMIT ?";
+		return getJdbcTemplate().query(sql, rowMapper, email, max);
+	}
 }     

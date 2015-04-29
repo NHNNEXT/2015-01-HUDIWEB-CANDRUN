@@ -28,6 +28,7 @@ import candrun.mail.MailService;
 import candrun.model.User;
 import candrun.service.UserService;
 import candrun.support.enums.CommonInvar;
+import candrun.support.enums.UserState;
 
 @RequestMapping("/users")
 @Controller
@@ -84,7 +85,7 @@ public class UsersController {
 		User user = userDao.findByEmail(email);
 
 		if (user != null && user.getState() == 0) {
-			userDao.changeState(user.getEmail());
+			userDao.changeState(user.getEmail(), UserState.CERTIED);
 			session.setAttribute("verified", "success");
 		}
 		// user의 state 값 1로 증가

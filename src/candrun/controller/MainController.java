@@ -1,7 +1,9 @@
 package candrun.controller;
 
 import java.security.GeneralSecurityException;
+
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
 import candrun.service.HomeService;
-import candrun.service.SecurityService;
+import candrun.service.UserService;
 import candrun.support.enums.Security;
 
 @RequestMapping("/")
@@ -30,19 +33,19 @@ public class MainController {
 	UserDAO userDao;
 	@Autowired
 	HomeService homeService;
+	@Autowired
+	UserService UserService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstPage(Model model, HttpSession session) {
 
-		if (session.getAttribute("email") == null
-				|| session.getAttribute("email") == "") {
-			try {
-				SecurityService.setRAS(session, model);
-			} catch (GeneralSecurityException e) {
-				LOGGER.error(e.toString());
-				return "errPage";
+		try {
+			if (!UserService.isLogedIn(model, session)) {
+				return "welcome";
 			}
-			return "welcome";
+		} catch (GeneralSecurityException e) {
+			LOGGER.error(e.toString());
+			e.printStackTrace();
 		}
 
 		// 로긴/회원가입 시 사용했던 비공개 키 삭제

@@ -122,7 +122,7 @@ INDEX.form.submitSigninForm = function(e) {
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setJson();
-	ajax.readyParam();
+	ajax.setSimplePost();
 	ajax.send(params);	
 }
 INDEX.form.checkLoginResult = function(sResp) {
