@@ -57,13 +57,13 @@ INDEX.methods.addEvents = function() {
 	elements.signupFormFields
 			.addEventListener("keyup", form.validateSignUpForm);
 	elements.signupFormFields
-			.addEventListener("click", form.validateSignUpForm);
+			.addEventListener("click", form.validateSignUpForm, true);
 	elements.signupFormFields.addEventListener("blur", form.validateSignUpForm,
 			true);
 	elements.signinFormFields.addEventListener("keyup",
 			form.confirmSigninSubmittable);
 	elements.signinFormFields.addEventListener("click",
-			form.confirmSigninSubmittable);
+			form.confirmSigninSubmittable, true);
 	elements.signinFormFields.addEventListener("blur",
 			form.confirmSigninSubmittalble, true);
 
