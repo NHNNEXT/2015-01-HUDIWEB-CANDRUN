@@ -1,6 +1,9 @@
 package candrun.service;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -30,5 +33,12 @@ public class GoalServiceTest {
 			logger.debug(gr.getMyGoal().getEmail());
 			logger.debug(gr.getMyGoal().getContents());
 		});
+	}
+	
+	@Test
+	public void testGetGoalRelationsWhenEmpty() throws Exception {
+		List<GoalRelation> goalRelations = goalService
+				.getGoalRelations("unitimes@naver.com");
+		assertTrue(goalRelations.isEmpty());
 	}
 }

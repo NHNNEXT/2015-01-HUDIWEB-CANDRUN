@@ -25,9 +25,6 @@ CANDRUN.util.ajaxFormData = function(sUrl, fSuccess, fFail) {
 		httpRequest.setRequestHeader("Content-type",
 				"application/x-www-form-urlencoded");
 	}
-	this.setMultiPart = function() {
-		httpRequest.setRequestHeader("Content-type", "multipart/form-data");
-	}
 	this.setMethod = function(sMethod) {
 		method = sMethod;
 	}

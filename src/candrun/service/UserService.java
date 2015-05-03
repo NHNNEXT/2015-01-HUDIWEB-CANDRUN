@@ -77,6 +77,9 @@ public class UserService {
 
 	public String makePicPath(String email, MultipartFile file,
 			HttpServletRequest req) throws IOException {
+		if (file.isEmpty())
+			return "";
+
 		String originalFilename = file.getOriginalFilename();
 		String extension = originalFilename.substring(
 				originalFilename.lastIndexOf('.'), originalFilename.length());

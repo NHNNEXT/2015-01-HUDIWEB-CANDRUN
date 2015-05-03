@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import candrun.dao.UserDAO;
@@ -48,28 +47,24 @@ public class UsersController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> create(HttpSession session, @RequestParam("email") String email,
+	public Map<String, String> create(HttpSession session,
+			@RequestParam("email") String email,
 			@RequestParam("password") String password,
-			@RequestParam("nickname") String nickname, HttpServletRequest request) throws Exception {
-		MultipartFile file = null;
+			@RequestParam("nickname") String nickname,
+			@RequestParam("pic") MultipartFile file,
+			HttpServletRequest request) throws Exception {
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
-		
-		if (!request.getParameter("pic").toString().equals("undefined")) {
-			MultipartHttpServletRequest multipartReq = multipartResolver.resolveMultipart(request);
-			file = multipartReq.getFile("pic");
-		}
-		
+
 		msg = userService.register(email, password, nickname, file, request);
 		LOGGER.debug(msg);
-		
+
 		mailService.putMailBodyElement(email);
 		mailService.sendMail(email);
-		
+
 		returnMsg.put(CommonInvar.RETURNMSG.getValue(), msg);
 		return returnMsg;
 	}
-	
 
 	@RequestMapping(value = "/{key}/verify", method = RequestMethod.GET)
 	public String verify(@PathVariable("key") String key, HttpSession session) {
@@ -93,18 +88,21 @@ public class UsersController {
 
 		return "redirect";
 	}
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) throws Exception {
-	    binder.registerCustomEditor(MultipartFile.class, new PropertyEditorSupport() {
+		binder.registerCustomEditor(MultipartFile.class,
+				new PropertyEditorSupport() {
 
-	        @Override
-	        public void setAsText(String text) {
-	            LOGGER.debug("initBinder MultipartFile.class: {}; set null;", text);
-	            setValue(null);
-	        }
+					@Override
+					public void setAsText(String text) {
+						LOGGER.debug(
+								"initBinder MultipartFile.class: {}; set null;",
+								text);
+						setValue(null);
+					}
 
-	    });
+				});
 	}
 
 }

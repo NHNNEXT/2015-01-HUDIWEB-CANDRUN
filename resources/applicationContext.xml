@@ -17,10 +17,6 @@
 	<util:properties id="javaMailPropertiesSmtp"
 		location="classpath:java-mail-properties.properties" />
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		p:maxUploadSize="1000000" />
-
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${database.driverClassName}"
 		p:url="${database.url}" p:username="${database.username}" p:password="${database.password}" />
@@ -38,6 +34,10 @@
 		<constructor-arg
 			type="org.springframework.mail.javamail.JavaMailSenderImpl" ref="mailSender" />
 	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="1000000" />
 
 	<!-- service related -->
 	<bean id="mailService" class="candrun.mail.CertifMailService"

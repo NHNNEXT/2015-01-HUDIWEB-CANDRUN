@@ -56,9 +56,13 @@ INDEX.methods.addEvents = function() {
 	});
 	elements.signupFormFields
 			.addEventListener("keyup", form.validateSignUpForm);
+	elements.signupFormFields
+			.addEventListener("click", form.validateSignUpForm);
 	elements.signupFormFields.addEventListener("blur", form.validateSignUpForm,
 			true);
 	elements.signinFormFields.addEventListener("keyup",
+			form.confirmSigninSubmittable);
+	elements.signinFormFields.addEventListener("click",
 			form.confirmSigninSubmittable);
 	elements.signinFormFields.addEventListener("blur",
 			form.confirmSigninSubmittalble, true);
@@ -80,10 +84,15 @@ INDEX.form.submitSignupForm = function(e) {
 	var sPubKey = elements.pubKeyInput.value;
 	var fEncryptor = INDEX.form.encryptInput;
 	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey);
-	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);	
+	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);
 	var ajax = new util.ajaxFormData("/users", form.checkSignUpResult);
 	var formData = new FormData();
-	formData.append("pic", elements.signFileInput.files[0]);
+	var emptyFile = new File([], "");
+	var imgFile = elements.signFileInput.files[0];
+
+	if (imgFile === undefined)
+		imgFile = emptyFile;
+	formData.append("pic", imgFile);
 	formData.append("email", sEncryptedEmail);
 	formData.append("password", sEncryptedPw);
 	formData.append("nickname", elements.signupNickInput.value);
@@ -91,7 +100,6 @@ INDEX.form.submitSignupForm = function(e) {
 	ajax.open();
 	ajax.setJson();
 	ajax.send(formData);
-	
 }
 INDEX.form.checkSignUpResult = function(sResp) {
 	var oReturnMsg = {};
@@ -113,17 +121,17 @@ INDEX.form.submitSigninForm = function(e) {
 	var elements = INDEX.elements;
 	var sPubKey = elements.pubKeyInput.value;
 	var fEncryptor = INDEX.form.encryptInput;
-	var sEncryptedEmail = fEncryptor(elements.signinEmailInput.value, sPubKey).replace(/\+/g, '%2B');
-	var sEncryptedPw = fEncryptor(elements.signinPwInput.value, sPubKey).replace(/\+/g, '%2B');
+	var sEncryptedEmail = fEncryptor(elements.signinEmailInput.value, sPubKey)
+			.replace(/\+/g, '%2B');
+	var sEncryptedPw = fEncryptor(elements.signinPwInput.value, sPubKey)
+			.replace(/\+/g, '%2B');
 	var ajax = new util.ajax("/auth", form.checkLoginResult);
-	var params = "email="
-			+ sEncryptedEmail
-			+ "&password=" + sEncryptedPw;
+	var params = "email=" + sEncryptedEmail + "&password=" + sEncryptedPw;
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setJson();
 	ajax.setSimplePost();
-	ajax.send(params);	
+	ajax.send(params);
 }
 INDEX.form.checkLoginResult = function(sResp) {
 	var oReturnMsg = {};
@@ -162,8 +170,8 @@ INDEX.form.validateSignUpForm = function(e) {
 		elTarget = elements.signupPwRep;
 		fValidator = util.isValidatePW;
 		if (elements.signupConPwInput.value) {
-			form.validateConPW(elements.signupConPwRep, elements.signupConPwInput.value,
-					e.target.value);
+			form.validateConPW(elements.signupConPwRep,
+					elements.signupConPwInput.value, e.target.value);
 		}
 		break;
 	case "input-1-4":
@@ -176,9 +184,9 @@ INDEX.form.validateSignUpForm = function(e) {
 		form.confirmSignupSubmittable();
 		return;
 	}
-		form.validateInput(elTarget, e.target.value, fValidator);
-		form.confirmSignupSubmittable();
-		return;
+	form.validateInput(elTarget, e.target.value, fValidator);
+	form.confirmSignupSubmittable();
+	return;
 }
 INDEX.form.confirmSignupSubmittable = function() {
 	var elements = INDEX.elements;

@@ -26,6 +26,8 @@ public class HomeService {
 		// 현재 유효한 골 관계 로드
 		List<GoalRelation> goalRelations = goalService.getGoalRelations(email);
 		model.addAttribute("goalRelations", goalRelations);
+		if (goalRelations.isEmpty())
+			return;
 		// 첫번째 goal의 tasks 로드
 		model.addAttribute(
 				"tasks",
