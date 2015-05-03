@@ -177,7 +177,12 @@ nav .nav-goal {
 #show-goal {
 	float: right;
 	width: calc(100% - 360px);
-	background-color: #f3f3f3;
+	background-color: #D9CCB4;
+	height: 100%;
+	perspective: 1000px;
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
 }
 
 #show-goal .goal-wrapper {
@@ -204,8 +209,20 @@ nav .nav-goal {
 }
 
 
-#show-goal .btn-nudge {
+.background-red {
+	background-color: #A65A53;
+}
+
+.background-pink{
+	background-color: #D97E7E;
+}
+
+.background-white {
 	background-color: #e6e6e6;
+}
+
+#show-goal .btn-nudge {
+	
 	font-size: 35px;
 	line-height: 120px;
 	width: 100%;
@@ -218,6 +235,9 @@ nav .nav-goal {
 	top: 50px;
 }
 
+/*#show-goal:hover{
+	transform: rotateY(180deg);
+}*/
 
 
 
