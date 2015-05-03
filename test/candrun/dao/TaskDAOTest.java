@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import candrun.model.Task;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/test-applicationContext.xml")
+@ContextConfiguration("classpath:/applicationContext.xml")
 public class TaskDAOTest {
 	
 	@Autowired
@@ -47,5 +47,12 @@ public class TaskDAOTest {
 		int nudgeCountAfterNudge = dbTasksAfterNudge.get(0).getNudge();
 		
 		assertEquals(nudgeCount+1, nudgeCountAfterNudge);
+	}
+	
+	@Test
+	public void testCompleteTask() throws Exception {
+		int taskId = 1;
+		taskDao.completeTask(taskId);
+		assertTrue(taskDao.getTaskByTaskId(taskId).isComplete());
 	}
 }

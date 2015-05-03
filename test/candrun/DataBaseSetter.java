@@ -87,6 +87,11 @@ public class DataBaseSetter {
 				taskDao.addTask(new Task("asdfqwer" + k, goalId));
 			}
 		}
+		
+		int taskLimit = maxUsers * 15;
+		for (int i = 1; i < taskLimit; i += 3) {
+			taskDao.completeTask(i);
+		}
 
 		// goal_has_goal의 데이터 수 가운트
 		int count = 1;

@@ -49,10 +49,19 @@
 	<button>make new goal</button>
 	</nav>
 
-	<section id="show-goal" "flip-container">
-		<div class="goal-wrapper">
-			<div class = "goal-title">${goals[0].contents}</div>
-			<div class = "startdate">${goals[0].startDate}</div>
+	<section id="show-goal">
+	<div class="goal-wrapper">
+		<div class="goal-title">${goalRelations[0].myGoal.contents}</div>
+		<div class="startdate">${goalRelations[0].myGoal.startDate}</div>
+	</div>
+	<c:forEach items="${tasks}" var="task">
+		<div class="task-wrapper">
+			<form class="submit_nudge">
+				<input type="submit" class="btn-nudge" value="${task.contents}" />
+				<input type="hidden" class="tasksId" value="${task.id}" />
+				<input type="hidden" class="task-complete" value="${task.complete}" />
+				<div class="nudge-number">${task.nudge}</div>
+			</form>
 		</div>
 		<c:forEach items="${tasks}" var="tasks">
 			<div class="task-wrapper">
