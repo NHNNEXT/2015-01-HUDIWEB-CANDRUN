@@ -82,7 +82,7 @@ public class UsersController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User user = userDao.findByEmail(email);
+		User user = userDao.getByEmail(email);
 
 		if (user != null && user.getState() == 0) {
 			userDao.changeState(user.getEmail(), UserState.CERTIED);

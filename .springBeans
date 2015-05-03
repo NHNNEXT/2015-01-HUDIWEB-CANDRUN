@@ -9,6 +9,7 @@
 	<configs>
 		<config>resources/candrun-servlet.xml</config>
 		<config>resources/applicationContext.xml</config>
+		<config>resources/aopContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

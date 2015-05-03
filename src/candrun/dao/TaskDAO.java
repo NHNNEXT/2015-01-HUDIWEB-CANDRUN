@@ -22,7 +22,6 @@ public class TaskDAO extends JdbcDaoSupport{
 				throw new BeanInstantiationException(Task.class, e.getMessage(), e);
 			}
 		}
-		
 	}
 	
 	public void addTask(Task task) {
@@ -31,13 +30,13 @@ public class TaskDAO extends JdbcDaoSupport{
 	}
 
 	//같은 goal아래 tasks을 불러온다
-	public List<Task> findTasksByGoalId(int goalId) {
+	public List<Task> getTasksByGoalId(int goalId) {
 		String sql ="SELECT * FROM tasks WHERE goal_id = ? LIMIT 3";
 		return getJdbcTemplate().query(sql, new TaskMapper(), goalId);
 	}
 	
 	//TaskId로 해당 태스크를 가져온다. 
-	public Task findTaskByTaskId(int taskId) {
+	public Task getTaskByTaskId(int taskId) {
 		String sql = "SELECT * FROM tasks WHERE id = ?";
 		return getJdbcTemplate().queryForObject(sql, new TaskMapper(), taskId);
 	}

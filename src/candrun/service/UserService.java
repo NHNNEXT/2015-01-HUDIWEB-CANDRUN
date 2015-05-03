@@ -35,7 +35,7 @@ public class UserService {
 		int userState;
 
 		try {
-			user = userDao.findByEmail(email);
+			user = userDao.getByEmail(email);
 		} catch (EmptyResultDataAccessException e) {
 			logger.error(e.toString());
 			return UserErrorcode.EMPTY.getValue();
@@ -89,7 +89,7 @@ public class UserService {
 			throws GeneralSecurityException {
 		if (session.getAttribute("email") == null
 				|| session.getAttribute("email") == "") {
-			SecurityService.setRAS(session, model);
+			SecurityService.setRSA(session, model);
 			return false;
 		}
 		return true;

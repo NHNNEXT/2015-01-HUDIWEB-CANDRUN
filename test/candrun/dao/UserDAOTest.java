@@ -26,7 +26,7 @@ public class UserDAOTest {
 	public void findUser() throws SQLException {
 		User user = new User("asdf0@asdf.com", "qwer0", "asdf", "pic0.jpg");
 		userDao.addUser(user);
-		User dbUser = userDao.findByEmail("candy@test.com");
+		User dbUser = userDao.getByEmail("candy@test.com");
 		assertEquals(user,dbUser);
 	}
 	
@@ -39,7 +39,7 @@ public class UserDAOTest {
 	
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void findUserByNotExistKey() throws SQLException {
-		userDao.findByEmail("honey@test.com");
+		userDao.getByEmail("honey@test.com");
 	}
 	
 	@Test

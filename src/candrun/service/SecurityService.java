@@ -26,7 +26,7 @@ public class SecurityService {
 	private SecurityService() {
 	};
 
-	public static final void setRAS(HttpSession session, Model model)
+	public static final void setRSA(HttpSession session, Model model)
 			throws GeneralSecurityException {
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
 		keyPairGenerator.initialize(1024);

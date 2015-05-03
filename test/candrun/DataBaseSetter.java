@@ -17,6 +17,7 @@ import candrun.model.Goal;
 import candrun.model.Task;
 import candrun.model.User;
 import candrun.service.SecurityService;
+import candrun.support.enums.RelationRequestState;
 import candrun.support.enums.UserState;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -79,13 +80,29 @@ public class DataBaseSetter {
 					taskDao.addTask(new Task("asdfqwer" + k, goalId));
 				}
 			}
-			int goalId = goalDao.addGoal(new Goal("asdfqwer" + (maxGoals - 1), "asdf" + i
-					+ "@asdf.com"));
+			int goalId = goalDao.addGoal(new Goal("asdfqwer" + (maxGoals - 1),
+					"asdf" + i + "@asdf.com"));
 			goalDao.startGoal(goalId);
 			for (int k = 0; k < maxTasks; k++) {
 				taskDao.addTask(new Task("asdfqwer" + k, goalId));
 			}
 		}
 
+		// goal_has_goal의 데이터 수 가운트
+		int count = 1;
+		for (int i = 9; i < (maxUsers - 5) * 8; i += 5) {
+			int k = i + 3;
+			for (; i < k; i++) {
+				for (int j = i + 8; j < i + (3 * 8) + 1; j += 8) {
+					goalDao.requestConnectGoal(i, j);
+					count++;
+				}
+			}
+		}
+		for (int i = 1; i < count; i++) {
+			if (i % 5 == 0)
+				continue;
+			goalDao.changeState(i, RelationRequestState.ACCEPTED);
+		}
 	}
 }

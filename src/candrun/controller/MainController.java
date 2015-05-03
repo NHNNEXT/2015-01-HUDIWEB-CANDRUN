@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
+import candrun.service.GoalService;
 import candrun.service.HomeService;
 import candrun.service.UserService;
 import candrun.support.enums.Security;
@@ -34,13 +35,15 @@ public class MainController {
 	@Autowired
 	HomeService homeService;
 	@Autowired
-	UserService UserService;
+	UserService userService;
+	@Autowired
+	GoalService goalService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstPage(Model model, HttpSession session) {
 
 		try {
-			if (!UserService.isLogedIn(model, session)) {
+			if (!userService.isLogedIn(model, session)) {
 				return "welcome";
 			}
 		} catch (GeneralSecurityException e) {
@@ -55,36 +58,5 @@ public class MainController {
 		homeService.setInitModel(model, email);
 		
 		return "home";
-
-//		// TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
-//		// String email = (String) session.getAttribute("email");
-//		String email = "javajava@naver.com";
-//
-//		// get goals
-//		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
-//		model.addAttribute("goals", goals);
-//
-//		// get recent goal and tasks
-//		if (goals.size() > 0) {
-//			Goal topGoal = goals.get(0);
-//			List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
-//			model.addAttribute("tasks", tasks);
-//		}
-//
-//		// get friends in nav
-//		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
-//		for (int i = 0; i < goals.size(); i++) {
-//			Goal goal = goals.get(i);
-//			LOGGER.info("recent goal's id: {}", goal.getId());
-//			friendsListGroupByGoal.put("friends" + i,
-//					(userDao.findUsersByGoalId(goal.getId(), email)));
-//		}
-//		model.addAllAttributes(friendsListGroupByGoal);
-//
-//		// get friends in sidebar
-//		List<User> friends = userDao.findFriendsAsRequester(email);
-//		model.addAttribute("friends", friends);
-//
-//		return "home";
 	}
 }

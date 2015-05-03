@@ -11,19 +11,18 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 	<context:component-scan base-package="candrun"/>
 	<mvc:annotation-driven/>
-	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
-	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
-	<mvc:resources location="/img/" mapping="/img/**"></mvc:resources>
+	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/img/" mapping="/img/**"/>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/"
-		p:suffix=".jsp"></bean>
+		p:suffix=".jsp"/>
 				
-	<aop:aspectj-autoproxy proxy-target-class="true">
-		<aop:include name="securityAspect"/>
-	</aop:aspectj-autoproxy>
+	<!-- for controller -->
+	<aop:aspectj-autoproxy/>
 	
 	<!-- aop -->
-	<bean id="securityAspect" class="candrun.service.aspect.SecurityAspect"></bean>
+	<bean id="securityAspect" class="candrun.service.aspect.SecurityAspect"/>
 		
 </beans>

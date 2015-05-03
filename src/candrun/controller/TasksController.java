@@ -29,6 +29,6 @@ public class TasksController {
 		int taskId = Integer.parseInt(req.getParameter("tasksId"));
 		taskDao.addNudge(taskId);
 
-		return taskDao.findTaskByTaskId(taskId);
+		return taskDao.getTaskByTaskId(taskId);
 	}
 }
