@@ -25,10 +25,8 @@ public class TasksController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Task update(HttpServletRequest req, HttpServletResponse resp) {
-		LOGGER.info("add Nudge: task Id = { }", req.getParameter("tasksId"));
 		int taskId = Integer.parseInt(req.getParameter("tasksId"));
 		taskDao.addNudge(taskId);
-
 		return taskDao.getTaskByTaskId(taskId);
 	}
 }
