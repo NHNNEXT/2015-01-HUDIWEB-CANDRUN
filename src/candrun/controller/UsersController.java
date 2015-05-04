@@ -1,6 +1,5 @@
 package candrun.controller;
 
-import java.beans.PropertyEditorSupport;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,16 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import candrun.dao.UserDAO;
 import candrun.mail.CryptoUtil;
 import candrun.mail.MailService;
@@ -37,13 +32,10 @@ public class UsersController {
 
 	@Autowired
 	private UserDAO userDao;
-	// 이미 존재하는 회원일 때 exception처리 해주어야 한다.
 	@Autowired
 	private MailService mailService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private CommonsMultipartResolver multipartResolver;
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
@@ -51,8 +43,8 @@ public class UsersController {
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
 			@RequestParam("nickname") String nickname,
-			@RequestParam("pic") MultipartFile file,
-			HttpServletRequest request) throws Exception {
+			@RequestParam("pic") MultipartFile file, HttpServletRequest request)
+			throws Exception {
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
 
@@ -88,21 +80,4 @@ public class UsersController {
 
 		return "redirect";
 	}
-
-	@InitBinder
-	public void initBinder(WebDataBinder binder) throws Exception {
-		binder.registerCustomEditor(MultipartFile.class,
-				new PropertyEditorSupport() {
-
-					@Override
-					public void setAsText(String text) {
-						LOGGER.debug(
-								"initBinder MultipartFile.class: {}; set null;",
-								text);
-						setValue(null);
-					}
-
-				});
-	}
-
 }

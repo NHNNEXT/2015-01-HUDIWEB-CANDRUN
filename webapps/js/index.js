@@ -55,18 +55,9 @@ INDEX.methods.addEvents = function() {
 		form.openModal(elements.signupForm);
 	});
 	elements.signupFormFields
-			.addEventListener("keyup", form.validateSignUpForm);
-	elements.signupFormFields
-			.addEventListener("click", form.validateSignUpForm, true);
-	elements.signupFormFields.addEventListener("blur", form.validateSignUpForm,
-			true);
-	elements.signinFormFields.addEventListener("keyup",
+			.addEventListener("input", form.validateSignUpForm);
+	elements.signinFormFields.addEventListener("input",
 			form.confirmSigninSubmittable);
-	elements.signinFormFields.addEventListener("click",
-			form.confirmSigninSubmittable, true);
-	elements.signinFormFields.addEventListener("blur",
-			form.confirmSigninSubmittalble, true);
-
 	elements.signinForm.addEventListener("submit", form.submitSigninForm);
 	elements.signupForm.addEventListener("submit", form.submitSignupForm);
 }
@@ -85,7 +76,7 @@ INDEX.form.submitSignupForm = function(e) {
 	var fEncryptor = INDEX.form.encryptInput;
 	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey);
 	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);
-	var ajax = new util.ajaxFormData("/users", form.checkSignUpResult);
+	var ajax = new util.ajax("/users", form.checkSignUpResult);
 	var formData = new FormData();
 	var emptyFile = new File([], "");
 	var imgFile = elements.signFileInput.files[0];
@@ -157,7 +148,6 @@ INDEX.form.validateSignUpForm = function(e) {
 	var util = CANDRUN.util;
 	var elements = INDEX.elements;
 	var form = INDEX.form;
-	var keyCode = util.getKeyCode(e);
 	var elTarget;
 	var fValidator;
 
@@ -246,6 +236,8 @@ INDEX.form.closeModal = function(elModal) {
 INDEX.form.openModal = function(elModal) {
 	var util = CANDRUN.util;
 	var elements = INDEX.elements;
+	var form = INDEX.form;
+
 	util.removeClass(elModal, "dp-none");
 	util.addClass(elements.bg, "overlay-darken");
 	util.addClass(elements.signLinksWrapper, "dp-none");

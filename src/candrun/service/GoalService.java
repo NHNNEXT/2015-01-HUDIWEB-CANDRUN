@@ -43,6 +43,10 @@ public class GoalService {
 		goals.addAll(goalDao.getGoals(email, GoalState.STARTED));
 		return goals;
 	}
+	
+	public Goal getGoal(int goalId) {
+		return goalDao.getGoalById(goalId);
+	}
 
 	private GoalRelation getGoalRelation(Goal myGoal) {
 		List<Goal> acceptedRelationGoals = new ArrayList<Goal>();

@@ -14,7 +14,7 @@ CANDRUN.enums.pwConMsg = {
 }
 
 CANDRUN.util = {};
-CANDRUN.util.ajaxFormData = function(sUrl, fSuccess, fFail) {
+CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var httpRequest;
 	var method = 'GET';
 
@@ -74,56 +74,56 @@ CANDRUN.util.ajaxFormData = function(sUrl, fSuccess, fFail) {
 // myAjax.setMethod("PUT");
 // Ajax 실행
 // myAjax.send();
-CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
-	var httpRequest;
-	var method = 'GET';
-
-	this.setJson = function() {
-		httpRequest.setRequestHeader('Accept', 'application/json');
-	}
-	this.setSimplePost = function() {
-		httpRequest.setRequestHeader("Content-type",
-				"application/x-www-form-urlencoded");
-	}
-	this.setMethod = function(sMethod) {
-		method = sMethod;
-	}
-	this.open = function() {
-		httpRequest.open(method, sUrl);
-	}
-	// send 메소드에 params 추가.
-	this.send = function(params) {
-		httpRequest.send(params);
-	}
-
-	if (window.XMLHttpRequest) {
-		httpRequest = new XMLHttpRequest();
-	} else if (window.ActiveXObject) {
-		try {
-			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			try {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			} catch (e) {
-			}
-		}
-	}
-	if (!httpRequest) {
-		console.log('Giving up :( Cannot create an XMLHTTP instance');
-		return false;
-	}
-	httpRequest.onreadystatechange = function() {
-		if (httpRequest.readyState === 4) {
-			if (httpRequest.status === 200) {
-				fSuccess(httpRequest.responseText);
-			} else {
-				if (fFail) {
-					fFail();
-				}
-			}
-		}
-	}
-}
+//CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
+//	var httpRequest;
+//	var method = 'GET';
+//
+//	this.setJson = function() {
+//		httpRequest.setRequestHeader('Accept', 'application/json');
+//	}
+//	this.setSimplePost = function() {
+//		httpRequest.setRequestHeader("Content-type",
+//				"application/x-www-form-urlencoded");
+//	}
+//	this.setMethod = function(sMethod) {
+//		method = sMethod;
+//	}
+//	this.open = function() {
+//		httpRequest.open(method, sUrl);
+//	}
+//	// send 메소드에 params 추가.
+//	this.send = function(params) {
+//		httpRequest.send(params);
+//	}
+//
+//	if (window.XMLHttpRequest) {
+//		httpRequest = new XMLHttpRequest();
+//	} else if (window.ActiveXObject) {
+//		try {
+//			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+//		} catch (e) {
+//			try {
+//				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+//			} catch (e) {
+//			}
+//		}
+//	}
+//	if (!httpRequest) {
+//		console.log('Giving up :( Cannot create an XMLHTTP instance');
+//		return false;
+//	}
+//	httpRequest.onreadystatechange = function() {
+//		if (httpRequest.readyState === 4) {
+//			if (httpRequest.status === 200) {
+//				fSuccess(httpRequest.responseText);
+//			} else {
+//				if (fFail) {
+//					fFail();
+//				}
+//			}
+//		}
+//	}
+//}
 CANDRUN.util.querySelector = function(el) {
 	return document.querySelector(el);
 }
@@ -164,7 +164,7 @@ CANDRUN.util.isValidatePW = function(sPW) {
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.NUM;
 	}
-	reg = /[!#$%&'*+/=?^_`{|}~-]/;
+	reg = /[!@#$%&'*+/=?^_`{|}~-]/;
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.MARK;
 	}

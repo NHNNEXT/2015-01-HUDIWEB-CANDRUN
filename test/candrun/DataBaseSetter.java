@@ -64,27 +64,29 @@ public class DataBaseSetter {
 
 		int maxGoals = 3;
 		int maxTasks = 3;
+		int goalIdx = 10;
+		int taskIdx = 10;
 		for (int i = 1; i < maxUsers; i++) {
 			for (int j = 0; j < maxGoals - 1; j++) {
-				int goalId = goalDao.addGoal(new Goal("asdfqwer" + j, "asdf"
+				int goalId = goalDao.addGoal(new Goal("asdfqwer" + goalIdx++, "asdf"
 						+ i + "@asdf.com"));
 				for (int k = 0; k < maxTasks; k++) {
-					taskDao.addTask(new Task("asdfqwer" + k, goalId));
+					taskDao.addTask(new Task("asdfqwer" + taskIdx++, goalId));
 				}
 			}
 			for (int j = maxGoals; j < maxGoals + 5; j++) {
-				int goalId = goalDao.addGoal(new Goal("asdfqwer" + j, "asdf"
+				int goalId = goalDao.addGoal(new Goal("asdfqwer" + goalIdx++, "asdf"
 						+ i + "@asdf.com"));
 				goalDao.finishGoal(goalId);
 				for (int k = 0; k < maxTasks; k++) {
-					taskDao.addTask(new Task("asdfqwer" + k, goalId));
+					taskDao.addTask(new Task("asdfqwer" + taskIdx++, goalId));
 				}
 			}
-			int goalId = goalDao.addGoal(new Goal("asdfqwer" + (maxGoals - 1),
+			int goalId = goalDao.addGoal(new Goal("asdfqwer" + goalIdx++,
 					"asdf" + i + "@asdf.com"));
 			goalDao.startGoal(goalId);
 			for (int k = 0; k < maxTasks; k++) {
-				taskDao.addTask(new Task("asdfqwer" + k, goalId));
+				taskDao.addTask(new Task("asdfqwer" + taskIdx++, goalId));
 			}
 		}
 		

@@ -17,7 +17,7 @@ public class TaskDAO extends JdbcDaoSupport {
 		@Override
 		public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
 			try {
-				return new Task(rs.getInt("id"), rs.getString("contents"),
+				return new Task(rs.getBigDecimal("id").intValue(), rs.getString("contents"),
 						rs.getInt("nudge"), rs.getInt("combo"),
 						rs.getInt("success_days"), rs.getInt("max_combo"),
 						rs.getInt("goal_id"), rs.getInt("achievement"),

@@ -48,6 +48,8 @@
 		c:userDao-ref="userDao" c:taskDao-ref="taskDao" c:goalService-ref="goalService" />
 	<bean id="goalService" class="candrun.service.GoalService"
 		c:goalDao-ref="goalDao" c:userDao-ref="userDao" />
+	<bean id="taskService" class="candrun.service.TaskService"
+		c:taskDao-ref="taskDao" />
 
 	<!-- dao related -->
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />

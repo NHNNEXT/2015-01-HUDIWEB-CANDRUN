@@ -7,7 +7,7 @@
 <head>
 <title>9bagi</title>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="/css/home.css">
+	<link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 <body>
 	<nav>
@@ -20,14 +20,13 @@
 	<div id="goal-groups">
 		<ul class="nav-goal-container">
 			<c:forEach var="goalRelation" items="${goalRelations}">
-				<li class="nav-goal">${goalRelation.myGoal.contents}
+				<li class="nav-goal"><span id="${goalRelation.myGoal.id}">${goalRelation.myGoal.contents}</span>
 					<div class="nav-friends-container">
 						<c:forEach var="relation" items="${goalRelation.relation}">
-							<div class="friend-picture"
+							<div class="friend-picture" id="${relation.value.id}"
 								style='background-image: url("/img/pics/${relation.key.picPath}")'></div>
 						</c:forEach>
-					</div>
-				</li>
+					</div></li>
 			</c:forEach>
 		</ul>
 	</div>
@@ -51,15 +50,17 @@
 	<section id="make-goal">
 	<form class="submit-form">
 		<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
-		<div class="input-container">
-			<input class="task-input" />
-		</div>
-		<div class="task-input-add">+</div>
-		<div class="goal-form-submit">submit</div>
+			<div class="input-container">
+				<input class="task-input" />
+			</div>
+			<div class="task-input-add">+</div>
+			<div class="goal-form-submit">submit</div>
 	</form>
 	</section>
 </body>
+<script src="/js/template/handlebars-v3.0.3.js"></script>
 <script src="/js/addGoal.js"></script>
 <script src="/js/addNudge.js"></script>
 <script src="/js/candrun.js"></script>
+<script src="/js/home.js"></script>
 </html>
