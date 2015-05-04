@@ -16,8 +16,8 @@ NUDGE.methods.getElements = function() {
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
 	var elements = NUDGE.elements;
 	elements.nudgeList = querySelectorAll(".btn-nudge");
-	elements.lastSelectedTabNumber;
-	elements.lastSelectedForm;
+	elements.numberToNudge;
+	elements.taskIdToNudge;
 };
 
 NUDGE.methods.addEvents = function() {
@@ -28,44 +28,42 @@ NUDGE.methods.addEvents = function() {
 			return;
 		var tempEl = nudgeList[idx];
 		tempEl.addEventListener("click", NUDGE.methods.addNudge);
+		tempEl.addEventListener("click", NUDGE.methods.checkComplete);
 	}
 };
 
 NUDGE.methods.addNudge = function (e) {
 	e.preventDefault();
-//	
-//	var elements = NUDGE.elements;
-//
-//	elements.lastSelectedTabNumber = e.target.parentNode.parentNode.querySelector('.nudge-number');
-//	elements.lastSelectedForm = e.target.parentNode.querySelector('.tasksId');
-//
-//	var sUrl = "/tasks";
-//	var params = "&tasksId=" + elements.lastSelectedForm.value;
-//	var addNudgeAjax = new CANDRUN.util.ajax(sUrl, NUDGE.methods.refreshNumber);
-//
-//	addNudgeAjax.setMethod("POST");
-//	addNudgeAjax.open();
-//	addNudgeAjax.readyParam();
-//	addNudgeAjax.send(params);
-	NUDGE.methods.refreshNumber({"nudge":"nudge"});
+	
+	var elements = NUDGE.elements;
+
+	elements.numberToNudge = e.target.parentNode.parentNode.querySelector('.nudge-number');
+	elements.taskIdToNudge = e.target.parentNode.querySelector('.tasksId');
+
+	var sUrl = "/tasks";
+	var params = "&tasksId=" + elements.taskIdToNudge.value;
+	var addNudgeAjax = new CANDRUN.util.ajax(sUrl, NUDGE.methods.refreshNumber);
+
+	addNudgeAjax.setMethod("POST");
+	addNudgeAjax.open();
+	addNudgeAjax.setSimplePost();
+	addNudgeAjax.send(params);
 
 };
 
-NUDGE.methods.checkComplete = function(){
-	var taskContents = document.getElementById('taskContents');
-	if(document.querySelector('.taskComplete').value == "true"){
-		taskContents.value ="너나 잘하시오";
-		taskContents.className = "btn-nudge background-pink";
+NUDGE.methods.checkComplete = function(e){
+	if(e.target.parentNode.childNodes[5].value === "true"){
+		e.target.value ="너나 잘하시오";
+		e.target.className = "btn-nudge background-pink";
 	}
 	else{
-		taskContents.value= "넛지 감사";
-		taskContents.className ="btn-nudge background-red";
+		e.target.value= "넛지 감사";
+		e.target.className ="btn-nudge background-red";
 	}
 };
 
 NUDGE.methods.refreshNumber = function (responseText) {
-//	NUDGE.elements.lastSelectedTabNumber.innerHTML = JSON.parse(responseText).nudge;
-	NUDGE.methods.checkComplete();
+	NUDGE.elements.numberToNudge.innerHTML = JSON.parse(responseText).nudge;
 
 };
 document.addEventListener("DOMContentLoaded", function() {

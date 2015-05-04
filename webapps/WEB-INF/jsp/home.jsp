@@ -19,6 +19,7 @@
 	<!-- id로 되어있는 friend 부분은 DB에서 받아오면서 class로 바꾸어야 한다. -->
 	<div id="goal-groups">
 		<ul class="nav-goal-container">
+
 			<c:forEach var="goalRelation" items="${goalRelations}">
 				<li class="nav-goal">${goalRelation.myGoal.contents}
 					<div class="nav-friends-container">
@@ -48,6 +49,7 @@
 			</form>
 		</div>
 	</c:forEach> </section>
+
 	<section id="make-goal">
 	<form class="submit-form">
 		<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
