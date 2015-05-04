@@ -7,7 +7,7 @@
 <head>
 <title>9bagi</title>
 <meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" type="text/css" href="css/home.css">
 </head>
 <body>
 	<nav id='nav'>
@@ -18,13 +18,12 @@
 	<!-- id로 되어있는 friend 부분은 DB에서 받아오면서 class로 바꾸어야 한다. -->
 	<div id="goal-groups">
 		<ul class="nav-goal-container">
-			<li class="nav-goal">${goals[0].contents} 
+			<li class="nav-goal">${goals[0].contents}
 				<div class="nav-friends-container">
 					<div class="nigayo"></div>
 					<div class="cob"></div>
 					<div class="hth"></div>
-				</div>
-				<c:forEach items="${friends0}" var="friends0">
+				</div> <c:forEach items="${friends0}" var="friends0">
 					<div>${friends0.nickname}</div>
 					<li></li>
 					<li></li>
@@ -50,41 +49,32 @@
 	</nav>
 
 	<section id="show-goal">
-	<div class="goal-wrapper">
-		<div class="goal-title">${goalRelations[0].myGoal.contents}</div>
-		<div class="startdate">${goalRelations[0].myGoal.startDate}</div>
-	</div>
-	<c:forEach items="${tasks}" var="task">
-		<div class="task-wrapper">
-			<form class="submit_nudge">
-				<input type="submit" class="btn-nudge" value="${task.contents}" />
-				<input type="hidden" class="tasksId" value="${task.id}" />
-				<input type="hidden" class="task-complete" value="${task.complete}" />
-				<div class="nudge-number">${task.nudge}</div>
-			</form>
+		<div class="goal-wrapper">
+			<div class="goal-title">${goalRelations[0].myGoal.contents}</div>
+			<div class="startdate">${goalRelations[0].myGoal.startDate}</div>
 		</div>
-		<c:forEach items="${tasks}" var="tasks">
-			<div class="task-wrapper">
+		<c:forEach items="${tasks}" var="task">
+			<div class="task-wrapper" id="taskid${task.id}">
 				<form class="submit_nudge">
-					<input type="submit" class="btn-nudge background-white" id="taskContents" value="${tasks.contents}" />
-					<input type="hidden" class="taskComplete" value="true" />
-					<input type="hidden" class="tasksId" value="${tasks.id}" />
-					<div class="nudge-number">${tasks.nudge}</div>
+					<input type="submit" class="btn-nudge" id="taskContents"
+						value="${task.contents}" /> <input type="hidden" class="tasksId"
+						value="${task.id}" /> <input type="hidden" class="task-complete"
+						value="${task.complete}" />
+					<div class="nudge-number">${task.nudge}</div>
 				</form>
 			</div>
-		</c:forEach>
-		<!-- <div class="back"></div> -->
-	</section>	
+		</c:forEach> 
+	</section>
 
 	<section id="make-goal">
-			<form class="submit-form">
-				<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
-					<div class="input-container">
-						<input class="task-input"/>
-					</div>
-				<div class="task-input-add">+</div>
-				<div class="goal-form-submit">submit</div>
-			</form>
+	<form class="submit-form">
+		<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
+		<div class="input-container">
+			<input class="task-input" />
+		</div>
+		<div class="task-input-add">+</div>
+		<div class="goal-form-submit">submit</div>
+	</form>
 	</section>
 </body>
 <script src="/js/addGoal.js"></script>

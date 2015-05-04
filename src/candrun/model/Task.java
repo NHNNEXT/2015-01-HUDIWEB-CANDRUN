@@ -17,14 +17,15 @@ public class Task {
 		this.goalId = goalId;
 	}
 
+
 	public Task(int id, String contents, int nudge, int combo, int successDays,
 			int maxCombo, int goalId, int achievement, boolean complete) {
-		this(contents, id);
+		this(contents, goalId);
 		this.nudge = nudge;
 		this.combo = combo;
 		this.successDays = successDays;
 		this.maxCombo = maxCombo;
-		this.goalId = goalId;
+		this.id = id;
 		this.achievement = achievement;
 		this.complete = complete;
 	}
