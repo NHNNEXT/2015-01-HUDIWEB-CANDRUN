@@ -287,3 +287,20 @@ nav .nav-goal {
 	width: calc(100% - 360px);
 	height:100%
 }
+
+.nav-goal .goal-title:hover{
+	-webkit-animation:fade-in 2s infinite;
+}
+
+@-webkit-keyframes fade-in{
+    0%{
+        opacity:1;
+    }
+    50%{
+        opacity:0.2;
+        font-size: 1.1em;
+    }
+    100%{
+        opacity:1;
+    }
+}

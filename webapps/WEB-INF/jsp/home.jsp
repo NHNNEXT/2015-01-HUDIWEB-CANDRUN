@@ -21,7 +21,8 @@
 			<ul class="nav-goal-container">
 
 				<c:forEach var="goalRelation" items="${goalRelations}">
-					<li class="nav-goal">${goalRelation.myGoal.contents}
+					<li class="nav-goal">
+					<div class="goal-title">${goalRelation.myGoal.contents}</div>
 						<div class="nav-friends-container">
 							<c:forEach var="relation" items="${goalRelation.relation}">
 								<div class="friend-picture"
