@@ -61,8 +61,8 @@
 					<div class="task-wrapper">
 						<form class="submit_nudge">
 							<input type="submit" class="btn-nudge" value="${task.contents}" />
-							<input type="hidden" class="tasksId" value="${task.id}" /> <input
-								type="hidden" class="task-complete" value="${task.complete}" />
+							<input type="hidden" class="tasksId" value="${task.id}" /> 
+							<input type="hidden" class="task-complete" value="${task.complete}" />
 							<div class="nudge-number">${task.nudge}</div>
 						</form>
 					</div>

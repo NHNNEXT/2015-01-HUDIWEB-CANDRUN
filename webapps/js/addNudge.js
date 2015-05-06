@@ -15,7 +15,7 @@ NUDGE.methods.getElements = function() {
 	var querySelector = CANDRUN.util.querySelector;
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
 	var elements = NUDGE.elements;
-	elements.nudgeList = querySelectorAll(".btn-nudge");
+	elements.nudgeList = querySelectorAll(".submit_nudge");
 	elements.numberToNudge;
 	elements.taskIdToNudge;
 };
@@ -26,9 +26,10 @@ NUDGE.methods.addEvents = function() {
 	for ( var idx in nudgeList) {
 		if (nudgeList[idx] >= nudgeList.length)
 			return;
-		var tempEl = nudgeList[idx];
-		tempEl.addEventListener("click", NUDGE.methods.addNudge);
-		tempEl.addEventListener("click", NUDGE.methods.checkComplete);
+		var nudgeEl = nudgeList[idx];
+		nudgeEl.addEventListener("click", NUDGE.methods.addNudge);
+		nudgeEl.addEventListener("click", NUDGE.methods.checkComplete);
+		NUDGE.methods.checkGlow(nudgeEl);
 	}
 };
 
@@ -48,7 +49,15 @@ NUDGE.methods.addNudge = function (e) {
 	addNudgeAjax.open();
 	addNudgeAjax.setSimplePost();
 	addNudgeAjax.send(params);
+};
 
+NUDGE.methods.checkGlow = function(nudgeEl){
+	console.log(document.querySelector('.task-complete'));
+	
+	var taskCompleteEl = nudgeEl.querySelector('.task-complete');
+	if(taskCompleteEl.value === "false"){
+		nudgeEl.className ="submit_nudge glow";
+	}
 };
 
 NUDGE.methods.checkComplete = function(e){

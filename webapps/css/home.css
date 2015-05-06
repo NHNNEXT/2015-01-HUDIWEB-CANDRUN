@@ -299,9 +299,23 @@ nav .nav-goal {
     }
     50%{
         opacity:0.2;
-        font-size: 1.1em;
+        font-size: 1.02em;
     }
     100%{
         opacity:1;
     }
+}
+
+@-webkit-keyframes beat {
+    0% {-webkit-transform: scale(1); -webkit-box-shadow:0 0 40px #00F3C3;}
+    50% {-webkit-transform: scale(1.02); -webkit-box-shadow:0 0 70px #00F3C3;}
+    100% {-webkit-transform: scale(1); -webkit-box-shadow:0 0 40px #00F3C3;}
+}
+
+
+.glow {
+    -webkit-animation: beat 0.9s ease 0s infinite normal;
+     -webkit-animation-iteration-count: 3;
+    -moz-animation: beat 0.9s ease 0s infinite normal;
+    animation: beat 0.9s ease 0s infinite normal;
 }
