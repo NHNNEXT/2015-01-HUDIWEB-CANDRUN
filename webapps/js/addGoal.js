@@ -1,4 +1,3 @@
-
 var GOAL = GOAL || {};
 GOAL.methods = {};
 GOAL.elements = {};
@@ -34,7 +33,6 @@ GOAL.methods.addEvents = function() {
 };
 
 GOAL.form.send = function () {
-
 	var sUrl = "/goals";
 	var params = "goal_contents="+GOAL.elements.goalInput.value;
 
@@ -46,10 +44,9 @@ GOAL.form.send = function () {
 	for(var i =0 ; i<inputs.length; i++){
 		params = params + "&task_contents_"+i+"="+inputs[i].value;
 	}
-	
 	addGoalAjax.setMethod("POST");
 	addGoalAjax.open();
-	addGoalAjax.readyParam();
+	addGoalAjax.setSimplePost();
 	addGoalAjax.send(params);
 };
 
