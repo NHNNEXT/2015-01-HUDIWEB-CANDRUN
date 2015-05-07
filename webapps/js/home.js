@@ -48,11 +48,13 @@ HOME.nav.refreshGoalView = function(sResp) {
 	template = Handlebars.compile(HOME.templates.showGoal);
 	html = template(oGoal);
 	HOME.elements.showGoalSec.innerHTML = html;
+	NUDGE.init();
 }
 
 HOME.templates = {};
 HOME.templates.showGoal = [ '<div class="goal-wrapper">',
-		'<div class="goal-title">{{goal.contents}}</div>', '</div>',
+		'<div class="goal-title">{{goal.contents}}</div>', 
+		'<input type="hidden" class="goal-owner-email" value="{{goal.email}}" />','</div>',
 		'{{#each tasks}}', '<div class="task-wrapper">',
 		'<form class="submit_nudge">',
 		'<input type="submit" class="btn-nudge" value="{{contents}}" />',
