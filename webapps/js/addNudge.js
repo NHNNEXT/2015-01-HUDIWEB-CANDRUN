@@ -35,14 +35,14 @@ NUDGE.methods.addEvents = function() {
 
 NUDGE.methods.addNudge = function (e) {
 	e.preventDefault();
-	
+
 	var elements = NUDGE.elements;
 
-	elements.numberToNudge = e.target.parentNode.parentNode.querySelector('.nudge-number');
+	elements.numberToNudge = e.target.parentNode.querySelector('.nudge-number');
 	elements.taskIdToNudge = e.target.parentNode.querySelector('.tasksId');
-
+	elements.goalOwnerEmail = e.target.parentNode.parentNode.parentNode.querySelector('.goal-owner-email');
 	var sUrl = "/tasks";
-	var params = "&tasksId=" + elements.taskIdToNudge.value;
+	var params = "&tasksId=" + elements.taskIdToNudge.value+"&goalOwnerEmail="+ elements.goalOwnerEmail.value;
 	var addNudgeAjax = new CANDRUN.util.ajax(sUrl, NUDGE.methods.refreshNumber);
 
 	addNudgeAjax.setMethod("POST");
@@ -52,7 +52,6 @@ NUDGE.methods.addNudge = function (e) {
 };
 
 NUDGE.methods.checkGlow = function(nudgeEl){
-	console.log(document.querySelector('.task-complete'));
 	
 	var taskCompleteEl = nudgeEl.querySelector('.task-complete');
 	if(taskCompleteEl.value === "false"){

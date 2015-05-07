@@ -1,7 +1,10 @@
 package candrun.controller;
 
 import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,20 +39,18 @@ public class GoalsController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Object create(@RequestParam("goal_contents") String goalContents,
-			HttpServletRequest req) {
+			HttpServletRequest req, HttpSession session) {
 
 		ArrayList<String> arrTaskContents = new ArrayList<String>();
-
+		String userEmail = (String) session.getAttribute("email");
+		
 		// TODO: 요청 보내는 front코드와 함께 리팩토링 필요,
 		for (int i = 0; i < 5; i++) {
 			String taskContents = req.getParameter("task_contents_" + i);
-			LOGGER.info("task: {}", taskContents);
-			if (taskContents == null) {
-				break;
-			}
+			if (taskContents == null) break;
 			arrTaskContents.add(taskContents);
 		}
-		Goal goal = new Goal(goalContents, "javajava@naver.com");
+		Goal goal = new Goal(goalContents, userEmail);
 		int returnedId = goalDao.addGoal(goal);
 
 		for (int i = 0; i < arrTaskContents.size(); i++) {
