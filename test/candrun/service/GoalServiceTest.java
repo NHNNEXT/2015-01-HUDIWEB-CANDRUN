@@ -41,4 +41,6 @@ public class GoalServiceTest {
 				.getGoalRelations("unitimes@naver.com");
 		assertTrue(goalRelations.isEmpty());
 	}
+	
+	
 }

@@ -2,12 +2,11 @@ package candrun.service;
 
 import java.util.List;
 
-import com.sun.media.jfxmedia.logging.Logger;
-
 import candrun.dao.TaskDAO;
 import candrun.model.Task;
 
 public class TaskService {
+	
 	private TaskDAO taskDao;
 	
 	public TaskService(TaskDAO taskDao) {
@@ -21,7 +20,6 @@ public class TaskService {
 	public Task handleTaskRequest(int taskId, String userEmail, String goalOwnerEmail) {
 		
 		if(userEmail.equals(goalOwnerEmail)){
-			System.out.println("complete");
 			taskDao.completeTask(taskId);
 		}else {
 			taskDao.addNudge(taskId);

@@ -1,7 +1,5 @@
 package candrun.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,17 +20,19 @@ import candrun.service.TaskService;
 public class TasksController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 	
-	@Autowired TaskDAO taskDao;
+	@Autowired 
+	TaskDAO taskDao;
+	@Autowired 
+	GoalDAO goalDao;
+	@Autowired
+	TaskService taskService;
 	
-	@Autowired GoalDAO goalDao;
-
 	@RequestMapping(method = RequestMethod.POST)
 	public Task update(@RequestParam("tasksId") String tasksId, @RequestParam("goalOwnerEmail") String goalOwnerEmail, HttpSession session) {
-		TaskService taskService  = new TaskService(taskDao);
-		
+	
 		int taskId = Integer.parseInt(tasksId);
 		String userEmail = (String) session.getAttribute("email");
-	
+		
 		taskService.handleTaskRequest(taskId, userEmail, goalOwnerEmail);
 	
 		return taskDao.getTaskByTaskId(taskId);
