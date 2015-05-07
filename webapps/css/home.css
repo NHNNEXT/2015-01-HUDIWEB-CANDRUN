@@ -280,7 +280,6 @@ nav .nav-goal {
 /* back, initially hidden pane */
 .back {
 	transform: rotateY(180deg);
-	
 }
 
 #make-goal{
@@ -288,9 +287,9 @@ nav .nav-goal {
 	height:100%
 }
 
-.nav-goal .goal-title:hover{
+.nav-goal:hover{
 	-webkit-animation:fade-in 2s;
-	 -webkit-animation-iteration-count: 2;
+	 -webkit-animation-iteration-count: 1;
 }
 
 @-webkit-keyframes fade-in{
@@ -307,9 +306,9 @@ nav .nav-goal {
 }
 
 @-webkit-keyframes beat {
-    0% {-webkit-transform: scale(1); -webkit-box-shadow:0 0 40px #00F3C3;}
-    50% {-webkit-transform: scale(1.02); -webkit-box-shadow:0 0 70px #00F3C3;}
-    100% {-webkit-transform: scale(1); -webkit-box-shadow:0 0 40px #00F3C3;}
+    0% {-webkit-transform: scale(1);}
+    50% {-webkit-transform: scale(1.02);}
+    100% {-webkit-transform: scale(1);}
 }
 
 
