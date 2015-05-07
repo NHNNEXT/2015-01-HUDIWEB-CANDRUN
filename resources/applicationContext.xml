@@ -47,7 +47,7 @@
 	<bean id="homeService" class="candrun.service.HomeService"
 		c:userDao-ref="userDao" c:taskDao-ref="taskDao" c:goalService-ref="goalService" />
 	<bean id="goalService" class="candrun.service.GoalService"
-		c:goalDao-ref="goalDao" c:userDao-ref="userDao" />
+		c:goalDao-ref="goalDao" c:userDao-ref="userDao" c:taskDao-ref="taskDao" />
 	<bean id="taskService" class="candrun.service.TaskService"
 		c:taskDao-ref="taskDao" />
 

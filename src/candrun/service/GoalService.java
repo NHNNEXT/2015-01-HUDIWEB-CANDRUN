@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import candrun.dao.GoalDAO;
+import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
 import candrun.model.Goal;
 import candrun.model.GoalRelation;
+import candrun.model.Task;
 import candrun.model.User;
 import candrun.support.enums.GoalState;
 import candrun.support.enums.RelationRequestState;
@@ -23,10 +25,12 @@ public class GoalService {
 
 	private GoalDAO goalDao;
 	private UserDAO userDao;
+	private TaskDAO taskDao;
 
-	public GoalService(GoalDAO goalDao, UserDAO userDao) {
+	public GoalService(GoalDAO goalDao, UserDAO userDao, TaskDAO taskDao) {
 		this.goalDao = goalDao;
 		this.userDao = userDao;
+		this.taskDao = taskDao;
 	}
 
 	public List<GoalRelation> getGoalRelations(String email) {
@@ -59,5 +63,16 @@ public class GoalService {
 		acceptedRelationGoals.forEach((goal) -> relation.put(
 				userDao.getByEmail(goal.getEmail()), goal));
 		return new GoalRelation(myGoal, relation);
+	}
+
+	public Goal addGoalAndTasks(String goalContents, ArrayList<String> tasks, String userEmail) {
+		
+		Goal goal = new Goal(goalContents, userEmail);
+		int returnedId = goalDao.addGoal(goal);
+
+		for (int i = 0; i < tasks.size(); i++) {
+			taskDao.addTask(new Task(tasks.get(i), returnedId));
+		}
+		return goal;
 	}
 }
