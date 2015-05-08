@@ -34,6 +34,11 @@
 		</div>
 		<button id="addNew">ADD NEW</button>
 	</nav>
+
+    <div id="user-card">
+        <div class="btn-logout">logout</div>
+    </div>
+
 	<div id="test" class="flip-container">
 		<div class="flipper">
 

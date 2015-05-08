@@ -30,6 +30,7 @@ GOAL.methods.addEvents = function() {
 	elements.goalSubmit.addEventListener("click", form.send);
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
 	elements.taskInputAdd.addEventListener("click", form.makeNextInput);
+	elements.goalInput.addEventListener("focus", form.clearInputValue);
 };
 
 GOAL.form.send = function () {
@@ -38,17 +39,23 @@ GOAL.form.send = function () {
 
 	//nav.appendNewNavGoal를 nav.appendNewNavGoal()로 써서 함수 실행시 에러 발생했음
 	//error code: unexpected token u
-	var addGoalAjax = new CANDRUN.util.ajax(sUrl, GOAL.nav.appendNewNavGoal);
+	var ajax = new CANDRUN.util.ajax(sUrl, GOAL.nav.appendNewNavGoal);
 	var inputs = document.querySelectorAll(".task-input");
 
 	for(var i =0 ; i<inputs.length; i++){
 		params = params + "&task_contents_"+i+"="+inputs[i].value;
 	}
-	addGoalAjax.setMethod("POST");
-	addGoalAjax.open();
-	addGoalAjax.setSimplePost();
-	addGoalAjax.send(params);
+	ajax.setMethod("POST");
+	ajax.open();
+	ajax.setSimplePost();
+	ajax.send(params);
 };
+
+GOAL.form.clearInputValue = function(e){
+	if(e.target.value=="제목을 입력해주세요."){
+		e.target.value=" ";
+	}
+}
 
 GOAL.form.makeNextInputWithEnter = function(e){
 	if(e.keyCode === 13){
@@ -57,6 +64,7 @@ GOAL.form.makeNextInputWithEnter = function(e){
 };
 
 GOAL.form.makeNextInput = function(){
+	
 	var input = document.createElement('input');
 
 	//마지막 inputTag의 이벤트를 제거

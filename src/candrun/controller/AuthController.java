@@ -46,9 +46,8 @@ public class AuthController {
 		return returnMsg;
 	}
 
-//	@RequestMapping(method = RequestMethod.DELETE)
-//	public String signOut(HttpSession session) throws IOException {
-//		session.removeAttribute("email");
-//		return "redirect: signIn";
-//	}
+	@RequestMapping(method = RequestMethod.DELETE)
+	public void signOut(HttpSession session) {
+		session.removeAttribute("email");
+	}
 }

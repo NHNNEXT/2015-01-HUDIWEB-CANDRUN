@@ -21,6 +21,10 @@ HOME.methods.getElements = function() {
 	var elements = HOME.elements;
 	elements.goalsInNav = querySelectorAll(".nav-goal");
 	elements.showGoalSec = querySelector("#show-goal");
+	elements.userCard = querySelector("#user-card");
+	elements.profilePic = querySelector(".profile-picture");
+	elements.btnLogout = querySelector(".btn-logout");
+
 }
 HOME.methods.addEvents = function() {
 	var elements = HOME.elements;
@@ -30,6 +34,8 @@ HOME.methods.addEvents = function() {
 			nav.requestGoal(e.target.id);
 		});
 	}
+	elements.profilePic.addEventListener("click", nav.userCardToggle);
+	elements.btnLogout.addEventListener("click", nav.logout);
 }
 
 HOME.nav = HOME.nav || {};
@@ -40,6 +46,7 @@ HOME.nav.requestGoal = function(id) {
 	ajax.setJson();
 	ajax.send();
 }
+
 HOME.nav.refreshGoalView = function(sResp) {
 	var oGoal = {};
 	var template;
@@ -49,6 +56,25 @@ HOME.nav.refreshGoalView = function(sResp) {
 	html = template(oGoal);
 	HOME.elements.showGoalSec.innerHTML = html;
 	NUDGE.init();
+}
+
+HOME.nav.userCardToggle = function(){
+	if(HOME.elements.userCard.style.display==="block"){
+		HOME.elements.userCard.style.display = "none";
+	}else{
+		HOME.elements.userCard.style.display = "block";
+	}
+}
+
+HOME.nav.logout = function(){
+	var util = CANDRUN.util;
+	var ajax = new CANDRUN.util.ajax("/auth", function(){
+		location.href="http://localhost:8080";
+	});
+	ajax.setMethod("DELETE");
+	ajax.open();
+	ajax.setSimplePost();
+	ajax.send();
 }
 
 HOME.templates = {};
