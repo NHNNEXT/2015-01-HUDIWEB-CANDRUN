@@ -95,6 +95,9 @@ nav .profile-picture {
     background-size: cover;
     background-position: center 0px;
     background-repeat: no-repeat;
+    z-index: 2;
+    position: relative;
+    
 }
 nav .nick {
 	height: 30px;
@@ -112,7 +115,7 @@ nav .nav-goal {
 	margin-top: 20px;
 }
 nav .nav-goal-container{
-	height: 900px;
+	height: 3000px;
 	overflow: hidden;
 }
 
@@ -230,6 +233,8 @@ nav .nav-goal-container{
 
 .flip-container {
 	perspective: 1000px;
+	z-index: 1;
+	position: relative;
 }
 /* flip the pane when hovered */
 .flip-container .flipper{

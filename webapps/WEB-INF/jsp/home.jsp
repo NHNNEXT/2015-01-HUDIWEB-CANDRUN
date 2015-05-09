@@ -43,9 +43,9 @@
 		<div class="flipper">
 			<section id="make-goal" class="make-goal">
 				<form class="submit-form">
-					<input class="goal-input" name="goal_contents" value="제목을 입력해주세요.">
+					<input class="goal-input" name="goal_contents" value="Goal을 입력하세요.">
 					<div class="input-container">
-						<input class="task-input" />
+						<input class="task-input" value="Task를 입력하세요." />
 					</div>
 					<div class="task-input-add">+</div>
 					<div class="goal-form-submit">submit</div>
@@ -73,7 +73,6 @@
 	</div>
 </body>
 <script src="/js/template/handlebars-v3.0.3.js"></script>
-<script src="/js/addGoal.js"></script>
 <script src="/js/addNudge.js"></script>
 <script src="/js/candrun.js"></script>
 <script src="/js/home.js"></script>

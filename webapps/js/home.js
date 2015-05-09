@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
 });
 
 var HOME = HOME || {};
+HOME.form = HOME.form || {};
+HOME.nav = HOME.nav || {};
 
 HOME.init = function() {
 	var methods = HOME.methods;
@@ -19,16 +21,25 @@ HOME.methods.getElements = function() {
 	var querySelectorAll = CANDRUN.util.querySelectorAll;
 	var querySelector = CANDRUN.util.querySelector;
 	var elements = HOME.elements;
-	elements.goalsInNav = querySelectorAll(".nav-goal");
+	elements.goalsInNav = querySelectorAll("nav .nav-goal");
+	elements.profilePic = querySelector("nav .profile-picture");
+	elements.navGoalContainer = querySelector("nav .nav-goal-container");
+	elements.goalInput = querySelector("#make-goal .goal-input");
+	elements.goalSubmit = querySelector("#make-goal .goal-form-submit");
+	elements.taskInput = querySelector("#make-goal .task-input");
+	elements.taskInputs = querySelectorAll("#make-goal .task-input");
+	elements.taskInputContainer = querySelector("#make-goal .input-container");
+	elements.taskInputAdd = querySelector("#make-goal .task-input-add");
 	elements.showGoalSec = querySelector("#show-goal");
 	elements.userCard = querySelector("#user-card");
-	elements.profilePic = querySelector(".profile-picture");
-	elements.btnLogout = querySelector(".btn-logout");
-
+	elements.btnLogout = querySelector("#user-card .btn-logout");
 }
+
 HOME.methods.addEvents = function() {
 	var elements = HOME.elements;
 	var nav = HOME.nav;
+	var form = HOME.form;
+
 	for (var i = 0; i < elements.goalsInNav.length; i++) {
 		elements.goalsInNav[i].addEventListener("click", function(e) {
 			nav.requestGoal(e.target.id);
@@ -36,11 +47,14 @@ HOME.methods.addEvents = function() {
 	}
 	elements.profilePic.addEventListener("click", nav.userCardToggle);
 	elements.btnLogout.addEventListener("click", nav.logout);
+	elements.goalSubmit.addEventListener("click", form.send);
+	elements.taskInputAdd.addEventListener("click", form.makeNextInput);
+	elements.taskInput.addEventListener("click", form.clearInputValue);
+	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
+	elements.goalInput.addEventListener("focus", form.clearInputValue);
 }
 
-HOME.nav = HOME.nav || {};
 HOME.nav.requestGoal = function(id) {
-	var util = CANDRUN.util;
 	var ajax = new CANDRUN.util.ajax("/goals/" + id, HOME.nav.refreshGoalView);
 	ajax.open();
 	ajax.setJson();
@@ -59,15 +73,15 @@ HOME.nav.refreshGoalView = function(sResp) {
 }
 
 HOME.nav.userCardToggle = function(){
-	if(HOME.elements.userCard.style.display==="block"){
-		HOME.elements.userCard.style.display = "none";
+	var userCard = HOME.elements.userCard;
+	if(userCard.style.display==="block"){
+		userCard.style.display = "none";
 	}else{
-		HOME.elements.userCard.style.display = "block";
+		userCard.style.display = "block";
 	}
 }
 
 HOME.nav.logout = function(){
-	var util = CANDRUN.util;
 	var ajax = new CANDRUN.util.ajax("/auth", function(){
 		location.href="http://localhost:8080";
 	});
@@ -76,6 +90,71 @@ HOME.nav.logout = function(){
 	ajax.setSimplePost();
 	ajax.send();
 }
+
+HOME.nav.appendNewNavGoal = function (responseText) {
+	var navGoal = HOME.nav.makeNavGoal(JSON.parse(responseText).contents);
+	HOME.elements.navGoalContainer.appendChild(navGoal);
+};
+
+HOME.nav.makeNavGoal= function (value) {
+	var li = document.createElement( 'li' );
+	li.innerHTML = value;
+	li.setAttribute("class", "nav-goal");
+	return li;
+};
+
+HOME.form.send = function () {
+	var sUrl = "/goals";
+	var params = "goal_contents="+HOME.elements.goalInput.value;
+	var ajax = new CANDRUN.util.ajax(sUrl, HOME.nav.appendNewNavGoal);
+	var inputs = CANDRUN.util.querySelectorAll(".task-input");
+
+	for(var i =0 ; i<inputs.length; i++){
+		params = params + "&task_contents_"+i+"="+inputs[i].value;
+	}
+	ajax.setMethod("POST");
+	ajax.open();
+	ajax.setSimplePost();
+	ajax.send(params);
+};
+
+HOME.form.clearInputValue = function(e){
+	if(e.target.value=="Task를 입력하세요."||e.target.value=="Goal을 입력하세요."){
+		e.target.value=" ";
+	}
+}
+
+HOME.form.makeNextInputWithEnter = function(e){
+	if(e.keyCode === 13){
+		HOME.form.makeNextInput();
+	}
+};
+
+//
+HOME.form.makeNextInput = function(){
+	var form = HOME.form;
+	var newInput = document.createElement('input');
+	var inputNodes = document.querySelectorAll(".task-input");
+	var lastInput = inputNodes[inputNodes.length-1];
+
+	lastInput.removeEventListener("keydown", form.makeNextInputWithEnter);
+	setAttributes(newInput);
+	HOME.elements.taskInputContainer.appendChild(newInput);
+	addEventForInput(newInput);
+
+	function setAttributes(input) {
+		input.setAttribute("class", "task-input");
+		input.setAttribute("value", "Task를 입력하세요.");
+	}
+
+	function addEventForInput(input){
+		input.addEventListener("keydown", form.makeNextInputWithEnter);
+		input.addEventListener("click", form.clearInputValue);
+		input.addEventListener("keydown", form.clearInputValue);
+		input.focus();
+	}
+};
+
 
 HOME.templates = {};
 HOME.templates.showGoal = [ '<div class="goal-wrapper">',
