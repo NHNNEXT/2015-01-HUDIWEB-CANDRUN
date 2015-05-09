@@ -17,6 +17,9 @@ CANDRUN.util = {};
 CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var httpRequest;
 	var method = 'GET';
+	// YG: 통신 과정을 지나치게 쪼개놓은 느낌입니다.
+	//     때문에 바깥쪽 코드에서 일일이 통신 과정을 조절하게 되는데, 비효율적이라고 느껴집니다.
+	//     (거의 표준처럼 여겨지는) jQuery ajax 함수를 참고하세요.
 
 	this.setJson = function() {
 		httpRequest.setRequestHeader('Accept', 'application/json');
@@ -124,6 +127,7 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 //		}
 //	}
 //}
+// YG: querySelector를 일부러 감싼 이유가 있나요?
 CANDRUN.util.querySelector = function(el) {
 	return document.querySelector(el);
 }
@@ -146,8 +150,11 @@ CANDRUN.util.trimRString = function(str) {
 CANDRUN.util.trimString = function(str) {
 	return str.replace(/^\s+|\s+$/g, '');
 }
+// YG: 용도상, 아래의 3개 함수는 validator라는 이름으로 분리해도 좋을 것 같아요. (제안입니다)
 CANDRUN.util.isValidateEmail = function(sEmail) {
-	var mailFormat = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+	// YG: '/'도 escape가 필요한 문자입니다.
+	var mailFormat = /(?:[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+
 	if (sEmail.match(mailFormat)) {
 		return true;
 	}
@@ -164,7 +171,7 @@ CANDRUN.util.isValidatePW = function(sPW) {
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.NUM;
 	}
-	reg = /[!@#$%&'*+/=?^_`{|}~-]/;
+	reg = /[!@#$%&'*+\/=?^_`{|}~-]/;
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.MARK;
 	}

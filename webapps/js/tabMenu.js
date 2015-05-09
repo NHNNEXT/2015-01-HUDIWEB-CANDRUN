@@ -3,6 +3,9 @@
  */
 
 
+// YG: 이 코드만 다른 사람이 작성한 것처럼
+//     인덴트도 다르고, 즉시실행함수를 사용했고, jQuery도 썼네요.
+//     코드 스타일은 서로 맞추시는게...
 var Tabs = (function() {
 
   var toggler = $('.views-toggle');
