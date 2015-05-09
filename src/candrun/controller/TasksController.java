@@ -31,10 +31,10 @@ public class TasksController {
 	public Task update(@RequestParam("tasksId") String tasksId, @RequestParam("goalOwnerEmail") String goalOwnerEmail, HttpSession session) {
 	
 		int taskId = Integer.parseInt(tasksId);
-		String userEmail = (String) session.getAttribute("email");
-		
+		String userEmail = (String) session.getAttribute("email");	
 		taskService.handleTaskRequest(taskId, userEmail, goalOwnerEmail);
-	
-		return taskDao.getTaskByTaskId(taskId);
+		Task updatedTask = taskDao.getTaskByTaskId(taskId);
+		
+		return updatedTask;
 	}
 }
