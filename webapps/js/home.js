@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
 });
 
 var HOME = HOME || {};
-HOME.form = HOME.form || {};
-HOME.nav = HOME.nav || {};
 
 HOME.init = function() {
 	var methods = HOME.methods;
@@ -54,6 +52,7 @@ HOME.methods.addEvents = function() {
 	elements.goalInput.addEventListener("focus", form.clearInputValue);
 }
 
+HOME.nav = HOME.nav || {};
 HOME.nav.requestGoal = function(id) {
 	var ajax = new CANDRUN.util.ajax("/goals/" + id, HOME.nav.refreshGoalView);
 	ajax.open();
@@ -103,15 +102,27 @@ HOME.nav.makeNavGoal= function (value) {
 	return li;
 };
 
+HOME.form = HOME.form || {};
 HOME.form.send = function () {
 	var sUrl = "/goals";
 	var params = "goal_contents="+HOME.elements.goalInput.value;
 	var ajax = new CANDRUN.util.ajax(sUrl, HOME.nav.appendNewNavGoal);
 	var inputs = CANDRUN.util.querySelectorAll(".task-input");
-
+	var blankPattern = /^\s+|\s+$/g;
+	
+	
+	if(HOME.elements.goalInput.value.replace(blankPattern,"")==""){
+		alert("Goal이 공백입니다.")
+	}
+	
 	for(var i =0 ; i<inputs.length; i++){
 		params = params + "&task_contents_"+i+"="+inputs[i].value;
+		if(inputs[i].value.replace(blankPattern,"")==""){
+			alert("Task가 공백입니다.");
+			return;
+		}
 	}
+	
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setSimplePost();
@@ -130,31 +141,44 @@ HOME.form.makeNextInputWithEnter = function(e){
 	}
 };
 
-//
 HOME.form.makeNextInput = function(){
 	var form = HOME.form;
-	var newInput = document.createElement('input');
+	var taskInputWrapper = document.createElement('div');
 	var inputNodes = document.querySelectorAll(".task-input");
 	var lastInput = inputNodes[inputNodes.length-1];
 
+	if(inputNodes.length > 4){
+		alert("Task를 5개 이상 등록할 수 없습니다.");		
+		return;
+	}
+	
 	lastInput.removeEventListener("keydown", form.makeNextInputWithEnter);
-	setAttributes(newInput);
-	HOME.elements.taskInputContainer.appendChild(newInput);
-	addEventForInput(newInput);
-
-	function setAttributes(input) {
-		input.setAttribute("class", "task-input");
-		input.setAttribute("value", "Task를 입력하세요.");
+	makeNewInput(taskInputWrapper);
+	HOME.elements.taskInputContainer.appendChild(taskInputWrapper);
+	addEventForInput(taskInputWrapper);
+	
+	function makeNewInput(taskInputWrapper) {
+		taskInputWrapper.setAttribute("class", "wrapper-task-input");
+		template = Handlebars.compile(HOME.templates.taskInput);
+		taskInputWrapper.innerHTML = template();
 	}
 
-	function addEventForInput(input){
+	function addEventForInput(taskInputWrapper){
+		input = taskInputWrapper.querySelector(".task-input");
 		input.addEventListener("keydown", form.makeNextInputWithEnter);
 		input.addEventListener("click", form.clearInputValue);
 		input.addEventListener("keydown", form.clearInputValue);
 		input.focus();
+	
+		btnInputDelete = taskInputWrapper.querySelector(".btn-delete-task");
+		btnInputDelete.addEventListener("click", form.deleteCurrentInput);		
 	}
 };
 
+HOME.form.deleteCurrentInput = function(e){
+	var wrapper= e.target.parentNode;
+	e.target.parentNode.parentNode.removeChild(wrapper);
+}
 
 HOME.templates = {};
 HOME.templates.showGoal = [ '<div class="goal-wrapper">',
@@ -167,3 +191,8 @@ HOME.templates.showGoal = [ '<div class="goal-wrapper">',
 		'<input type="hidden" class="task-complete" value="{{complete}}" />',
 		'<div class="nudge-number">{{nudge}}</div>', '</form>', '</div>',
 		'{{/each}}' ].join("\n");
+
+HOME.templates.taskInput = ['<input class="task-input" value="Task를 입력하세요." />',
+                            '<div class=btn-delete-task></div>'
+                           ].join("\n");
+
