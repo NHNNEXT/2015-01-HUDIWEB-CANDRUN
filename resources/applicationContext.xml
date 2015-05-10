@@ -56,4 +56,25 @@
 	<bean id="goalDao" class="candrun.dao.GoalDAO" p:dataSource-ref="dataSource" />
 	<bean id="taskDao" class="candrun.dao.TaskDAO" p:dataSource-ref="dataSource" />
 
+	<!-- quartz -->
+    <bean name="DailyInitializeJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+          p:jobClass="candrun.scheduled.DailyInitializeJob"
+          p:durability="true">
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="taskDao" value-ref="taskDao"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+          p:jobDetail-ref="DailyInitializeJob"
+          p:startDelay="1000"
+          p:cronExpression="0 59 23 * * ?"/>
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
 </beans>

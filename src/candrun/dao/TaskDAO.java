@@ -56,4 +56,14 @@ public class TaskDAO extends JdbcDaoSupport {
 		String sql = "UPDATE tasks SET complete = ? WHERE id = ?";
 		getJdbcTemplate().update(sql, true, taskId);
 	}
+	
+	public void initializeNudgeCount(){
+		String sql = "UPDATE tasks SET nudge = 0";
+		getJdbcTemplate().update(sql);
+	}
+	
+	public void saveNudgeCount(){
+		String sql = "INSERT INTO nudge (tasks_id, count) SELECT id, nudge From tasks";
+		getJdbcTemplate().update(sql);
+	}
 }
