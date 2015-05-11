@@ -181,6 +181,15 @@ HOME.form.deleteCurrentInput = function(e){
 }
 
 HOME.templates = {};
+// YG: 앞으로도 계속 이 방식으로 템플릿을 작성하실 계획이신가요?
+//     템플릿 유지보수가 매우 어려울 것 같습니다. 더 큰 템플릿을 추가하게 된다면 더더욱.
+//     제가 아는 다른 방법으로는
+//       1. html 파일에 <noscript> 태그를 사용하여 템플릿을 저장해두는 방법.
+//       2. 다른 html 파일로 저장해둔 뒤, ajax로 요청하여 받아내는 방법.
+//     등이 있습니다. 위 방법들은 html 코드를 js 코드와 분리하는 것을 우선으로 생각합니다.
+//     만약 js 코드 내에 템플릿을 보관하고 싶으시다고 하더라도
+//     리스트로 작성하고, join()하는 방식은 좋지 못한 방법으로 보입니다.
+//     다른 방법을 찾아보셨으면 좋겠습니다.
 HOME.templates.showGoal = [ '<div class="goal-wrapper">',
 		'<div class="goal-title">{{goal.contents}}</div>', 
 		'<input type="hidden" class="goal-owner-email" value="{{goal.email}}" />','</div>',
