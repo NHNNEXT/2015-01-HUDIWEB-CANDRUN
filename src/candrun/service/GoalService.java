@@ -19,6 +19,34 @@ import candrun.model.User;
 import candrun.support.enums.GoalState;
 import candrun.support.enums.RelationRequestState;
 
+/*
+ * applicationContext에서 component-sacn을 사용할 때 예제입니다
+ * 
+
+@Service
+public class GoalService {
+	private static final Logger logger = LoggerFactory
+			.getLogger(GoalService.class);
+
+	@Autowired
+	private GoalDAO goalDao;
+	
+	@Autowired
+	private UserDAO userDao;
+	
+	@Autowired
+	private TaskDAO taskDao;
+
+	// 개별적인 DI를 수행하므로 아래 생성자는 필요 없습니다.
+	public GoalService(GoalDAO goalDao, UserDAO userDao, TaskDAO taskDao) {
+		this.goalDao = goalDao;
+		this.userDao = userDao;
+		this.taskDao = taskDao;
+	}
+
+	public List<GoalRelation> getGoalRelations(String email) { ...
+ */
+
 public class GoalService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(GoalService.class);

@@ -12,6 +12,24 @@
 		location="classpath:local-properties/database.properties, 
 		classpath:local-properties/mailSender.properties, 
 		classpath:local-properties/mailMessage.properties" />
+		
+	<!-- 
+		1. component-sacn
+		<context:component-scan	base-package="candrun.service, candrun.dao" />
+		or
+		<context:component-scan	base-package="candrun" />
+	
+		2. jdbcTemplate bean 등록
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+			<property name="dataSource" ref="dataSource"></property>  
+		</bean>
+		
+		이렇게 설정시
+		아래 service, dao의 개별적 bean 등록을 안해도 됩니다.
+	 -->
+	
+	
+	
 
 	<!-- 프로퍼티 파일을 프러퍼티 객체화 -->
 	<util:properties id="javaMailPropertiesSmtp"
@@ -38,7 +56,14 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 		p:maxUploadSize="1000000" />
-
+		
+	<!-- 
+		직접 bean을 등록하는 방식으로 개발시 프로젝트가 커질수록 부담도 늘어날거에요.
+		component-scan을 사용하길 바랍니다.
+		그리고 DI받는 bean의 경우 필드에 @Autowired를 사용하면 됩니다.
+		
+		- 참고: http://joke00.tistory.com/162 
+	 -->
 	<!-- service related -->
 	<bean id="mailService" class="candrun.mail.CertifMailService"
 		p:mailContext-ref="mailContext" />
