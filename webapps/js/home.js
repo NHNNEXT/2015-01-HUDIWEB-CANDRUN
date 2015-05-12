@@ -31,6 +31,8 @@ HOME.methods.getElements = function() {
 	elements.showGoalSec = querySelector("#show-goal");
 	elements.userCard = querySelector("#user-card");
 	elements.btnLogout = querySelector("#user-card .btn-logout");
+	elements.sectionToggle = querySelector("#section-toggle");
+	elements.flipContainer = querySelector("#flip-container");
 }
 
 HOME.methods.addEvents = function() {
@@ -50,6 +52,7 @@ HOME.methods.addEvents = function() {
 	elements.taskInput.addEventListener("click", form.clearInputValue);
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
 	elements.goalInput.addEventListener("focus", form.clearInputValue);
+	elements.sectionToggle.addEventListener("click", nav.sectionChangeToggle)
 }
 
 HOME.nav = HOME.nav || {};
@@ -101,6 +104,11 @@ HOME.nav.makeNavGoal= function (value) {
 	li.setAttribute("class", "nav-goal");
 	return li;
 };
+
+HOME.nav.sectionChangeToggle = function(){
+	HOME.elements.flipContainer.classList.toggle('flip-container');
+}
+
 
 HOME.form = HOME.form || {};
 HOME.form.send = function () {
