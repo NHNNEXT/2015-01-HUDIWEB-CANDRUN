@@ -5,9 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,21 @@ public class SecurityAspect {
 			+ "|| execution(public * candrun.controller.AuthController.signIn(..))")
 	public void decrypUserInfo() {
 	};
+	
+	/*
+	 * 돌려보지는 않았지만 before만 쓴다면 이게 조금 더 명확할 것 같아요!!
+	 * 
+	@Before("decrypUserInfo()")
+	public void beforeRegister(JoinPoint joinPoint) throws Throwable {
+		Object[] args = joinPoint.getArgs();
+		logger.debug("before start method");
+		PrivateKey privateKey = (PrivateKey) ((HttpSession) args[0])
+				.getAttribute(Security.RSA_PRI_KEY.getValue());
+		args[1] = SecurityService.decrytRsa(privateKey, (String) args[1]);
+		args[2] = SecurityService.decrytRsa(privateKey, (String) args[2]);
+		logger.debug("email: " + (String) args[1] + "/" + "password: " + (String) args[2]); 
+	}
+	*/
 
 	@SuppressWarnings("unchecked")
 	@Around("decrypUserInfo()")

@@ -27,14 +27,18 @@ public class GoalsController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TasksController.class);
 	private static final int maxTasksNumber = 5;
+	
+	/*
+	 * 특별한 이유가 없는한 private을 붙여주는게 좋습니다.
+	 */
 	@Autowired
-	GoalDAO goalDao;
+	private GoalDAO goalDao;
 	@Autowired
-	TaskDAO taskDao;
+	private TaskDAO taskDao;
 	@Autowired
-	GoalService goalService;
+	private GoalService goalService;
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Object create(@RequestParam("goal_contents") String goalContents,
@@ -44,6 +48,11 @@ public class GoalsController {
 		ArrayList<String> tasks = new ArrayList<String>();
 
 		for (int i = 0; i < maxTasksNumber; i++) {
+			/*
+			 * 클라이언트에서 값을 전달할 때부터 배열이면 좋을 것 같아요.
+			 *  - 클라참고: http://goo.gl/BORzx6
+			 *  - 서버참고: http://goo.gl/rCZ3Jq
+			 */
 			String taskContents = req.getParameter("task_contents_" + i);
 			if (taskContents == null) break;
 			tasks.add(taskContents);
