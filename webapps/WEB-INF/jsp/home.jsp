@@ -57,7 +57,7 @@
 				</form>
 			</section>
 			<section id="show-goal" class="show-goal">
-				<form class="submit_nudge">
+				<form class="submit-nudge">
 					<div class="goal-wrapper">
 						<div class="goal-title">${goalRelations[0].myGoal.contents}</div>
 						<div class="startdate">${goalRelations[0].myGoal.startDate}</div>
@@ -78,8 +78,6 @@
 	</div>
 </body>
 <script src="/js/template/handlebars-v3.0.3.js"></script>
-<script src="/js/addNudge.js"></script>
 <script src="/js/candrun.js"></script>
 <script src="/js/home.js"></script>
-<script src="/js/flip.js"></script>
 </html>

@@ -99,7 +99,7 @@ nav .nav-goal {
 	font-size: 20px;
 	margin-top: 20px;
 }
-nav .nav-goal .goal-title:hover{
+nav .nav-goal span:hover{
 	-webkit-animation:fade-in 2s;
 	-webkit-animation-iteration-count: 2;
 }
