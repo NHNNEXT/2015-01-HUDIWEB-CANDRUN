@@ -44,6 +44,28 @@ public class UserService {
 			return UserErrorcode.WRONG_PW.getValue();
 		}
 
+		/*
+		 * @see candrun.model.User
+		 * @see candrun.model.UserTest
+		 * @see candrun.service.UserService
+		 * 
+		 * @see candrun.support.enums.Value
+		 * @see candrun.support.enums.UserErrorcode
+		 * @see candrun.support.enums.CommonInvar
+		
+		객체지향의 특징은 문제를 요청하고 결과를 받는다는 것입니다.
+		보통은 이것을 객체간 메시지를 주고 받는다고 하더라구요.
+		
+		지금의 코드는 다음과 같이 변경하면 좋을 것 같아요.
+		이러한 코드의 장점은 핵심 로직을 분리하여 유지보수가 쉽고, 가독성도 높아지고, 테스트도 좋아집니다. 
+		
+		userState = user.getEnumState();
+		if (CommonInvar.SUCCESS.equals(userState) {
+			session.setAttribute("email", email);
+		}
+		return userState.getValue();
+		
+		 */
 		userState = user.getState();
 		if (userState == 0) {
 			return UserErrorcode.NOT_YET_CERTI.getValue();

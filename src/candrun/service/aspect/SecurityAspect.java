@@ -31,7 +31,7 @@ public class SecurityAspect {
 	 * 돌려보지는 않았지만 before만 쓴다면 이게 조금 더 명확할 것 같아요!!
 	 * 
 	@Before("decrypUserInfo()")
-	public void beforeRegister(JoinPoint joinPoint) throws Throwable {
+	public void beforeRegister(JoinPoint joinPoint) {
 		Object[] args = joinPoint.getArgs();
 		logger.debug("before start method");
 		PrivateKey privateKey = (PrivateKey) ((HttpSession) args[0])

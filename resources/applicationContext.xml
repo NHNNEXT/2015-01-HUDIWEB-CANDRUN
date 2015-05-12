@@ -12,6 +12,24 @@
 		location="classpath:local-properties/database.properties, 
 		classpath:local-properties/mailSender.properties, 
 		classpath:local-properties/mailMessage.properties" />
+		
+	<!-- 
+		1. component-sacn
+		<context:component-scan	base-package="candrun.service, candrun.dao" />
+		or
+		<context:component-scan	base-package="candrun" />
+	
+		2. jdbcTemplate bean 등록
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+			<property name="dataSource" ref="dataSource"></property>  
+		</bean>
+		
+		이렇게 설정시
+		아래 service, dao의 개별적 bean 등록을 안해도 됩니다.
+	 -->
+	
+	
+	
 
 	<!-- 프로퍼티 파일을 프러퍼티 객체화 -->
 	<util:properties id="javaMailPropertiesSmtp"
