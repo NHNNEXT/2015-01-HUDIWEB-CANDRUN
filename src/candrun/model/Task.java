@@ -2,26 +2,32 @@ package candrun.model;
 
 public class Task {
 
-	private Integer id;
+	private int id;
 	private String contents;
-	private Integer nudge;
-	private Integer praise;
-	private Integer combo;
-	private Integer successDays;
-	private Integer maxCombo;
-	private Integer goalId;
-	private Integer achievement;
+	private int nudge;
+	private int combo;
+	private int successDays;
+	private int maxCombo;
+	private int goalId;
+	private int achievement;
+	private Boolean complete;
 
 	public Task(String contents, int goalId) {
 		this.contents = contents;
 		this.goalId = goalId;
 	}
 
-	public Task(String contents, int goalId, int id, int nudge) {
-		this.contents = contents;
-		this.goalId = goalId;
-		this.id = id;
+
+	public Task(int id, String contents, int nudge, int combo, int successDays,
+			int maxCombo, int goalId, int achievement, boolean complete) {
+		this(contents, goalId);
 		this.nudge = nudge;
+		this.combo = combo;
+		this.successDays = successDays;
+		this.maxCombo = maxCombo;
+		this.id = id;
+		this.achievement = achievement;
+		this.complete = complete;
 	}
 
 	public int getId() {
@@ -34,10 +40,6 @@ public class Task {
 
 	public int getNudge() {
 		return nudge;
-	}
-
-	public int getPraise() {
-		return praise;
 	}
 
 	public int getCombo() {
@@ -58,6 +60,10 @@ public class Task {
 
 	public int getAchievement() {
 		return achievement;
+	}
+
+	public boolean isComplete() {
+		return complete;
 	}
 
 	@Override

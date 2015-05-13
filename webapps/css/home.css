@@ -1,5 +1,4 @@
 /** start initialization **/
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -27,6 +26,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
+    min-width: 700px;
 }
 ol, ul {
     list-style: none;
@@ -43,86 +43,33 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
- 
 /** end initialization **/
 
-/** start layout **/
-section {
-	float: right;
-	width: calc(100% - 360px);
-	height: 1300px;
-	background-color: #f3f3f3;
 
-}
-
+/** start nav **/
 nav {
 	padding-top: 100px;
 	background-color: #610A1D;
-	width:360px;
-	height:1200px;
+	width:30%;
 	float:left;
 	color: #DFCED2;
-	position: absolute;
+	min-width: 200px;
 }
-
-nav .nigayo {
+nav .friend-picture {
 	width: 50px;
 	height: 50px;
 	display: inline-block;
-	background-image: url("../img/nigayo.jpg");
-	background-size: 50px 50px;
+	background-size: cover;
 	border-radius: 25px;
-	margin: 3px;
-}
-
-nav .kdj {
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	background-image: url("../img/kdj.jpg");
-	background-size: 50px 50px;
-	border-radius: 25px;
-	margin: 3px;
-}
-
-nav .hsj {
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	background-image: url("../img/hsj.jpg");
-	background-size: 50px 50px;
-	border-radius: 25px;
-	margin: 3px;
-}
-
-nav .hth {
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	background-image: url("../img/hth.png");
-	background-size: 50px 50px;
-	border-radius: 25px;
-	margin: 3px;
-}
-
-nav .cob {
-		width: 50px;
-	height: 50px;
-	display: inline-block;
-	background-image: url("../img/cob.png");
-	background-size: 50px 50px;
-	border-radius: 25px;
-	margin: 3px;
+	background-position: center;
 }
 nav .nav-friends-container {
 	display: block;
 	margin-top: 7px;
 }
-
 nav .profile-wrapper {
 	height: 300px;
 }
-
 nav .profile-picture {
 	height: 150px;
 	width: 150px;
@@ -130,18 +77,18 @@ nav .profile-picture {
 	margin-top: 30px;
 	margin-bottom: 30px;
     border-radius: 100px;
-    background-image: url("../img/javajigi.jpg");
-    background-size: 150px 150px;
+    background-size: cover;
     background-position: center 0px;
     background-repeat: no-repeat;
+    z-index: 2;
+    position: relative;
+    
 }
-
 nav .nick {
 	height: 30px;
 	font-size: 30px;
 	text-align: center;
 }
-
 nav .nav-goal {
 	text-align: left;
 	margin: 0px auto;
@@ -152,18 +99,49 @@ nav .nav-goal {
 	font-size: 20px;
 	margin-top: 20px;
 }
+nav .nav-goal span:hover{
+	-webkit-animation:fade-in 2s;
+	-webkit-animation-iteration-count: 2;
+}
+/** end nav **/
 
-/** end layout **/
+/** start fliper **/
+#flip-container{
+	width: 70%;
+	float:left;
+	height:100%;
+	
+}
+.flip-container {
+	perspective: 1000px;
+	z-index: 1;
+	position: relative;
+}
+
+/* flip the pane when hovered */
+.flip-container .flipper{
+	transform: rotateY(180deg);
+}
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+}
+/** end fliper **/
 
 /** start make-goal **/
-
+#make-goal{
+	height:100%;
+	backface-visibility: hidden;
+	background-color: #fff;
+	transform: rotateY(180deg);
+}
 #make-goal .submit-form{
 	padding-top: 150px;
 	width: 85%;
 	color: #707070;
 	margin: 0px auto;
 }
-
 #make-goal .goal-input {
 	width: 100%;
 	height: 100px;
@@ -172,18 +150,14 @@ nav .nav-goal {
 	font-size: 45px;
 	text-align: center;
 	color: #707070;
-
 }
-
 #make-goal .task-input {
 	width: 100%;
 	height: 120px;
-	margin:10px;
 	float: right;
 	background-color: #e6e6e6;
 	text-align: center;
 }
-
 #make-goal .task-input-add {
 	width: 100%;
 	height: 60px;
@@ -194,9 +168,7 @@ nav .nav-goal {
 	font-size: 60px;
 	float: right;
 }
-
 #make-goal .goal-form-submit {
-
 	float: right;
 	width: 120px;
 	height: 40px;
@@ -208,19 +180,43 @@ nav .nav-goal {
 	border-radius: 30px;
 	border-color: #d9d9d9;
 	color: #610A1D;
-
 }
-
-/** end makeGoal **/
+#make-goal .wrapper-task-input {
+	position:relative;
+	width:100%;
+	height:120px;
+	background-color: black;
+	overflow: hidden;
+	margin:10px;
+	
+}
+#make-goal .btn-delete-task {
+	width: 20px;
+	height:20px;
+	background-color: #e6e6e6;
+	position: absolute;
+	top:0px;
+	right:0px;
+}
+#make-goal .btn-delete-task:hover {
+	width: 20px;
+	height:20px;
+	background-color: red;
+	position: absolute;
+	top:0px;
+	right:0px;
+}
+/** end make-goal **/
 
 /** start show-goal **/
-
 #show-goal {
-	float: right;
-	width: calc(100% - 360px);
-	background-color: #f3f3f3;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+	position: absolute;
+ 	top: 0px;
+ 	transform: rotateY(0deg);
 }
-
 #show-goal .goal-wrapper {
 	padding-top: 150px;
 	width: 100%;
@@ -232,7 +228,6 @@ nav .nav-goal {
   	font-weight: 200;
 	text-align: center;	
 }
-
 #show-goal .task-wrapper{
 	background-color: #e6e6e6;
 	width: 85%;
@@ -243,22 +238,56 @@ nav .nav-goal {
 	color: #707070;
 	position: relative;
 }
-
-
 #show-goal .btn-nudge {
-	background-color: #e6e6e6;
 	font-size: 35px;
 	line-height: 120px;
 	width: 100%;
 	color: #707070;
 }
-
 #show-goal .nudge-number {
 	position: absolute;
 	right: 40px;
 	top: 50px;
 }
+#show-goal .glow {
+    -webkit-animation: beat 0.9s ease 0s infinite normal;
+    -webkit-animation-iteration-count: 3;
+    -moz-animation: beat 0.9s ease 0s infinite normal;
+    animation: beat 0.9s ease 0s infinite normal;
+}
+@-webkit-keyframes fade-in{
+    0%{
+        opacity:1;
+    }
+    50%{
+        opacity:0.2;
+        font-size: 1.02em;
+    }
+    100%{
+        opacity:1;
+    }
+}
+@-webkit-keyframes beat {
+    0% {-webkit-transform: scale(1);}
+    50% {-webkit-transform: scale(1.02);}
+    100% {-webkit-transform: scale(1);}
+}
+/**  end show-goal **/
 
-
-
-
+/** start user-card **/
+#user-card{
+	position:absolute;
+	width: 200px;
+	height: 140px;
+	top: 300px;
+	left: 100px;
+	background-color: #ECE3DC;
+	display: none;
+}
+#user-card .btn-logout{
+	background-color: #610A1D;
+	position: absolute;
+	left: 30px;
+	top: 50px;
+}
+/** end user-card **/

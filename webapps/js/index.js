@@ -33,6 +33,8 @@ INDEX.methods.getElements = function() {
 	elements.signinEmailRep = querySelector("#signin-email-responser");
 	elements.signinPwRep = querySelector("#signin-pw-responser");
 	elements.signinSubmit = querySelector("#signin-form-submit");
+	elements.pubKeyInput = querySelector("#rsaPubKey");
+	elements.signFileInput = querySelector("#input-1-5");
 }
 INDEX.methods.addEvents = function() {
 	var elements = INDEX.elements;
@@ -53,32 +55,42 @@ INDEX.methods.addEvents = function() {
 		form.openModal(elements.signupForm);
 	});
 	elements.signupFormFields
-			.addEventListener("keyup", form.validateSignUpForm);
-	elements.signupFormFields.addEventListener("blur", form.validateSignUpForm,
-			true);
-	elements.signinFormFields.addEventListener("keyup",
+			.addEventListener("input", form.validateSignUpForm);
+	elements.signinFormFields.addEventListener("input",
 			form.confirmSigninSubmittable);
-	elements.signinFormFields.addEventListener("blur",
-			form.confirmSigninSubmittalble, true);
-
 	elements.signinForm.addEventListener("submit", form.submitSigninForm);
 	elements.signupForm.addEventListener("submit", form.submitSignupForm);
 }
 INDEX.form = INDEX.form || {};
+INDEX.form.encryptInput = function(sValue, sPubKey) {
+	var encrypt = new JSEncrypt();
+	encrypt.setPublicKey(sPubKey);
+	return encrypt.encrypt(sValue);
+}
 INDEX.form.submitSignupForm = function(e) {
 	e.preventDefault();
 	var util = CANDRUN.util;
 	var form = INDEX.form;
 	var elements = INDEX.elements;
+	var sPubKey = elements.pubKeyInput.value;
+	var fEncryptor = INDEX.form.encryptInput;
+	var sEncryptedEmail = fEncryptor(elements.signupEmailInput.value, sPubKey);
+	var sEncryptedPw = fEncryptor(elements.signupPwInput.value, sPubKey);
 	var ajax = new util.ajax("/users", form.checkSignUpResult);
-	var params = "email=" + elements.signupEmailInput.value + "&password="
-			+ elements.signupPwInput.value + "&nickname="
-			+ elements.signupNickInput.value;
-	ajax.setMethod("POST");
+	var formData = new FormData();
+	var emptyFile = new File([], "");
+	var imgFile = elements.signFileInput.files[0];
+
+	if (imgFile === undefined)
+		imgFile = emptyFile;
+	formData.append("pic", imgFile);
+	formData.append("email", sEncryptedEmail);
+	formData.append("password", sEncryptedPw);
+	formData.append("nickname", elements.signupNickInput.value);
+	ajax.setMethod("post");
 	ajax.open();
 	ajax.setJson();
-	ajax.readyParam();
-	ajax.send(params);
+	ajax.send(formData);
 }
 INDEX.form.checkSignUpResult = function(sResp) {
 	var oReturnMsg = {};
@@ -98,13 +110,18 @@ INDEX.form.submitSigninForm = function(e) {
 	var util = CANDRUN.util;
 	var form = INDEX.form;
 	var elements = INDEX.elements;
+	var sPubKey = elements.pubKeyInput.value;
+	var fEncryptor = INDEX.form.encryptInput;
+	var sEncryptedEmail = fEncryptor(elements.signinEmailInput.value, sPubKey)
+			.replace(/\+/g, '%2B');
+	var sEncryptedPw = fEncryptor(elements.signinPwInput.value, sPubKey)
+			.replace(/\+/g, '%2B');
 	var ajax = new util.ajax("/auth", form.checkLoginResult);
-	var params = "email=" + elements.signinEmailInput.value + "&password="
-			+ elements.signinPwInput.value;
+	var params = "email=" + sEncryptedEmail + "&password=" + sEncryptedPw;
 	ajax.setMethod("POST");
 	ajax.open();
 	ajax.setJson();
-	ajax.readyParam();
+	ajax.setSimplePost();
 	ajax.send(params);
 }
 INDEX.form.checkLoginResult = function(sResp) {
@@ -131,7 +148,6 @@ INDEX.form.validateSignUpForm = function(e) {
 	var util = CANDRUN.util;
 	var elements = INDEX.elements;
 	var form = INDEX.form;
-	var keyCode = util.getKeyCode(e);
 	var elTarget;
 	var fValidator;
 
@@ -143,6 +159,10 @@ INDEX.form.validateSignUpForm = function(e) {
 	case "input-1-3":
 		elTarget = elements.signupPwRep;
 		fValidator = util.isValidatePW;
+		if (elements.signupConPwInput.value) {
+			form.validateConPW(elements.signupConPwRep,
+					elements.signupConPwInput.value, e.target.value);
+		}
 		break;
 	case "input-1-4":
 		elTarget = elements.signupConPwRep;
@@ -151,13 +171,12 @@ INDEX.form.validateSignUpForm = function(e) {
 		form.confirmSignupSubmittable();
 		return;
 	default:
-		return;
-	}
-	if (keyCode != 13) {
-		form.validateInput(elTarget, e.target.value, fValidator);
 		form.confirmSignupSubmittable();
 		return;
 	}
+	form.validateInput(elTarget, e.target.value, fValidator);
+	form.confirmSignupSubmittable();
+	return;
 }
 INDEX.form.confirmSignupSubmittable = function() {
 	var elements = INDEX.elements;
@@ -217,6 +236,8 @@ INDEX.form.closeModal = function(elModal) {
 INDEX.form.openModal = function(elModal) {
 	var util = CANDRUN.util;
 	var elements = INDEX.elements;
+	var form = INDEX.form;
+
 	util.removeClass(elModal, "dp-none");
 	util.addClass(elements.bg, "overlay-darken");
 	util.addClass(elements.signLinksWrapper, "dp-none");

@@ -2,35 +2,28 @@ var CANDRUN = CANDRUN || {};
 
 CANDRUN.enums = {};
 CANDRUN.enums.pwValMsg = {
-	SHORT: "비밀번호는 최소 6자 이상이어야 합니다.",
-	NUM: "비밀번호는 숫자를 포함하여야 합니다.",
-	MARK: "비밀번호는 특수문자를 포함하여야 합니다."
+	SHORT : "비밀번호는 최소 6자 이상이어야 합니다.",
+	NUM : "비밀번호는 숫자를 포함하여야 합니다.",
+	MARK : "비밀번호는 특수문자를 포함하여야 합니다."
 }
 CANDRUN.enums.emailValMsg = {
-	FAULT: "유효한 이메일 형식이 아닙니다."
+	FAULT : "유효한 이메일 형식이 아닙니다."
 }
 CANDRUN.enums.pwConMsg = {
-	FAULT: "비밀번호가 일치하지 않습니다."
+	FAULT : "비밀번호가 일치하지 않습니다."
 }
 
 CANDRUN.util = {};
-//사용 예시
-//var myAjax = new CANDRUN.util.ajax("http://candrun.com/user", function() {console.log("success");}, function() {console.log("fail");});
-//헤더를 json으로 - option
-//myAjax.setJson();
-//메소드를 put으로 - option
-//myAjax.setMethod("PUT");
-//Ajax 실행
-//myAjax.send();
 CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	var httpRequest;
 	var method = 'GET';
 
 	this.setJson = function() {
-		 httpRequest.setRequestHeader('Accept', 'application/json');
+		httpRequest.setRequestHeader('Accept', 'application/json');
 	}
-	this.readyParam = function() {
-		 httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	this.setSimplePost = function() {
+		httpRequest.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
 	}
 	this.setMethod = function(sMethod) {
 		method = sMethod;
@@ -38,11 +31,11 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	this.open = function() {
 		httpRequest.open(method, sUrl);
 	}
-	//send 메소드에 params 추가.
+	// send 메소드에 params 추가.
 	this.send = function(params) {
 		httpRequest.send(params);
-	}	
-	
+	}
+
 	if (window.XMLHttpRequest) {
 		httpRequest = new XMLHttpRequest();
 	} else if (window.ActiveXObject) {
@@ -70,18 +63,79 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 			}
 		}
 	}
+
 }
+// 사용 예시
+// var myAjax = new CANDRUN.util.ajax("http://candrun.com/user", function()
+// {console.log("success");}, function() {console.log("fail");});
+// 헤더를 json으로 - option
+// myAjax.setJson();
+// 메소드를 put으로 - option
+// myAjax.setMethod("PUT");
+// Ajax 실행
+// myAjax.send();
+//CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
+//	var httpRequest;
+//	var method = 'GET';
+//
+//	this.setJson = function() {
+//		httpRequest.setRequestHeader('Accept', 'application/json');
+//	}
+//	this.setSimplePost = function() {
+//		httpRequest.setRequestHeader("Content-type",
+//				"application/x-www-form-urlencoded");
+//	}
+//	this.setMethod = function(sMethod) {
+//		method = sMethod;
+//	}
+//	this.open = function() {
+//		httpRequest.open(method, sUrl);
+//	}
+//	// send 메소드에 params 추가.
+//	this.send = function(params) {
+//		httpRequest.send(params);
+//	}
+//
+//	if (window.XMLHttpRequest) {
+//		httpRequest = new XMLHttpRequest();
+//	} else if (window.ActiveXObject) {
+//		try {
+//			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+//		} catch (e) {
+//			try {
+//				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+//			} catch (e) {
+//			}
+//		}
+//	}
+//	if (!httpRequest) {
+//		console.log('Giving up :( Cannot create an XMLHTTP instance');
+//		return false;
+//	}
+//	httpRequest.onreadystatechange = function() {
+//		if (httpRequest.readyState === 4) {
+//			if (httpRequest.status === 200) {
+//				fSuccess(httpRequest.responseText);
+//			} else {
+//				if (fFail) {
+//					fFail();
+//				}
+//			}
+//		}
+//	}
+//}
 CANDRUN.util.querySelector = function(el) {
 	return document.querySelector(el);
 }
-CANDRUN.util.querySelectorAll = function(el){
+CANDRUN.util.querySelectorAll = function(el) {
 	return document.querySelectorAll(el);
 }
 CANDRUN.util.addClass = function(elTarget, sClass) {
 	elTarget.className += " " + sClass;
 }
 CANDRUN.util.removeClass = function(elTarget, sClass) {
-	elTarget.className = CANDRUN.util.trimString(elTarget.className.replace(sClass, ''));
+	elTarget.className = CANDRUN.util.trimString(elTarget.className.replace(
+			sClass, ''));
 }
 CANDRUN.util.trimLString = function(str) {
 	return str.replace(/^\s+/, '');
@@ -110,7 +164,7 @@ CANDRUN.util.isValidatePW = function(sPW) {
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.NUM;
 	}
-	reg = /[!#$%&'*+/=?^_`{|}~-]/;
+	reg = /[!@#$%&'*+/=?^_`{|}~-]/;
 	if (!reg.test(sPW)) {
 		return pwValMsgEnum.MARK;
 	}

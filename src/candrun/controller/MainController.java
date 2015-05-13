@@ -1,8 +1,6 @@
 package candrun.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.GeneralSecurityException;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,59 +15,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import candrun.dao.GoalDAO;
 import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
-import candrun.model.Goal;
-import candrun.model.Task;
-import candrun.model.User;
-
+import candrun.service.GoalService;
+import candrun.service.HomeService;
+import candrun.service.UserService;
+import candrun.support.enums.Security;
 
 @RequestMapping("/")
 @Controller
 public class MainController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(MainController.class);
 
-	@Autowired GoalDAO goalDao;
+	@Autowired
+	GoalDAO goalDao;
+	@Autowired
+	TaskDAO taskDao;
+	@Autowired
+	UserDAO userDao;
+	@Autowired
+	HomeService homeService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	GoalService goalService;
 
-	@Autowired TaskDAO taskDao;
-	
-	@Autowired UserDAO userDao;
-	
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, HttpSession session) {
-		
-		LOGGER.debug((String) session.getAttribute("email"));
-		if (session.getAttribute("email") == null || session.getAttribute("email") == "") {
-			return "welcome";
-		}
-		
-		//TODO: 로그인까지 기능하면 session에서 email정보를 받아온다.
-		//String email = (String) session.getAttribute("email");
-		String email = "javajava@naver.com";
-		
-		
-		//get goals
-		List<Goal> goals = goalDao.findRecentGoalsByEmail(email);
-		model.addAttribute("goals", goals);		
+	public String firstPage(Model model, HttpSession session) {
 
-		//get recent goal and tasks
-		if(goals.size() > 0){
-			Goal topGoal = goals.get(0);
-			List<Task> tasks = taskDao.findTasksByGoalId(topGoal.getId());
-			model.addAttribute("tasks", tasks);
+		try {
+			if (!userService.isLogedIn(model, session)) {
+				return "welcome";
+			}
+		} catch (GeneralSecurityException e) {
+			LOGGER.error(e.toString());
+			e.printStackTrace();
 		}
-		
-		//get friends in nav  
-		Map<String, List<User>> friendsListGroupByGoal = new HashMap<String, List<User>>();
-		for(int i=0 ; i<goals.size();i++){
-			Goal goal = goals.get(i);
-			LOGGER.info("recent goal's id: {}",goal.getId());
-			friendsListGroupByGoal.put("friends"+i, (userDao.findUsersByGoalId(goal.getId(),email)));
-		}
-		model.addAllAttributes(friendsListGroupByGoal);
-		
-		//get friends in sidebar
-		List<User> friends = userDao.findFriendsAsRequester(email);
-		model.addAttribute("friends", friends);
 
-		return "home";		
+		// 로긴/회원가입 시 사용했던 비공개 키 삭제
+		session.removeAttribute(Security.RSA_PRI_KEY.getValue());
+		
+		String email = (String) session.getAttribute("email");
+		homeService.setInitModel(model, email);
+		
+		return "home";
 	}
 }

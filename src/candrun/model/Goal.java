@@ -14,16 +14,26 @@ public class Goal {
 	private int combo;
 	private int maxCombo;
 	private int achievement;
+	private int state;
 
 	public Goal(String contents, String email) {
 		this.contents = contents;
 		this.email = email;
 	}
 	
-	public Goal(int id, String contents, Timestamp startDate) {
+	public Goal(int id, String contents, String email, Timestamp startDate,
+			Timestamp createdDate, Timestamp modDate, int successDays,
+			int combo, int maxCombo, int achievement, int state) {
+		this(contents, email);
 		this.id = id;
-		this.contents = contents;
 		this.startDate = startDate;
+		this.createdDate = createdDate;
+		this.modDate = modDate;
+		this.successDays = successDays;
+		this.combo = combo;
+		this.maxCombo = maxCombo;
+		this.achievement = achievement;
+		this.state = state;
 	}
 
 	public int getId() {  
@@ -64,5 +74,13 @@ public class Goal {
 
 	public int getAchievement() {
 		return achievement;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
 	}
 }
