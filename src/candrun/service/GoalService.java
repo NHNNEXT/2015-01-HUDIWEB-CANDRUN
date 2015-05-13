@@ -65,13 +65,13 @@ public class GoalService {
 		return new GoalRelation(myGoal, relation);
 	}
 
-	public Goal addGoalAndTasks(String goalContents, ArrayList<String> tasks, String userEmail) {
+	public Goal addGoalAndTasks(String goalContents, String[] tasks, String userEmail) {
 		
 		Goal goal = new Goal(goalContents, userEmail);
 		int returnedId = goalDao.addGoal(goal);
 
-		for (int i = 0; i < tasks.size(); i++) {
-			taskDao.addTask(new Task(tasks.get(i), returnedId));
+		for (String task : tasks) {
+			taskDao.addTask(new Task(task, returnedId));
 		}
 		return goal;
 	}

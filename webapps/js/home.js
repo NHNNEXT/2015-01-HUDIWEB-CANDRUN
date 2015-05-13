@@ -188,7 +188,7 @@ HOME.form.send = function () {
 		alert("Goal이 공백입니다.")
 	}
 	for(var i =0 ; i<inputs.length; i++){
-		params = params + "&task_contents_"+i+"="+inputs[i].value;
+		params = params + "&taskContents[]"+"="+inputs[i].value;
 		if(inputs[i].value.replace(blankPattern,"")==""){
 			alert("Task가 공백입니다.");
 			return;

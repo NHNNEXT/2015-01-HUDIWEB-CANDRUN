@@ -1,8 +1,5 @@
 package candrun.controller;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -26,7 +23,6 @@ import candrun.service.TaskService;
 public class GoalsController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TasksController.class);
-	private static final int maxTasksNumber = 5;
 	@Autowired
 	GoalDAO goalDao;
 	@Autowired
@@ -37,20 +33,12 @@ public class GoalsController {
 	TaskService taskService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Object create(@RequestParam("goal_contents") String goalContents,
-			HttpServletRequest req, HttpSession session) {
+	public Object create(@RequestParam("goal_contents") String goalContents, @RequestParam("taskContents[]") String[] taskContents, 
+			HttpSession session) {
 		String userEmail = (String) session.getAttribute("email");
-
-		ArrayList<String> tasks = new ArrayList<String>();
-
-		for (int i = 0; i < maxTasksNumber; i++) {
-			String taskContents = req.getParameter("task_contents_" + i);
-			if (taskContents == null) break;
-			tasks.add(taskContents);
-		}
 		
 		//TODO: 친구추가하는 기능과 합쳐서 GoalRelation 객체로 리턴해주어야 한다. 
-		Goal newGoal = goalService.addGoalAndTasks(goalContents, tasks, userEmail);
+		Goal newGoal = goalService.addGoalAndTasks(goalContents, taskContents, userEmail);
 		return newGoal;
 	}
 
