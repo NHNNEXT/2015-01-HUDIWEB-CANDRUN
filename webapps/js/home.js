@@ -14,7 +14,6 @@ HOME.init = function() {
 	methods.runInitMethods();
 }
 
-
 HOME.elements = HOME.elements || {};
 HOME.methods = HOME.methods || {};
 HOME.methods.getElements = function() {
@@ -131,26 +130,32 @@ HOME.methods.makeChart = function (taskIds){
 }
 
 HOME.methods.drawChart = function (responseText){
+	const previousDayLength = 6;
 	var taskLogLists = JSON.parse(responseText);
-	const showDayLength = 7;
-	
-	var firstDayIndex = taskLogLists[0].length-1;
-	var firstDayString = taskLogLists[0][firstDayIndex].date;
-	var firstDay = changeIntoDateFormat(firstDayString);
-	
 	var data = {labels: [], datasets: []};
-	var options={};
+	var options={ datasetFill : false};
+	setLabels();
+	setDatas();
 	
-	for(var i=0; i<showDayLength;i++){			
-		data.labels.push(firstDay.getDate() + i);
-	}
-	for(var i=0; i<taskLogLists.length;i++){
-		var dataContents = makeDataContents(taskLogLists[i], i);		
-		data.datasets.push(dataContents);
-	}
 	var ctx = document.querySelector("#taskChart").getContext("2d");
 	var myLineChart = new Chart(ctx).Line(data, options);
 	
+	function setLabels(){
+		var firstDayIndex = taskLogLists[0].length-1;
+		var firstDayString = taskLogLists[0][firstDayIndex].date;
+		var firstDay = changeIntoDateFormat(firstDayString);
+
+		//현재 날짜까지 표시해주기 위해 +1을 한다.
+		for(var i=0; i<previousDayLength+1;i++){			
+			data.labels.push(firstDay.getDate() + i);
+		}
+	}
+	function setDatas(){
+		for(var i=0; i<taskLogLists.length;i++){
+			var dataContents = makeDataContents(taskLogLists[i], i);		
+			data.datasets.push(dataContents);
+		}		
+	}
 	function makeDataContents(taskLogList, number){
 		var dataTemplete = {
 				pointStrokeColor: "#fff",
@@ -159,21 +164,35 @@ HOME.methods.drawChart = function (responseText){
 				data: []
 		}
 		var nullCount = 0;
+		var curNudgeCount = findCurNudgeCount(taskLogList[0].taskId);
 
-		for(var i=showDayLength; i>=0;i--){	
+		//먼저 리스트에 들어간 값이 그래프에 왼쪽으로 그려진다. 
+		//최신순으로 값을 받아왔으므로 뒤에서부터 dataTemplete에 넣는다. 		
+		for(var i=previousDayLength; i>0;i--){	
 			if(taskLogList[i]===undefined){
 				nullCount++;
 			}else{				
 				dataTemplete.data.push(taskLogList[i].count);
 			}
 		}
-		
 		for(var i=0; i<nullCount; i++){
 			dataTemplete.data.push(0);
 		}
+		dataTemplete.data.push(curNudgeCount);
 	
 		setColor(dataTemplete, number);
 		return dataTemplete;
+	}
+	
+	function findCurNudgeCount(taskId){
+		var taskIds = document.querySelectorAll(".tasksId");
+		var nudgeCount = 0;
+		for(var i=0; i < taskIds.length ; i++){
+			if(taskId==taskIds[i].value){
+				nudgeCount = taskIds[i].parentNode.querySelector(".nudge-number");
+				return nudgeCount.innerHTML;
+			};
+		}
 	}
 	function changeIntoDateFormat(dayString){
 		var monthPattern = /^([A-Z])\w+/g;
@@ -204,7 +223,6 @@ HOME.methods.drawChart = function (responseText){
 		dataTemplete.pointColor= colorSet[number];
 	}
 }
-
 
 HOME.nav = HOME.nav || {};
 HOME.nav.requestGoal = function(id) {
