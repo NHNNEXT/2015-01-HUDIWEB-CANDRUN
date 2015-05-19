@@ -72,7 +72,7 @@
 							<div class="nudge-number">${task.nudge}</div>
 						</div>
 					</c:forEach>
-					<canvas id="myChart" width="800" height="300"></canvas>
+					<canvas id="taskChart" width="800" height="300"></canvas>
 				</form>
 			</section>
 		</div>
