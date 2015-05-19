@@ -3,6 +3,7 @@
  */
 document.addEventListener("DOMContentLoaded", function(e) {
 	HOME.init();
+	HOME.methods.makeChart();
 });
 
 var HOME = HOME || {};
@@ -31,10 +32,12 @@ HOME.methods.getElements = function() {
 	elements.taskInputAdd = querySelector("#make-goal .task-input-add");
 	elements.showGoalSec = querySelector("#show-goal");
 	elements.taskList = querySelectorAll("#show-goal .task-wrapper");
+	elements.taskIds = querySelectorAll("#show-goal .tasksId");
 	elements.userCard = querySelector("#user-card");
 	elements.btnLogout = querySelector("#user-card .btn-logout");
 	elements.sectionToggle = querySelector("#section-toggle");
 	elements.flipContainer = querySelector("#flip-container");
+	elements.taskChart = querySelector("#myChart");
 }
 
 HOME.methods.addEvents = function() {
@@ -106,8 +109,98 @@ HOME.methods.checkComplete = function(e){
 
 HOME.methods.refreshNumber = function (responseText) {
 	HOME.elements.numberToNudge.innerHTML = JSON.parse(responseText).nudge;
-
 };
+
+HOME.methods.makeChart = function (){
+	var taskIds = HOME.elements.taskIds;
+	var sUrl = "/tasks?";
+	for(var i =0 ; i<taskIds.length; i++){
+		sUrl = sUrl + "&taskIds[]"+"="+taskIds[i].value;
+	}
+	var ajax = new CANDRUN.util.ajax(sUrl, HOME.methods.drawChart);
+	alert(sUrl);
+	ajax.open();
+	ajax.setSimplePost();
+	ajax.send();
+}
+
+HOME.methods.drawChart = function (responseText){
+	var taskLogLists = JSON.parse(responseText);
+	const showDayLength = 7;
+	
+	var firstDayIndex = taskLogLists[0].length-1;
+	var firstDayString = taskLogLists[0][firstDayIndex].date;
+	var firstDay = changeIntoDateFormat(firstDayString);
+	
+	var data = {labels: [], datasets: []};
+	var options={};
+	
+	for(var i=0; i<showDayLength;i++){			
+		data.labels.push(firstDay.getDate() + i);
+	}
+	for(var i=0; i<taskLogLists.length;i++){
+		var dataContents = makeDataContents(taskLogLists[i], i);		
+		data.datasets.push(dataContents);
+	}
+	
+	var ctx = HOME.elements.taskChart.getContext("2d");
+	var myLineChart = new Chart(ctx).Line(data, options);
+	
+	function makeDataContents(taskLogList, number){
+		var dataTemplete = {
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(220,220,220,1)",
+				data: []
+		}
+		var nullCount = 0;
+
+		for(var i=showDayLength; i>=0;i--){	
+			if(taskLogList[i]===undefined){
+				nullCount++;
+			}else{				
+				dataTemplete.data.push(taskLogList[i].count);
+				console.log(taskLogList[i].date);
+				console.log(i);
+			}
+		}
+		
+		for(var i=0; i<nullCount; i++){
+			dataTemplete.data.push(0);
+		}
+	
+		setColor(dataTemplete, number);
+		return dataTemplete;
+	}
+	function changeIntoDateFormat(dayString){
+		var monthPattern = /^([A-Z])\w+/g;
+		var dayPattern = /(\d)+,/g;
+		var yearPattern = /, (\d)+/g;	
+		var monthMap = {}; 
+		monthMap["Jan"] = "01";
+		monthMap["Feb"] = "02";
+		monthMap["Mar"] = "03";
+		monthMap["Apr"] = "04";
+		monthMap["May"] = "05";
+		monthMap["Jun"] = "06";
+		monthMap["Jul"] = "07";
+		monthMap["Aug"] = "08";
+		monthMap["Sep"] = "09";
+		monthMap["Oct"] = "10";
+		monthMap["Nov"] = "11";
+		monthMap["Dec"] = "12";
+		var day = dayPattern.exec(dayString)[0].replace(",","");
+		var month = monthMap[monthPattern.exec(dayString)[0]];
+		var year = yearPattern.exec(dayString)[0].replace(", ","");
+		return new Date(year+"-"+month+"-"+day);
+	}
+	function setColor(dataTemplete, number){
+		var colorSet = ["rgb(29,82,97)", "rgb(86,152,163)", "rgb(245,225,201)", "rgb(161,82,78)", "rgb(97,10,29)"];
+		dataTemplete.fillColor = colorSet[number];
+		dataTemplete.strokeColor= colorSet[number];
+		dataTemplete.pointColor= colorSet[number];
+	}
+}
 
 
 HOME.nav = HOME.nav || {};

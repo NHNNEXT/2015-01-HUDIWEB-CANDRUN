@@ -72,6 +72,7 @@
 							<div class="nudge-number">${task.nudge}</div>
 						</div>
 					</c:forEach>
+					<canvas id="myChart" width="800" height="300"></canvas>
 				</form>
 			</section>
 		</div>
@@ -80,4 +81,5 @@
 <script src="/js/template/handlebars-v3.0.3.js"></script>
 <script src="/js/candrun.js"></script>
 <script src="/js/home.js"></script>
+<script src="/js/chart/Chart.js"></script>
 </html>
