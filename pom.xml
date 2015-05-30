@@ -8,6 +8,7 @@
 
 	<properties>
 		<tomcat.version>8.0.20</tomcat.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
@@ -224,7 +225,7 @@
 					<configuration>
 						<failOnMissingWebXml>true</failOnMissingWebXml>
 						<webappDirectory>webapps</webappDirectory>
-						<webXml>WEB-INF/web.xml</webXml>
+						<webXml>webapps/WEB-INF/web.xml</webXml>
 					</configuration>
 				</plugin>
 				<plugin>

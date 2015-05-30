@@ -11,8 +11,8 @@ HOME.init = function() {
 	var methods = HOME.methods;
 	methods.getElements();
 	methods.addEvents();
+	methods.runInitMethods();
 }
-
 
 HOME.elements = HOME.elements || {};
 HOME.methods = HOME.methods || {};
@@ -31,6 +31,7 @@ HOME.methods.getElements = function() {
 	elements.taskInputAdd = querySelector("#make-goal .task-input-add");
 	elements.showGoalSec = querySelector("#show-goal");
 	elements.taskList = querySelectorAll("#show-goal .task-wrapper");
+	elements.taskIds = querySelectorAll("#show-goal .tasksId");
 	elements.userCard = querySelector("#user-card");
 	elements.btnLogout = querySelector("#user-card .btn-logout");
 	elements.sectionToggle = querySelector("#section-toggle");
@@ -57,8 +58,17 @@ HOME.methods.addEvents = function() {
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
 	elements.goalInput.addEventListener("focus", form.clearInputValue);
 	elements.sectionToggle.addEventListener("click", nav.sectionChangeToggle)
+}
+
+HOME.methods.runInitMethods = function(){
+	var taskList = document.querySelectorAll("#show-goal .task-wrapper");
+	var taskIdInputs = document.querySelectorAll(".tasksId");
+	var taskIdValues = [];
 	
-	var taskList = elements.taskList;
+	for(var i=0; i<taskIdInputs.length; i++){
+		taskIdValues.push(taskIdInputs[i].value);
+	}
+	HOME.methods.makeChart(taskIdValues);
 
 	for ( var idx in taskList) {
 		if (taskList[idx] >= taskList.length)
@@ -116,9 +126,113 @@ HOME.methods.checkComplete = function(e){
 
 HOME.methods.refreshNumber = function (responseText) {
 	HOME.elements.numberToNudge.innerHTML = JSON.parse(responseText).nudge;
-
 };
 
+HOME.methods.makeChart = function (taskIds){
+	var sUrl = "/tasks?";
+	for(var i =0 ; i<taskIds.length; i++){
+		sUrl = sUrl + "&taskIds[]"+"="+taskIds[i];
+	}
+	var ajax = new CANDRUN.util.ajax(sUrl, HOME.methods.drawChart);
+	ajax.open();
+	ajax.setSimplePost();
+	ajax.send();
+}
+
+HOME.methods.drawChart = function (responseText){
+	const previousDayLength = 6;
+	var taskLogLists = JSON.parse(responseText);
+	var data = {labels: [], datasets: []};
+	var options={ datasetFill : false};
+	setLabels();
+	setDatas();
+	
+	var ctx = document.querySelector("#taskChart").getContext("2d");
+	var myLineChart = new Chart(ctx).Line(data, options);
+	
+	function setLabels(){
+		var firstDayIndex = taskLogLists[0].length-1;
+		var firstDayString = taskLogLists[0][firstDayIndex].date;
+		var firstDay = changeIntoDateFormat(firstDayString);
+
+		//현재 날짜까지 표시해주기 위해 +1을 한다.
+		for(var i=0; i<previousDayLength+1;i++){			
+			data.labels.push(firstDay.getDate() + i);
+		}
+	}
+	function setDatas(){
+		for(var i=0; i<taskLogLists.length;i++){
+			var dataContents = makeDataContents(taskLogLists[i], i);		
+			data.datasets.push(dataContents);
+		}		
+	}
+	function makeDataContents(taskLogList, number){
+		var dataTemplete = {
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(220,220,220,1)",
+				data: []
+		}
+		var nullCount = 0;
+		var curNudgeCount = findCurNudgeCount(taskLogList[0].taskId);
+
+		//먼저 리스트에 들어간 값이 그래프에 왼쪽으로 그려진다. 
+		//최신순으로 값을 받아왔으므로 뒤에서부터 dataTemplete에 넣는다. 		
+		for(var i=previousDayLength; i>0;i--){	
+			if(taskLogList[i]===undefined){
+				nullCount++;
+			}else{				
+				dataTemplete.data.push(taskLogList[i].count);
+			}
+		}
+		for(var i=0; i<nullCount; i++){
+			dataTemplete.data.push(0);
+		}
+		dataTemplete.data.push(curNudgeCount);
+	
+		setColor(dataTemplete, number);
+		return dataTemplete;
+	}
+	
+	function findCurNudgeCount(taskId){
+		var taskIds = document.querySelectorAll(".tasksId");
+		var nudgeCount = 0;
+		for(var i=0; i < taskIds.length ; i++){
+			if(taskId==taskIds[i].value){
+				nudgeCount = taskIds[i].parentNode.querySelector(".nudge-number");
+				return nudgeCount.innerHTML;
+			};
+		}
+	}
+	function changeIntoDateFormat(dayString){
+		var monthPattern = /^([A-Z])\w+/g;
+		var dayPattern = /(\d)+,/g;
+		var yearPattern = /, (\d)+/g;	
+		var monthMap = {}; 
+		monthMap["Jan"] = "01";
+		monthMap["Feb"] = "02";
+		monthMap["Mar"] = "03";
+		monthMap["Apr"] = "04";
+		monthMap["May"] = "05";
+		monthMap["Jun"] = "06";
+		monthMap["Jul"] = "07";
+		monthMap["Aug"] = "08";
+		monthMap["Sep"] = "09";
+		monthMap["Oct"] = "10";
+		monthMap["Nov"] = "11";
+		monthMap["Dec"] = "12";
+		var day = dayPattern.exec(dayString)[0].replace(",","");
+		var month = monthMap[monthPattern.exec(dayString)[0]];
+		var year = yearPattern.exec(dayString)[0].replace(", ","");
+		return new Date(year+"-"+month+"-"+day);
+	}
+	function setColor(dataTemplete, number){
+		var colorSet = ["rgb(29,82,97)", "rgb(86,152,163)", "rgb(245,225,201)", "rgb(161,82,78)", "rgb(97,10,29)"];
+		dataTemplete.fillColor = colorSet[number];
+		dataTemplete.strokeColor= colorSet[number];
+		dataTemplete.pointColor= colorSet[number];
+	}
+}
 
 HOME.nav = HOME.nav || {};
 HOME.nav.requestGoal = function(id) {
@@ -136,18 +250,7 @@ HOME.nav.refreshGoalView = function(sResp) {
 	template = Handlebars.compile(HOME.templates.showGoal);
 	html = template(oGoal);
 	HOME.elements.showGoalSec.innerHTML = html;
-
-	HOME.elements.taskList = document.querySelectorAll("#show-goal .task-wrapper");
-	var nudgeList = HOME.elements.taskList;
-	console.log(nudgeList);
-	for (var idx in nudgeList) {
-		if (nudgeList[idx] >= nudgeList.length)
-			return;
-		var nudgeEl = nudgeList[idx];
-		nudgeEl.addEventListener("click", HOME.methods.addNudge);
-		nudgeEl.addEventListener("click", HOME.methods.checkComplete);
-		HOME.methods.checkGlow(nudgeEl);
-	}
+	HOME.methods.runInitMethods();
 }
 
 HOME.nav.userCardToggle = function(){
@@ -270,7 +373,8 @@ HOME.templates.showGoal = [ '<div class="goal-wrapper">',
 		'<input type="hidden" class="tasksId" value="{{id}}" />',
 		'<input type="hidden" class="task-complete" value="{{complete}}" />',
 		'<div class="nudge-number">{{nudge}}</div>', '</form>', '</div>',
-		'{{/each}}' ].join("\n");
+		'{{/each}}','<canvas id="taskChart" width="800" height="300"></canvas>'
+ ].join("\n");
 
 HOME.templates.taskInput = ['<input class="task-input" value="Task를 입력하세요." />',
                             '<div class=btn-delete-task></div>'

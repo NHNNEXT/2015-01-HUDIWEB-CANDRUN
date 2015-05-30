@@ -12,7 +12,7 @@ public class DailyInitializeJob extends QuartzJobBean{
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		taskDao.saveNudgeCount();
+		taskDao.saveTaskLog();
 		taskDao.initializeNudgeCount();
 	}
 

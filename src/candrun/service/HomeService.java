@@ -6,21 +6,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 
-import candrun.dao.TaskDAO;
 import candrun.dao.UserDAO;
 import candrun.model.GoalRelation;
 
 public class HomeService {
 
 	private UserDAO userDao;
-	private TaskDAO taskDao;
 	private GoalService goalService;
+	private TaskService taskService;
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeService.class);
-	public HomeService(UserDAO userDao, TaskDAO taskDao, GoalService goalService) {
+	public HomeService(UserDAO userDao, GoalService goalService, TaskService taskService) {
 		this.userDao = userDao;
-		this.taskDao = taskDao;
 		this.goalService = goalService;
+		this.taskService = taskService;
 	}
 
 	public void setInitModel(Model model, String email) {
@@ -33,8 +32,8 @@ public class HomeService {
 			return;
 		// 첫번째 goal의 tasks 로드
 		model.addAttribute(
-				"tasks", taskDao.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
+				"tasks", taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
 		logger.debug("goalrelations: {}", goalRelations);
-		logger.debug("taskes: {}", taskDao.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
+		logger.debug("taskes: {}", taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
 	}
 }
