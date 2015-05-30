@@ -45,6 +45,8 @@ HOME.methods.addEvents = function() {
 	for (var i = 0; i < elements.goalsInNav.length; i++) {
 		elements.goalsInNav[i].addEventListener("click", function(e) {
 			nav.requestGoal(e.target.id);
+			////
+			nav.slideOut(e.target.id);
 		});
 	}
 	elements.profilePic.addEventListener("click", nav.userCardToggle);
@@ -67,7 +69,15 @@ HOME.methods.addEvents = function() {
 		HOME.methods.checkGlow(nudgeEl);
 	}
 }
-
+////
+HOME.methods.slideOut = function(e){
+	e.preventDefault();
+	var elements = HOME.elements;
+	
+	//goal 이름을 누르면, 열려 있는.
+	
+}
+////
 HOME.methods.addNudge = function (e) {
 	e.preventDefault();
 
