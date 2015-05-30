@@ -8,6 +8,7 @@
 
 	<properties>
 		<tomcat.version>8.0.20</tomcat.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
