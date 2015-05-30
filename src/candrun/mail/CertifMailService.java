@@ -20,7 +20,7 @@ public class CertifMailService implements MailService {
 		MailBodyWriter writer = new MailBodyWriter() {
 			@Override
 			public String writeBody(SimpleMailMessage mailMessage) {
-				String body = mailMessage.getText() + "http://localhost:8080/users/"+mailBodyElements.get("key")+"/verify";
+				String body = mailMessage.getText()+mailBodyElements.get("key")+"/verify";
 				return body;
 			}
 		};
