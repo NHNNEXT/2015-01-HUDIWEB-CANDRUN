@@ -224,7 +224,7 @@
 					<configuration>
 						<failOnMissingWebXml>true</failOnMissingWebXml>
 						<webappDirectory>webapps</webappDirectory>
-						<webXml>WEB-INF/web.xml</webXml>
+						<webXml>webapps/WEB-INF/web.xml</webXml>
 					</configuration>
 				</plugin>
 				<plugin>
