@@ -48,10 +48,10 @@ table {
 
 /** start nav **/
 nav {
-	padding-top: 100px;
+	padding-top: 20px;
 	background-color: #760706;
 	width:20%;
- 	height:100vh;
+ 	/* height:100vh; */
 	float:left;
 	color: #DFCED2;
 	min-width: 200px;
@@ -73,6 +73,7 @@ nav .nav-friends-container {
 	margin-top: 7px;
 }
 nav .profile-wrapper {
+	padding-top:80px;
 	height: 300px;
 }
 nav .profile-picture {
@@ -110,13 +111,20 @@ nav .nav-goal span:hover{
 }
 /** end nav **/
 
-/** start fliper **/
+/** start flipper **/
+#section-toggle{
+	width: 90px;
+	height:30px;
+	float:right;
+	font-size: 30px;
+	
+}
 #flip-container{
 	width: 100%;
 	float:left;
 	height:100%;
-	
 }
+
 .flip-container {
 	perspective: 1000px;
 	z-index: 1;
