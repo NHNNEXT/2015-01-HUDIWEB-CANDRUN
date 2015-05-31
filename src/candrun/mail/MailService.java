@@ -1,8 +1,7 @@
 package candrun.mail;
 
-public interface MailService {
+public interface MailService extends Runnable {
 
-	public void sendMail(String email);
+	public void setMailReceiver(String email);
 	public void putMailBodyElement(String element);
-	
 }

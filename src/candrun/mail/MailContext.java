@@ -9,15 +9,16 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailContext {
 
-	public JavaMailSenderImpl mailSender;
-	public SimpleMailMessage mailMessage;
+	private JavaMailSenderImpl mailSender;
+	private SimpleMailMessage mailMessage;
+	private String mailReceiver;
 	
 	public MailContext(JavaMailSenderImpl mailSender, SimpleMailMessage mailMessage) {
 		this.mailSender = mailSender;
 		this.mailMessage = mailMessage;
 	}
 	
-	public void workWithBodyWriter(MailBodyWriter writer, String toMail) {
+	public void workWithBodyWriter(MailBodyWriter writer) {
 		String fromMail = mailMessage.getFrom();
 		String subject = mailMessage.getSubject();
 		String body = writer.writeBody(mailMessage);
@@ -26,7 +27,7 @@ public class MailContext {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 			helper.setFrom(fromMail);
-			helper.setTo(toMail);
+			helper.setTo(mailReceiver);
 			helper.setSubject(subject);
 			helper.setText(body);
 		} catch (MessagingException e) {
@@ -34,5 +35,9 @@ public class MailContext {
 			e.printStackTrace();
 		}
 		mailSender.send(mimeMessage);
+	}
+
+	public void setMailReceiver(String mailReceiver) {
+		this.mailReceiver = mailReceiver;
 	}
 }

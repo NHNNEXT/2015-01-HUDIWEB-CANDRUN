@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import candrun.dao.UserDAO;
 import candrun.mail.CryptoUtil;
 import candrun.mail.MailService;
@@ -36,6 +38,8 @@ public class UsersController {
 	private MailService mailService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ThreadPoolTaskExecutor taskExecutor;
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
@@ -47,12 +51,15 @@ public class UsersController {
 			throws Exception {
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
-
+		
 		msg = userService.register(email, password, nickname, file, request);
 		LOGGER.debug(msg);
-
-		mailService.putMailBodyElement(email);
-		mailService.sendMail(email);
+		
+		if(msg==CommonInvar.SUCCESS.getValue()){
+			mailService.putMailBodyElement(email);
+			mailService.setMailReceiver(email);
+			taskExecutor.execute(mailService);
+		}
 
 		returnMsg.put(CommonInvar.RETURNMSG.getValue(), msg);
 		return returnMsg;
