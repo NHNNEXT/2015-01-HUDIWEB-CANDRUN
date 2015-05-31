@@ -6,17 +6,20 @@ import java.util.Map;
 import org.springframework.mail.SimpleMailMessage;
 
 public class CertifMailService implements MailService {
-
+	
 	MailContext mailContext;
 	Map<String, Object> mailBodyElements = new HashMap<String, Object>();
 
-	public void setMailContext(MailContext mailContext) {
+	public CertifMailService(MailContext mailContext) {
 		this.mailContext = mailContext;
 	}
 	
+	public void setMailReceiver(String mailReceiver){
+		mailContext.setMailReceiver(mailReceiver);
+	}
 	
-	public void sendMail(String toMail) {
-		
+	@Override
+	public void run() {
 		MailBodyWriter writer = new MailBodyWriter() {
 			@Override
 			public String writeBody(SimpleMailMessage mailMessage) {
@@ -24,7 +27,7 @@ public class CertifMailService implements MailService {
 				return body;
 			}
 		};
-		mailContext.workWithBodyWriter(writer, toMail);
+		mailContext.workWithBodyWriter(writer);
 	}
 
 	@Override
