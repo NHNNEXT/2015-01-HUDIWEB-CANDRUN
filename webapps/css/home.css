@@ -341,8 +341,106 @@ nav .nav-goal span:hover{
     padding: 0;
 }
 /** end spreadNav**/
-#friendsBar{
-	background-color: #E8E4E5;
-	width:15%;
-	height:100vh;
+
+/** Start friendsBar **/
+
+#friendsBar {
+  width: 300px;
+  height: 100%;
+  float: right;
+  top: 0;
+  background-color: #34495e;
+  transform: translate3d(0,0,0);
+  transition: 500ms transform ease-in-out;
 }
+
+.toggle#friendsBar {
+  transform: translate3d(-300px,0,0);
+}
+
+#friendsBar ul{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+#friendsBar li {
+  color: white;
+  line-height: 2em;
+  position: relative;
+}
+
+#friendsBar li a {
+  color: white;
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 300;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-top: 1px solid #406081;
+  border-bottom: 1px solid #2c3e50;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+#friendsBar li a:hover {
+  background: #3d566e;
+}
+
+#toggle_button {
+  display: block; 
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: -55px;
+  width: 45px;
+  height: 8px;
+  background: #fff;
+}
+#toggle_button:before {
+  display: block;
+  content:"";
+  background-color: white;
+  height: 8px;
+  margin: 11px auto 0px;
+  width: 45px;
+}
+#toggle_button:after {
+  display: block;
+ content:"";
+  background-color: white;
+  height: 8px;
+  width: 45px;
+  margin: 3px auto 0px;
+}
+
+/*font face*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Lato Hairline'), local('Lato-Hairline'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/boeCNmOCCh-EWFLSfVffDg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/KT3KS9Aol4WfR6Vas8kNcg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/wkfQbvfT_02e2IWO3yYueQ.woff) format('woff');
+}
+
+/** end friendsBar **/

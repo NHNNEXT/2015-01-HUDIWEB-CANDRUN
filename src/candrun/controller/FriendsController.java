@@ -1,10 +1,22 @@
 package candrun.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import candrun.dao.UserDAO;
+
 import candrun.model.User;
+import candrun.service.FriendsService;
+
 
 /**
  * show() 메서드는 실제 서비스에서는 사라질 메서드 입니다.
@@ -16,22 +28,25 @@ import candrun.model.User;
 @RequestMapping("/friends")
 @Controller
 public class FriendsController {
-  
+	private static final Logger LOGGER = LoggerFactory.getLogger(FriendsController.class);
+	@Autowired
+	UserDAO userDao;
+	@Autowired
+	FriendsService friendsService;
+	
 	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
 	@ResponseBody
-	protected User[] getJson() {
-		User user1 = new User("test01@test.com", "nick01");
-		User user2 = new User("test02@test.com", "nick02");
-		User user3 = new User("test03@test.com", "nick03");
-		User user4 = new User("test04@test.com", "nick04");
-		User user5 = new User("test05@test.com", "nick05");
-		User user6 = new User("test06@test.com", "nick06");
-		User[] users = {user1, user2, user3, user4, user5, user6};
+	public List<User> showfriends(HttpSession session) { 
+		String userEmail = (String) session.getAttribute("email");
+		List<User> friendsList = friendsService.getFriends(userEmail);
 		
-		return users;
+		for (int i = 0; i < friendsList.size(); i++) {
+		    System.out.println(friendsList.get(i));
+		}
+		
+		return friendsList; //친구 list 반환 
 	}
-	@RequestMapping(value="/friends")
-	protected String show() {
-		return "friends";
-	}
+
 }
+
+
