@@ -60,6 +60,7 @@ public class UserService {
 		String picPath = "";
 		try {
 			picPath = makePicPath(email, file, req);
+			logger.info(picPath);
 			userDao.addUser(new User(email, nick, SecurityService.encrypt(pw,
 					pw), picPath));
 		} catch (DuplicateKeyException e) {

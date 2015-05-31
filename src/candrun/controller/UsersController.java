@@ -51,7 +51,7 @@ public class UsersController {
 			throws Exception {
 		Map<String, String> returnMsg = new HashMap<String, String>();
 		String msg;
-
+		
 		msg = userService.register(email, password, nickname, file, request);
 		LOGGER.debug(msg);
 		

@@ -104,6 +104,10 @@ INDEX.form.checkSignUpResult = function(sResp) {
 		alert("이메일 인증을 하셔야 회원가입이 완료 됩니다.")
 		location.replace("/");
 	}
+	if (oReturnMsg.returnMsg === "uploadError") {
+		alert("10MB 이하의 사진을 선택해주세요.");
+		return;
+	}
 }
 INDEX.form.submitSigninForm = function(e) {
 	e.preventDefault();
