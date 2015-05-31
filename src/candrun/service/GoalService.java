@@ -75,4 +75,9 @@ public class GoalService {
 		}
 		return goal;
 	}
+
+	public RelationRequestState addGoalRelation(String requesterId, String receiverId) {
+		goalDao.requestConnectGoal(Integer.parseInt(requesterId), Integer.parseInt(receiverId));
+		return RelationRequestState.REQUESTED;
+	}
 }

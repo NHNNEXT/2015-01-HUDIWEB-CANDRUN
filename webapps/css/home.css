@@ -48,10 +48,10 @@ table {
 
 /** start nav **/
 nav {
-	padding-top: 100px;
+	padding-top: 20px;
 	background-color: #760706;
 	width:20%;
- 	height:100vh;
+ 	/* height:100vh; */
 	float:left;
 	color: #DFCED2;
 	min-width: 200px;
@@ -73,6 +73,7 @@ nav .nav-friends-container {
 	margin-top: 7px;
 }
 nav .profile-wrapper {
+	padding-top:80px;
 	height: 300px;
 }
 nav .profile-picture {
@@ -110,13 +111,20 @@ nav .nav-goal span:hover{
 }
 /** end nav **/
 
-/** start fliper **/
-#flip-container{
-	width: 70%;
-	float:left;
-	height:100%;
+/** start flipper **/
+#section-toggle{
+	width: 90px;
+	height:30px;
+	float:right;
+	font-size: 30px;
 	
 }
+#flip-container{
+	width: 100%;
+	float:left;
+	height:100%;
+}
+
 .flip-container {
 	perspective: 1000px;
 	z-index: 1;
@@ -136,17 +144,21 @@ nav .nav-goal span:hover{
 
 /** start make-goal **/
 #make-goal{
+	width:100%;
 	height:100%;
 	backface-visibility: hidden;
-	background-color: #fff;
+	background-color:#F5E8E8;
 	transform: rotateY(180deg);
 }
+
 #make-goal .submit-form{
 	padding-top: 150px;
-	width: 85%;
-	color: #707070;
-	margin: 0px auto;
-}
+	width: 50%;
+	color: #F5E8E8;
+	font-weight:bold;
+	margin-left: 35%;
+} 
+
 #make-goal .goal-input {
 	width: 100%;
 	height: 100px;
@@ -155,19 +167,21 @@ nav .nav-goal span:hover{
 	font-size: 45px;
 	text-align: center;
 	color: #707070;
+	font-weight:bold;
 }
 #make-goal .task-input {
-	width: 100%;
-	height: 120px;
+	width: 90%;
+	height: 80px;
 	float: right;
 	background-color: #E4C7C5;
+	font-size: 170%;
 	text-align: center;
 }
 #make-goal .task-input-add {
-	width: 100%;
+	width: 90%;
 	height: 60px;
-	background-color: #d9d9d9;
-	margin:10px;
+	background-color: #E4C7C5;
+	margin-top:10px;
 	text-align: center;
 	line-height: 60px;
 	font-size: 60px;
@@ -187,14 +201,15 @@ nav .nav-goal span:hover{
 	color: #610A1D;
 }
 #make-goal .wrapper-task-input {
+	width: 100%;
+	height: 80px;
+	float: right;
+	text-align: center;
+	margin-top:15px;
 	position:relative;
-	width:100%;
-	height:120px;
-	background-color: black;
 	overflow: hidden;
-	margin:10px;
 	
-}
+} 
 #make-goal .btn-delete-task {
 	width: 20px;
 	height:20px;
@@ -227,6 +242,7 @@ nav .nav-goal span:hover{
 	width: 100%;
 	height: 100px;
 	color: #707070;
+	font-weight:bold;
 	font-size: 50px;
   	font-family: sans-serif;
   	font-size: 60px;
@@ -241,6 +257,7 @@ nav .nav-goal span:hover{
 	margin-bottom: 20px;
 	margin-top: 20px;
 	color: #707070;
+	font-weight:bold;
 	position: relative;
 }
 #show-goal .btn-nudge {
@@ -248,6 +265,8 @@ nav .nav-goal span:hover{
 	line-height: 120px;
 	width: 100%;
 	color: #707070;
+	font-weight: bold;
+	background-color: #E4C7C5;
 }
 #show-goal .nudge-number {
 	position: absolute;
@@ -444,3 +463,10 @@ nav .nav-goal span:hover{
 }
 
 /** end friendsBar **/
+
+.submit-nudge{
+	background-color:#F5E8E8;
+	margin-left: 35%;
+	width:50%;
+}
+

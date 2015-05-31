@@ -27,17 +27,9 @@ public class MainController {
 			.getLogger(MainController.class);
 
 	@Autowired
-	GoalDAO goalDao;
-	@Autowired
-	TaskDAO taskDao;
-	@Autowired
-	UserDAO userDao;
-	@Autowired
 	HomeService homeService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	GoalService goalService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstPage(Model model, HttpSession session) {
