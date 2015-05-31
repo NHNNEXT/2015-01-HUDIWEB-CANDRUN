@@ -27,17 +27,9 @@ public class MainController {
 			.getLogger(MainController.class);
 
 	@Autowired
-	GoalDAO goalDao;
-	@Autowired
-	TaskDAO taskDao;
-	@Autowired
-	UserDAO userDao;
-	@Autowired
 	HomeService homeService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	GoalService goalService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstPage(Model model, HttpSession session) {
@@ -53,6 +45,8 @@ public class MainController {
 
 		// 로긴/회원가입 시 사용했던 비공개 키 삭제
 		session.removeAttribute(Security.RSA_PRI_KEY.getValue());
+		
+		LOGGER.debug("Login Successed.");
 		
 		String email = (String) session.getAttribute("email");
 		homeService.setInitModel(model, email);

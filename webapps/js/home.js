@@ -145,7 +145,7 @@ HOME.methods.makeChart = function (taskIds){
 }
 
 HOME.methods.drawChart = function (responseText){
-	const previousDayLength = 6;
+	const dayOfTheWeek = 7;
 	var taskLogLists = JSON.parse(responseText);
 	var data = {labels: [], datasets: []};
 	var options={ datasetFill : false};
@@ -156,15 +156,14 @@ HOME.methods.drawChart = function (responseText){
 	var myLineChart = new Chart(ctx).Line(data, options);
 	
 	function setLabels(){
-		var firstDayIndex = taskLogLists[0].length-1;
-		var firstDayString = taskLogLists[0][firstDayIndex].date;
-		var firstDay = changeIntoDateFormat(firstDayString);
-
-		//현재 날짜까지 표시해주기 위해 +1을 한다.
-		for(var i=0; i<previousDayLength+1;i++){			
-			data.labels.push(firstDay.getDate() + i);
+		var date = new Date();
+		date.setDate(date.getDate() - (dayOfTheWeek - 1));
+		for(var i=0; i<dayOfTheWeek;i++){
+			data.labels.push(date.getDate());
+			date.setDate(date.getDate()+1);
 		}
 	}
+	
 	function setDatas(){
 		for(var i=0; i<taskLogLists.length;i++){
 			var dataContents = makeDataContents(taskLogLists[i], i);		

@@ -11,15 +11,19 @@ import candrun.model.GoalRelation;
 
 public class HomeService {
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(HomeService.class);
 	private UserDAO userDao;
 	private GoalService goalService;
 	private TaskService taskService;
-	private static final Logger logger = LoggerFactory
-			.getLogger(HomeService.class);
-	public HomeService(UserDAO userDao, GoalService goalService, TaskService taskService) {
+	private FriendsService friendsService;
+
+	public HomeService(UserDAO userDao, GoalService goalService,
+			TaskService taskService, FriendsService friendsService) {
 		this.userDao = userDao;
 		this.goalService = goalService;
 		this.taskService = taskService;
+		this.friendsService = friendsService;
 	}
 
 	public void setInitModel(Model model, String email) {
@@ -32,8 +36,16 @@ public class HomeService {
 			return;
 		// 첫번째 goal의 tasks 로드
 		model.addAttribute(
-				"tasks", taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
+				"tasks",
+				taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal()
+						.getId()));
+		// 친구목록 로드
+		model.addAttribute("friends", friendsService.getFriends(email));
+
 		logger.debug("goalrelations: {}", goalRelations);
-		logger.debug("taskes: {}", taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal().getId()));
+		logger.debug(
+				"taskes: {}",
+				taskService.getTasksByGoalId(goalRelations.get(0).getMyGoal()
+						.getId()));
 	}
 }
