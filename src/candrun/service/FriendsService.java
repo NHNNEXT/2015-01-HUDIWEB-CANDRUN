@@ -1,5 +1,6 @@
 package candrun.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import candrun.dao.UserDAO;
 import candrun.model.User;
 import candrun.support.enums.CommonInvar;
 import candrun.support.enums.ReturnMessage;
+import candrun.support.enums.UserState;
 
 
 public class FriendsService {
@@ -22,11 +24,23 @@ public class FriendsService {
 
 	public Map<String, List<User>> getFriends(String email) {
 		Map<String, List<User>> friendsList = new HashMap<String, List<User>>();
+		Map<Integer, List<User>> friendsLists = new HashMap<Integer, List<User>>();
+		List<User> availableFriends = new ArrayList<User>();
+		List<User> nonavailableFriends = new ArrayList<User>();
+		friendsLists.put(UserState.CERTIED.getValue(), nonavailableFriends);
+		friendsLists.put(UserState.MAKABLE_NONAVAILABLE.getValue(), nonavailableFriends);
+		friendsLists.put(UserState.MAX_NONAVAILABLE.getValue(), nonavailableFriends);
+		friendsLists.put(UserState.MAKABLE_AVAILABLE.getValue(), availableFriends);
+		friendsLists.put(UserState.MAX_AVAILABLE.getValue(), availableFriends);
+		
 		List<User> acceptedFriends = userDao.getFriendsAsReciever(email);
 		acceptedFriends.addAll(userDao.getFriendsAsRequester(email));
 		
-		friendsList.put(CommonInvar.ACCEPTEDFRIENDS.getValue(), acceptedFriends);
+		acceptedFriends.forEach(f -> friendsLists.get(f.getState()).add(f));
+		
 		friendsList.put(CommonInvar.REQUESTEDFRIENDS.getValue(), userDao.getRequesters(email));
+		friendsList.put(CommonInvar.AVAILABLEFRIENDS.getValue(), availableFriends);
+		friendsList.put(CommonInvar.NONAVAILABLEFRIENDS.getValue(), nonavailableFriends);
 		
 		return friendsList;
 	}

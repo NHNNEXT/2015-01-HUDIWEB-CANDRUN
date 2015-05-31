@@ -36,7 +36,8 @@ public class UserDAO extends JdbcDaoSupport {
 			try {
 				return new User(rs.getString("email"),
 						rs.getString("nickname"),
-						rs.getString("pic_path"));
+						rs.getString("pic_path"),
+						rs.getInt("state"));
 			} catch (SQLException e) {
 				throw new BeanInstantiationException(User.class,
 						e.getMessage(), e);

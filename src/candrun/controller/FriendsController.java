@@ -52,13 +52,10 @@ public class FriendsController {
 		return returnMsg;
 	}
 
-//	@ResponseBody
-//	@RequestMapping(value = "", method = RequestMethod.PUT)
-//	public void acceptRequest(@RequestBody List<User> friends) {
-//		friends.forEach(f -> {
-//			friendsService.acceptRequest(f.getEmail(),
-//					(String) session.getAttribute("email"));
-//			logger.debug(f.getEmail());
-//		});
-//	}
+	@ResponseBody
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public Map<String, List<User>> acceptRequest(HttpSession session, @RequestBody User friend) {
+		friendsService.acceptRequest(friend.getEmail(), (String) session.getAttribute("email"));
+		return friendsService.getFriends((String) session.getAttribute("email"));
+	}
 }

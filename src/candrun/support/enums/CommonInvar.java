@@ -6,7 +6,9 @@ public enum CommonInvar {
 	SUCCESS ("success"),
 	DEFAULT ("default"),
 	ACCEPTEDFRIENDS ("acceptedFriends"),
-	REQUESTEDFRIENDS ("requestesFriends");
+	REQUESTEDFRIENDS ("requestesFriends"),
+	AVAILABLEFRIENDS ("availableFriends"),
+	NONAVAILABLEFRIENDS ("nonavailableFriends");
 	
 	private final String value;
 	
