@@ -1,4 +1,4 @@
-var CANDRUN = CANDRUN || {}:q
+var CANDRUN = CANDRUN || {};
 
 CANDRUN.enums = {};
 CANDRUN.enums.pwValMsg = {

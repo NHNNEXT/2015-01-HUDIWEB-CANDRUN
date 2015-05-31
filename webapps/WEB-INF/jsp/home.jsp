@@ -11,6 +11,7 @@
 </head>
 <body>
 	<nav id="nav">
+		<div id="section-toggle">new goal</div>
 		<div class="profile-wrapper">
 			<div class="profile-picture"
 				style='background-image: url("/img/pics/${user.picPath}")'></div>
@@ -38,29 +39,13 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<button id="section-toggle">change section</button>
 	</nav>
 	<div id= 'wholeWrap'>
 		<div id="ani"></div>
 		<div id='floatContainer'>
 			<div class="realData">
-				<div id="flip-container" class="flip-container">
+				<div id="flip-container">
 					<div class="flipper">
-						<section id="make-goal" class="make-goal">
-							<form class="submit-form">
-								<input class="goal-input" name="goal_contents" value="Goal을 입력하세요.">
-								<div class="input-container">
-									
-								<div class="wrapper-task-input">	
-									<input class="task-input" value="Task를 입력하세요." />
-									<div class="btn-delete-task"></div>
-								</div>
-								
-								</div>
-								<div class="task-input-add">+</div>
-								<div class="goal-form-submit">submit</div>
-							</form>
-						</section>
 						<section id="show-goal" class="show-goal">
 							<form class="submit-nudge">
 								<div class="goal-wrapper">
@@ -78,6 +63,21 @@
 									</div>
 								</c:forEach>
 								<canvas id="taskChart" width="800" height="300"></canvas>
+							</form>
+						</section>
+						<section id="make-goal" class="make-goal">
+							<form class="submit-form">
+								<input class="goal-input" name="goal_contents" value="Goal을 입력하세요.">
+								<div class="input-container">
+									
+								<div class="wrapper-task-input">	
+									<input class="task-input" value="Task를 입력하세요." />
+									<div class="btn-delete-task"></div>
+								</div>
+								
+								</div>
+								<div class="task-input-add">+</div>
+								<div class="goal-form-submit">submit</div>
 							</form>
 						</section>
 					</div>
