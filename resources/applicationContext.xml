@@ -46,11 +46,14 @@
 		c:userDao-ref="userDao" />
 	<bean id="homeService" class="candrun.service.HomeService"
 		c:userDao-ref="userDao" c:goalService-ref="goalService"
-		c:taskService-ref="taskService" />
+		c:taskService-ref="taskService" c:friendsService-ref="friendsService" />
 	<bean id="goalService" class="candrun.service.GoalService"
 		c:goalDao-ref="goalDao" c:userDao-ref="userDao" c:taskDao-ref="taskDao" />
 	<bean id="taskService" class="candrun.service.TaskService"
 		c:taskDao-ref="taskDao" />
+	<bean id="friendsService" class="candrun.service.FriendsService"
+		c:userDao-ref="userDao" />
+
 
 	<!-- dao related -->
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />
@@ -80,7 +83,6 @@
 			</list>
 		</property>
 	</bean>
-
 	<!-- thread related -->
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

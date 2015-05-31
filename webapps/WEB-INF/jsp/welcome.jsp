@@ -19,7 +19,7 @@
 	</div>
 	<div class="sign-link-wrapper">
 		<div class="sign-link-border">
-			<a id="signin-link" href="javascript:void(0);">SING IN</a> <span>/</span>
+			<a id="signin-link" href="javascript:void(0);">SIGN IN</a> <span>/</span>
 			<a id="signup-link" href="javascript:void(0);">SIGN UP</a>
 		</div>
 	</div>

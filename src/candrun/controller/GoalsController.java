@@ -41,7 +41,7 @@ public class GoalsController {
 		Goal newGoal = goalService.addGoalAndTasks(goalContents, taskContents, userEmail);
 		return newGoal;
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public GoalWithTasks read(@PathVariable("id") int goalId) {
 		return new GoalWithTasks(goalService.getGoal(goalId), taskService.getTasks(goalId));
