@@ -45,11 +45,15 @@
 	<bean id="userService" class="candrun.service.UserService"
 		c:userDao-ref="userDao" />
 	<bean id="homeService" class="candrun.service.HomeService"
-		c:userDao-ref="userDao" c:goalService-ref="goalService" c:taskService-ref="taskService"/>
+		c:userDao-ref="userDao" c:goalService-ref="goalService"
+		c:taskService-ref="taskService" c:friendsService-ref="friendsService" />
 	<bean id="goalService" class="candrun.service.GoalService"
 		c:goalDao-ref="goalDao" c:userDao-ref="userDao" c:taskDao-ref="taskDao" />
 	<bean id="taskService" class="candrun.service.TaskService"
 		c:taskDao-ref="taskDao" />
+	<bean id="friendsService" class="candrun.service.FriendsService"
+		c:userDao-ref="userDao" />
+
 
 	<!-- dao related -->
 	<bean id="userDao" class="candrun.dao.UserDAO" p:dataSource-ref="dataSource" />
@@ -57,24 +61,25 @@
 	<bean id="taskDao" class="candrun.dao.TaskDAO" p:dataSource-ref="dataSource" />
 
 	<!-- quartz -->
-    <bean name="DailyInitializeJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
-          p:jobClass="candrun.scheduled.DailyInitializeJob"
-          p:durability="true">
-        <property name="jobDataAsMap">
-            <map>
-                <entry key="taskDao" value-ref="taskDao"/>
-            </map>
-        </property>
-    </bean>
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-          p:jobDetail-ref="DailyInitializeJob"
-          p:startDelay="1000"
-          p:cronExpression="0 59 23 * * ?"/>
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="cronTrigger"/>
-            </list>
-        </property>
-    </bean>
+	<bean name="DailyInitializeJob"
+		class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+		p:jobClass="candrun.scheduled.DailyInitializeJob" p:durability="true">
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="taskDao" value-ref="taskDao" />
+			</map>
+		</property>
+	</bean>
+	<bean id="cronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+		p:jobDetail-ref="DailyInitializeJob" p:startDelay="1000"
+		p:cronExpression="0 59 23 * * ?" />
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
 </beans>

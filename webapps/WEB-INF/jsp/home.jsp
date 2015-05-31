@@ -77,6 +77,14 @@
 			</section>
 		</div>
 	</div>
+	<nav id="friendsBar" class="toggle">
+	  <div id="toggle_button"></div>
+	  <ul>
+	  <c:forEach var="friends" items="${friends}">
+		<li><a href="javascript:void(0);" id="${friends.email}">${friends.nickname}</a></li>
+	  </c:forEach>
+	  </ul>
+	</nav>
 </body>
 <script src="/js/template/handlebars-v3.0.3.js"></script>
 <script src="/js/candrun.js"></script>
