@@ -42,14 +42,7 @@ HOME.methods.addEvents = function() {
 	var elements = HOME.elements;
 	var nav = HOME.nav;
 	var form = HOME.form;
-
-	for (var i = 0; i < elements.goalsInNav.length; i++) {
-		elements.goalsInNav[i].addEventListener("click", function(e) {
-			nav.requestGoal(e.target.id);
-			////
-			nav.slideOut(e.target.id);
-		});
-	}
+	
 	elements.profilePic.addEventListener("click", nav.userCardToggle);
 	elements.btnLogout.addEventListener("click", nav.logout);
 	elements.goalSubmit.addEventListener("click", form.send);
@@ -57,7 +50,25 @@ HOME.methods.addEvents = function() {
 	elements.taskInput.addEventListener("click", form.clearInputValue);
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
 	elements.goalInput.addEventListener("focus", form.clearInputValue);
-	elements.sectionToggle.addEventListener("click", nav.sectionChangeToggle)
+	elements.sectionToggle.addEventListener("click", nav.sectionChangeToggle);
+	for (var i = 0; i < elements.goalsInNav.length; i++) {
+		elements.goalsInNav[i].addEventListener("click", function(e) {
+			HOME.methods.slideNav(e);	
+		});
+	}
+}
+
+HOME.methods.slideNav = function(e){
+	var openGoalId = e.target.id;
+	var ani = document.querySelector('#ani');
+	ani.classList.add('active');
+
+	ani.style.transform = 'translate3d(0,0,0)';
+
+	setTimeout(function(){ ani.style.transform= 'translate3d(100%,0,0)'; HOME.nav.requestGoal(openGoalId)}, 500);
+	
+	setTimeout(function(){ ani.classList.remove('active');
+		ani.style.removeProperty('transform'); }, 1500);
 }
 
 HOME.methods.runInitMethods = function(){
@@ -78,16 +89,9 @@ HOME.methods.runInitMethods = function(){
 		nudgeEl.addEventListener("click", HOME.methods.checkComplete);
 		HOME.methods.checkGlow(nudgeEl);
 	}
-}
-////
-HOME.methods.slideOut = function(e){
-	e.preventDefault();
-	var elements = HOME.elements;
-	
-	//goal 이름을 누르면, 열려 있는.
 	
 }
-////
+
 HOME.methods.addNudge = function (e) {
 	e.preventDefault();
 
