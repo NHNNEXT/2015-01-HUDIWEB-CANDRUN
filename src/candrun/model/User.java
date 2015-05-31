@@ -7,11 +7,23 @@ public class User {
 	private String picPath;
 	private int state;
 
-	public User(String email, String nickname, String password, String picPath) {
+	public User(String email) {
+		this.email = email;
+	}
+	/**
+	 * 친구 관리를 위해서 필요한 정보만을 담는 생성자
+	 * @param email
+	 * @param nickname
+	 * @param picPath
+	 */
+	public User(String email, String nickname, String picPath) {
 		this.email = email;
 		this.nickname = nickname;
-		this.password = password;
 		this.picPath = picPath;
+	}
+	public User(String email, String nickname, String password, String picPath) {
+		this(email, nickname, picPath);
+		this.password = password;
 	}
 	public User(String email, String nickname, String password, String picPath, int state) {
 		this(email, nickname, password, picPath);

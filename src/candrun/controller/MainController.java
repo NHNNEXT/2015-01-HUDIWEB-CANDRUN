@@ -54,6 +54,8 @@ public class MainController {
 		// 로긴/회원가입 시 사용했던 비공개 키 삭제
 		session.removeAttribute(Security.RSA_PRI_KEY.getValue());
 		
+		LOGGER.debug("Login Successed.");
+		
 		String email = (String) session.getAttribute("email");
 		homeService.setInitModel(model, email);
 		

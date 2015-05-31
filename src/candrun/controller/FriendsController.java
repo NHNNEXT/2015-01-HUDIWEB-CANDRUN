@@ -1,56 +1,64 @@
 package candrun.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.junit.runners.Parameterized.Parameter;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import candrun.dao.UserDAO;
 import candrun.model.User;
+import candrun.service.FriendsService;
+import candrun.support.enums.CommonInvar;
 
 /**
- * show() 메서드는 실제 서비스에서는 사라질 메서드 입니다.
- * 현재 있는 friends.jsp 는 includ 방식으로 다른 jsp에 포함되어야 하고
- * 각 페이제에서 이벤트로 getJson()을 호출하는 방식으로 사용될 것 입니다.
- * 해당 작업시 getJson() 메서드의 requestmapping은 "/"로 수정해야 합니다.
+ * show() 메서드는 실제 서비스에서는 사라질 메서드 입니다. 현재 있는 friends.jsp 는 includ 방식으로 다른 jsp에
+ * 포함되어야 하고 각 페이제에서 이벤트로 getJson()을 호출하는 방식으로 사용될 것 입니다. 해당 작업시 getJson() 메서드의
+ * requestmapping은 "/"로 수정해야 합니다.
  */
 
 @RequestMapping("/friends")
 @Controller
 public class FriendsController {
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(FriendsController.class);
+
 	@Autowired
-	UserDAO userDao;
-  
-	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
+	FriendsService friendsService;
+
 	@ResponseBody
-	protected User[] getJson() {
-		User user1 = new User("test01@test.com", "nick01");
-		User user2 = new User("test02@test.com", "nick02");
-		User user3 = new User("test03@test.com", "nick03");
-		User user4 = new User("test04@test.com", "nick04");
-		User user5 = new User("test05@test.com", "nick05");
-		User user6 = new User("test06@test.com", "nick06");
-		User[] users = {user1, user2, user3, user4, user5, user6};
-		
-		return users;
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public Map<String, List<User>> getFriends(HttpSession session) {
+		return friendsService
+				.getFriends((String) session.getAttribute("email"));
 	}
-	
-	@RequestMapping(value="/friends")
-	protected String show() {
-		return "friends";
-	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="", method=RequestMethod.GET)
-	public List<User> getFriends(@RequestParam("email") String email) {
-		List<User> friends = userDao.getFriendsAsReciever(email);
-		friends.addAll(userDao.getFriendsAsRequester(email));
-		return friends;
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public Map<String, String> request(HttpSession session,
+			@RequestParam("rcvEmail") String rcvEmail) {
+		Map<String, String> returnMsg = new HashMap<String, String>();
+		returnMsg.put(CommonInvar.RETURNMSG.getValue(), friendsService
+				.addFriend((String) session.getAttribute("email"), rcvEmail));
+		return returnMsg;
 	}
+
+//	@ResponseBody
+//	@RequestMapping(value = "", method = RequestMethod.PUT)
+//	public void acceptRequest(@RequestBody List<User> friends) {
+//		friends.forEach(f -> {
+//			friendsService.acceptRequest(f.getEmail(),
+//					(String) session.getAttribute("email"));
+//			logger.debug(f.getEmail());
+//		});
+//	}
 }
