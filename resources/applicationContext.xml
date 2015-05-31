@@ -81,6 +81,7 @@
 		</property>
 	</bean>
 
+	<!-- thread related -->
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
