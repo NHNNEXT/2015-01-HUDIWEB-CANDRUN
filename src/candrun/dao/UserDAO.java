@@ -41,21 +41,32 @@ public class UserDAO extends JdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, rowMapper, email);
 	}
 
+	public void changeState(String email, UserState userState) {
+		String sql = "UPDATE user SET state = ? WHERE email = ?";
+		getJdbcTemplate().update(sql, userState.getValue(), email);
+	}
+
 	public List<User> getUsersByGoalId(int goalId, String email) {
 		String sql = "SELECT DISTINCT u.* FROM (SELECT gg.requester, gg.receiver, g.id, g.user_email FROM goal_has_goal gg INNER JOIN goal g ON (gg.receiver = g.id || gg.requester = g.id)) temp INNER JOIN user u ON u.email = user_email WHERE (requester = ? || receiver = ?) AND !(email = ?)";
 
 		return getJdbcTemplate().query(sql, rowMapper, goalId, goalId, email);
 	}
 
-	// user를 가져온다, status = 1이고, 내가 requester일 때, user_has_user에서 responser를
-	// 가져온다.
-	// 그것으로 user table에서 email로 검색해서 user를 가져온다.
-	// Accepted 된 친구만 불러오도록 수정
+	/**
+	 * requester기준으로 현재 친구 상태인 (상태값이 1인) 친구 리스트를 불러온다.
+	 * @param email
+	 * @return 친구 리스트
+	 */
 	public List<User> getFriendsAsRequester(String email) {
 		String sql = "SELECT * FROM (SELECT u.*, uu.requester , uu.receiver, uu.state AS 'uu_state' FROM user_has_user uu INNER JOIN user u ON uu.receiver = u.email WHERE uu.state = 1) temp WHERE requester = ?";
 		return getJdbcTemplate().query(sql, rowMapper, email);
 	}
 
+	/**
+	 * receiver기준으로 현재 친구 상태인 (상태값이 1인) 친구 리스트를 불러온다.
+	 * @param email
+	 * @return 친구 리스트
+	 */
 	public List<User> getFriendsAsReciever(String email) {
 		String sql = "SELECT * FROM (SELECT u.*, uu.requester , uu.receiver, uu.state AS 'uu_state' FROM user_has_user uu INNER JOIN user u ON uu.requester = u.email WHERE uu.state = 1) temp WHERE receiver = ?";
 		return getJdbcTemplate().query(sql, rowMapper, email);
@@ -79,12 +90,22 @@ public class UserDAO extends JdbcDaoSupport {
 		return getJdbcTemplate().query(sql, rowMapper, email);
 	}
 
-	// 친구 신청 및 승인, 거절과 관련된 메서드들 시작////////////////////////////////////////////
+	/**
+	 * 친구 신청
+	 * @param reqEmail 친구를 신청하는 사람의 이메일
+	 * @param rcvEmail 친구 신청을 받는 사람의 이메일
+	 */
 	public void requestToBeFriend(String reqEmail, String rcvEmail) {
 		String sql = "INSERT INTO user_has_user(requester, receiver) VALUES(?, ?)";
 		getJdbcTemplate().update(sql, reqEmail, rcvEmail);
 	}
 
+	/**
+	 * 친구 신청 이력 확인
+	 * @param reqEmail 친구를 신청한 사람의 이메일
+	 * @param rcvEmail 친구 신청을 받은 사람의 이메일
+	 * @return true이면 친구 신청 이력이 없음, false이면 친구 신청 이력 존재
+	 */
 	public boolean isNewRequestToBeFriend(String reqEmail, String rcvEmail) {
 		RowCountCallbackHandler countCallback = new RowCountCallbackHandler();
 		String sql = "SELECT id FROM user_has_user WHERE (requester = ? AND receiver = ?) OR (requester = ? AND receiver = ?)";
@@ -94,22 +115,25 @@ public class UserDAO extends JdbcDaoSupport {
 		return rowCount == 0;
 	}
 
+	/**
+	 * 친구 신청을 수락
+	 * @param reqEmail 친구를 신청한 사람의 이메일
+	 * @param rcvEmail 친구 신청을 받은 사람의 이메일
+	 */
 	public void acceptRequestToBeFriend(String reqEmail, String rcvEmail) {
 		String sql = "UPDATE user_has_user SET state = ?, complete_date = NOW() WHERE requester = ? AND receiver = ?";
 		getJdbcTemplate().update(sql, RelationRequestState.ACCEPTED.getValue(),
 				reqEmail, rcvEmail);
 	}
 
+	/**
+	 * 친구 신청을 거절
+	 * @param reqEmail 친구 신청을 한 사람의 이메일
+	 * @param rcvEmail 친구 신청을 받은 사람의 이메일
+	 */
 	public void denyRequestToBeFriend(String reqEmail, String rcvEmail) {
 		String sql = "UPDATE user_has_user SET state = ?, complete_date = NOW() WHERE requester = ? AND receiver = ?";
 		getJdbcTemplate().update(sql, RelationRequestState.DENIED.getValue(),
 				reqEmail, rcvEmail);
 	}
-
-	// 친구 신청 및 승인, 거절과 관련된 메서드들 끝////////////////////////////////////////////
-	public void changeState(String email, UserState userState) {
-		String sql = "UPDATE user SET state = ? WHERE email = ?";
-		getJdbcTemplate().update(sql, userState.getValue(), email);
-	}
-
 }

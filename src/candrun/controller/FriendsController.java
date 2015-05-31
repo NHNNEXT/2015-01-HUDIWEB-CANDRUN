@@ -1,9 +1,16 @@
 package candrun.controller;
 
+import java.util.List;
+
+import org.junit.runners.Parameterized.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import candrun.dao.UserDAO;
 import candrun.model.User;
 
 /**
@@ -16,6 +23,9 @@ import candrun.model.User;
 @RequestMapping("/friends")
 @Controller
 public class FriendsController {
+	
+	@Autowired
+	UserDAO userDao;
   
 	@RequestMapping(value="/getFriends.cdr", method=RequestMethod.GET)
 	@ResponseBody
@@ -30,8 +40,17 @@ public class FriendsController {
 		
 		return users;
 	}
+	
 	@RequestMapping(value="/friends")
 	protected String show() {
 		return "friends";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public List<User> getFriends(@RequestParam("email") String email) {
+		List<User> friends = userDao.getFriendsAsReciever(email);
+		friends.addAll(userDao.getFriendsAsRequester(email));
+		return friends;
 	}
 }
