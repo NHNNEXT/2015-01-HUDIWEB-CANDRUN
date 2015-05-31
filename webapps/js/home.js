@@ -61,6 +61,7 @@ HOME.methods.addEvents = function() {
 HOME.methods.slideNav = function(e){
 	var openGoalId = e.target.id;
 	var ani = document.querySelector('#ani');
+	ani.classList.remove('active');
 	ani.classList.add('active');
 
 	ani.style.transform = 'translate3d(0,0,0)';
