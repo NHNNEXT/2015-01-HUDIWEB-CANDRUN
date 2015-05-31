@@ -57,8 +57,11 @@
 								</div>
 								
 								</div>
+								<div class ="wrapper-task-input-add">
 								<div class="task-input-add">+</div>
+								</div>
 								<div class="goal-form-submit">submit</div>
+							</form>
 							</form>
 						</section>
 						<section id="show-goal" class="show-goal">
@@ -85,7 +88,19 @@
 			</div>
 		</div>
 	</div>
-	<div id="friendsBar">FRIENDSBar</div>
+	<nav id="friendsBar" class="toggle">
+<!--<div id="toggle_button"></div>-->  
+      <ul>
+<!-- 	  <c:forEach var="friends" items="${friends}">
+		<li><a href="javascript:void(0);" id="${friends.email}">${friends.nickname}</a></li>
+	  </c:forEach> -->
+	  	<li><a href="#">선승현</a></li>
+	  	<li><a href="#">선승현</a></li>
+	  	<li><a href="#">선승현</a></li>
+	  	<li><a href="#">선승현</a></li>
+	  	<li><a href="#">선승현</a></li>
+	  </ul>
+	</nav>
 </body>
 <script src="/js/template/handlebars-v3.0.3.js"></script>
 <script src="/js/candrun.js"></script>

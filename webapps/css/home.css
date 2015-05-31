@@ -27,6 +27,8 @@ footer, header, hgroup, menu, nav, section {
 body {
     line-height: 1;
     min-width: 700px;
+    background-color: #F5E8E8;
+
 }
 ol, ul {
     list-style: none;
@@ -51,14 +53,14 @@ nav {
 	padding-top: 100px;
 	background-color: #760706;
 	width:20%;
- 	height:100vh;
+ 	height:100%;
 	float:left;
 	color: #DFCED2;
 	min-width: 200px;
 	
 	/* position: fixed; */
-    position: relative;
-    z-index: 30;
+/*    position: relative;
+*/    z-index: 30;
 }
 nav .friend-picture {
 	width: 50px;
@@ -138,85 +140,106 @@ nav .nav-goal span:hover{
 #make-goal{
 	width:100%;
 	height:100%;
-	backface-visibility: hidden;
-	background-color:#F5E8E8;
+/*	backface-visibility: hidden;
+*/	background-color:#F5E8E8;
 	transform: rotateY(180deg);
 }
 
-#make-goal .submit-form{
-	padding-top: 150px;
-	width: 50%;
-	color: #F5E8E8;
-	font-weight:bold;
-	margin-left: 35%;
+#make-goal .input-container {
+	width : 100%;
+	height: 100%;
 } 
 
+
 #make-goal .goal-input {
-	width: 100%;
-	height: 100px;
-	margin-top: 30px;
-	background: #E4C7C5;
-	font-size: 45px;
+	width: 75%;
+	height: 120px;
+	line-height: 120px;
+	margin-left: 20%;
+	margin-top: 100px;
+	margin-bottom: 20px;
+	background: #FFF;
+	font-size: 55px;
 	text-align: center;
-	color: #707070;
-	font-weight:bold;
+	color: #000;
+	font-weight: bold;
+	border-style: solid;
+	border-width: medium;
+	border-color: #760706;
 }
+
+#make-goal .wrapper-task-input {
+	width: 75%;
+	height: 75px;
+	text-align: center;
+	margin-top: 20px;
+	position: relative;
+	overflow: hidden;
+	margin-left: 20%;
+	margin-right: 0%;
+}
+
+
 #make-goal .task-input {
-	width: 90%;
-	height: 80px;
+	width: 85%;
+	height: 75px;
 	float: right;
 	background-color: #E4C7C5;
-	font-size: 170%;
+	font-size: 35px;
+	font-weight: bold;
 	text-align: center;
 }
-#make-goal .task-input-add {
-	width: 90%;
-	height: 60px;
-	background-color: #E4C7C5;
-	margin-top:10px;
+
+#make-goal .wrapper-task-input-add {
+	width: 75%;
+	height: 75px;
+	line-height: 75px;
 	text-align: center;
-	line-height: 60px;
-	font-size: 60px;
+	margin-top: 20px;
+	position: relative;
+	overflow: hidden;
+	margin-left: 20%;
+	margin-right: 0%;
+} 
+
+#make-goal .task-input-add {
+	width: 85%;
+	height: 75px;
+	line-height: 75px;
+	background-color: #E4C7C5;
+	font-size: 35px;
+	font-weight: bold;
+	text-align: center;
 	float: right;
 }
 #make-goal .goal-form-submit {
 	float: right;
 	width: 120px;
 	height: 40px;
-	margin: 10px;
+	margin: 20px;
 	text-align: center;
 	line-height: 40px;
-	font-size: 25px;
 	border: solid 2px;
-	border-radius: 30px;
 	border-color: #d9d9d9;
-	color: #610A1D;
+	color: #000;
 }
-#make-goal .wrapper-task-input {
-	width: 100%;
-	height: 80px;
-	float: right;
-	text-align: center;
-	margin-top:15px;
-	position:relative;
-	overflow: hidden;
-	
-} 
+
 #make-goal .btn-delete-task {
-	width: 20px;
-	height:20px;
+	width: 10px;
+	height:10px;
 	background-color: #e6e6e6;
+	font-size:10px;
 	position: absolute;
-	top:0px;
-	right:0px;
+	top:5px;
+	right:5px;
 }
 #make-goal .btn-delete-task:hover {
-	width: 20px;
-	height:20px;
+	width: 10px;
+	height:10px;
 	background-color: red;
 	position: absolute;
-	top:0px;
-	right:0px;
+	top:5px;
+	right:5px;
 }
 /** end make-goal **/
 
@@ -310,9 +333,12 @@ nav .nav-goal span:hover{
 
 /**spreadNav**/
 #ani {
-    position:absolute;
-    left:0; top:0;
-    width:100%;
+/*    position:absolute;
+
+*/  
+	float:left;  
+	left:0; top:0;
+    width:65%;
     height:100%;
     background:#760706;
     z-index:21;
@@ -323,7 +349,7 @@ nav .nav-goal span:hover{
 }
 
 .realData {
-    width:100%;
+    width:65%;
     height:100%;
     background-color: #F5E8E8;
     float:left;
@@ -331,20 +357,18 @@ nav .nav-goal span:hover{
 }
 
 .realCover {
-    width:100%;
+    width:65%;
     height:100%;
     background-color:#760706;
     float:left;
 }
 
 #wholeWrap{
-    width:65vw;
+    width:65%;
     height:100vh;
-    left: 0px;
-    top:0px;
+	float:left;
     /* background-color:black; */
     overflow: hidden;
-    position: relative;
 }
 
 *{
@@ -354,15 +378,113 @@ nav .nav-goal span:hover{
 /** end spreadNav**/
 .submit-nudge{
 	background-color:#F5E8E8;
-	margin-left: 35%;
-	width:50%;
+	width:100%;
+	float: left;
 }
-#friendsBar{
-	background-color: #E8E4E5;
-	width:15%;
-	height:100vh;
-	float:right;
-}
+
 .goal-input :focus{
 	background-color:#fff;
 }
+
+/** Start friendsBar **/
+
+#friendsBar {
+  width: 15%;
+  height: 2000px;
+  float: left;
+  top: 0;
+  background-color: #34495e;
+  transform: translate3d(0,0,0);
+  transition: 500ms transform ease-in-out;
+}
+
+/*.toggle#friendsBar {
+  transform: translate3d(-300px,0,0);
+}*/
+
+#friendsBar ul{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+#friendsBar li {
+  color: white;
+  line-height: 2em;
+  position: relative;
+}
+
+#friendsBar li a {
+  color: white;
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 300;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-top: 1px solid #406081;
+  border-bottom: 1px solid #2c3e50;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+#friendsBar li a:hover {
+  background: #3d566e;
+}
+
+#toggle_button {
+  display: block; 
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: -55px;
+  width: 45px;
+  height: 8px;
+  background: #fff;
+}
+#toggle_button:before {
+  display: block;
+  content:"";
+  background-color: white;
+  height: 8px;
+  margin: 11px auto 0px;
+  width: 45px;
+}
+#toggle_button:after {
+  display: block;
+ content:"";
+  background-color: white;
+  height: 8px;
+  width: 45px;
+  margin: 3px auto 0px;
+}
+
+/*font face*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Lato Hairline'), local('Lato-Hairline'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/boeCNmOCCh-EWFLSfVffDg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/KT3KS9Aol4WfR6Vas8kNcg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/wkfQbvfT_02e2IWO3yYueQ.woff) format('woff');
+}
+
+/** end friendsBar **/
