@@ -50,7 +50,7 @@ table {
 
 /** start nav **/
 nav {
-	padding-top: 20px;
+	padding-top: 100px;
 	background-color: #760706;
 	width:20%;
  	height:100%;
@@ -75,7 +75,6 @@ nav .nav-friends-container {
 	margin-top: 7px;
 }
 nav .profile-wrapper {
-	padding-top:80px;
 	height: 300px;
 }
 nav .profile-picture {
@@ -113,20 +112,13 @@ nav .nav-goal span:hover{
 }
 /** end nav **/
 
-/** start flipper **/
-#section-toggle{
-	width: 90px;
-	height:30px;
-	float:right;
-	font-size: 30px;
-	
-}
+/** start fliper **/
 #flip-container{
 	width: 100%;
 	float:left;
 	height:100%;
+	
 }
-
 .flip-container {
 	perspective: 1000px;
 	z-index: 1;
@@ -229,7 +221,7 @@ nav .nav-goal span:hover{
 	line-height: 40px;
 	border: solid 2px;
 	border-color: #d9d9d9;
-	color: #000;
+	color: #610A1D;
 }
 
 #make-goal .btn-delete-task {
@@ -384,110 +376,6 @@ nav .nav-goal span:hover{
     padding: 0;
 }
 /** end spreadNav**/
-
-/** Start friendsBar **/
-
-#friendsBar {
-  width: 300px;
-  height: 100%;
-  float: right;
-  top: 0;
-  background-color: #34495e;
-  transform: translate3d(0,0,0);
-  transition: 500ms transform ease-in-out;
-}
-
-.toggle#friendsBar {
-  transform: translate3d(-300px,0,0);
-}
-
-#friendsBar ul{
-  margin: 0px;
-  padding: 0px;
-  list-style: none;
-}
-
-#friendsBar li {
-  color: white;
-  line-height: 2em;
-  position: relative;
-}
-
-#friendsBar li a {
-  color: white;
-  display: block;
-  position: relative;
-  text-decoration: none;
-  padding: 10px;
-  font-weight: 300;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border-top: 1px solid #406081;
-  border-bottom: 1px solid #2c3e50;
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-}
-
-#friendsBar li a:hover {
-  background: #3d566e;
-}
-
-#toggle_button {
-  display: block; 
-  position: absolute;
-  cursor: pointer;
-  top: 10px;
-  right: -55px;
-  width: 45px;
-  height: 8px;
-  background: #fff;
-}
-#toggle_button:before {
-  display: block;
-  content:"";
-  background-color: white;
-  height: 8px;
-  margin: 11px auto 0px;
-  width: 45px;
-}
-#toggle_button:after {
-  display: block;
- content:"";
-  background-color: white;
-  height: 8px;
-  width: 45px;
-  margin: 3px auto 0px;
-}
-
-/*font face*/
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 100;
-  src: local('Lato Hairline'), local('Lato-Hairline'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/boeCNmOCCh-EWFLSfVffDg.woff) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Lato Light'), local('Lato-Light'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/KT3KS9Aol4WfR6Vas8kNcg.woff) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
-}
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Lato Bold'), local('Lato-Bold'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/wkfQbvfT_02e2IWO3yYueQ.woff) format('woff');
-}
-
-/** end friendsBar **/
-
 .submit-nudge{
 	background-color:#F5E8E8;
 	width:100%;
