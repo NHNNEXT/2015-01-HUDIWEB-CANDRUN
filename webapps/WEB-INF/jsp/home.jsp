@@ -11,7 +11,7 @@
 </head>
 <body>
 	<nav id="nav">
-		<div id="section-toggle">new goal</div>
+		<div id="section-toggle">flip</div>
 		<div class="profile-wrapper">
 			<div class="profile-picture"
 				style='background-image: url("/img/pics/${user.picPath}")'></div>
