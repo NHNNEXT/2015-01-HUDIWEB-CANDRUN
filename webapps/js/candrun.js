@@ -21,6 +21,9 @@ CANDRUN.util.ajax = function(sUrl, fSuccess, fFail) {
 	this.setJson = function() {
 		httpRequest.setRequestHeader('Accept', 'application/json');
 	};
+	this.setContentTypeJson = function() {
+		httpRequest.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	};
 	this.setSimplePost = function() {
 		httpRequest.setRequestHeader("Content-type",
 				"application/x-www-form-urlencoded");

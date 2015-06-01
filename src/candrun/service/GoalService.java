@@ -75,4 +75,12 @@ public class GoalService {
 		}
 		return goal;
 	}
+
+	public RelationRequestState addGoalRelation(String requesterId, String receiverId) {
+		goalDao.requestConnectGoal(Integer.parseInt(requesterId), Integer.parseInt(receiverId));
+		return RelationRequestState.REQUESTED;
+	}
+	public void addGoal(String email, String goalContensts, String[] taskContents, String[] friends) {
+		
+	}
 }
