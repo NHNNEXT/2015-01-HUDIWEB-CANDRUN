@@ -33,7 +33,7 @@ HOME.methods.getElements = function() {
 	elements.taskList = querySelectorAll("#show-goal .task-wrapper");
 	elements.taskIds = querySelectorAll("#show-goal .tasksId");
 	elements.userCard = querySelector("#user-card");
-	elements.btnLogout = querySelector("#user-card .btn-logout");
+	elements.btnLogout = querySelector(".btn-logout");
 	elements.sectionToggle = querySelector("#section-toggle");
 	elements.flipContainer = querySelector("#flip-container");
 }
@@ -51,7 +51,6 @@ HOME.methods.addEvents = function() {
 	elements.taskInput.addEventListener("click", form.clearInputValue);
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
 	elements.goalInput.addEventListener("focus", form.clearInputValue);
-	elements.sectionToggle.addEventListener("click", nav.sectionChangeToggle);
 	for (var i = 0; i < elements.goalsInNav.length; i++) {
 		elements.goalsInNav[i].addEventListener("click", function(e) {
 			HOME.methods.slideNav(e);	

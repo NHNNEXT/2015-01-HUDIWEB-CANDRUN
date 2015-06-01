@@ -11,15 +11,13 @@
 </head>
 <body>
 	<nav id="nav">
-		<div id="section-toggle">flip</div>
+		<div class="section-toggle">flip</div>
+		<div class="btn-logout">logout</div>
+		
 		<div class="profile-wrapper">
 			<div class="profile-picture"
 				style='background-image: url("/img/pics/${user.picPath}")'></div>
-			<div class="nick">${user.nickname}
-				<div id="user-card">
-					<div class="btn-logout">logout</div>
-				</div>
-			</div>
+			<div class="nick">${user.nickname}</div>
 		</div>
 		<!-- id로 되어있는 friend 부분은 DB에서 받아오면서 class로 바꾸어야 한다. -->
 		<div id="goal-groups">
@@ -37,7 +35,6 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<button id="section-toggle">change section</button>
 	</nav>
 	<div id='wholeWrap'>
 		<div id="ani"></div>
