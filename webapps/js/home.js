@@ -43,6 +43,7 @@ HOME.methods.addEvents = function() {
 	var nav = HOME.nav;
 	var form = HOME.form;
 	
+	window.addEventListener('resize', HOME.chart.resizeCanvas);
 	elements.profilePic.addEventListener("click", nav.userCardToggle);
 	elements.btnLogout.addEventListener("click", nav.logout);
 	elements.goalSubmit.addEventListener("click", form.send);
@@ -80,7 +81,7 @@ HOME.methods.runInitMethods = function(){
 	for(var i=0; i<taskIdInputs.length; i++){
 		taskIdValues.push(taskIdInputs[i].value);
 	}
-	HOME.methods.makeChart(taskIdValues);
+	HOME.chart.makeChart(taskIdValues);
 
 	for ( var idx in taskList) {
 		if (taskList[idx] >= taskList.length)
@@ -133,27 +134,36 @@ HOME.methods.refreshNumber = function (responseText) {
 	HOME.elements.numberToNudge.innerHTML = JSON.parse(responseText).nudge;
 };
 
-HOME.methods.makeChart = function (taskIds){
+HOME.chart = HOME.chart || {};
+HOME.chart.makeChart = function (taskIds){
 	var sUrl = "/tasks?";
 	for(var i =0 ; i<taskIds.length; i++){
 		sUrl = sUrl + "&taskIds[]"+"="+taskIds[i];
 	}
-	var ajax = new CANDRUN.util.ajax(sUrl, HOME.methods.drawChart);
+	var ajax = new CANDRUN.util.ajax(sUrl, HOME.chart.drawChart);
 	ajax.open();
 	ajax.setSimplePost();
 	ajax.send();
 }
 
-HOME.methods.drawChart = function (responseText){
+HOME.chart.resizeCanvas = function (){
+	var ctx = document.querySelector("#taskChart").getContext("2d");
+	ctx.canvas.width = window.innerWidth * 0.6;
+	ctx.canvas.height = window.innerWidth * 0.2;
+	var myLineChart = new Chart(ctx).Line(HOME.chart.data, HOME.chart.options);
+}
+HOME.chart.drawChart = function (responseText){
 	const dayOfTheWeek = 7;
 	var taskLogLists = JSON.parse(responseText);
 	var data = {labels: [], datasets: []};
 	var options={ datasetFill : false};
+	
 	setLabels();
 	setDatas();
 	
-	var ctx = document.querySelector("#taskChart").getContext("2d");
-	var myLineChart = new Chart(ctx).Line(data, options);
+	HOME.chart.data = data;
+	HOME.chart.options = options;
+	HOME.chart.resizeCanvas();
 	
 	function setLabels(){
 		var date = new Date();
@@ -163,12 +173,11 @@ HOME.methods.drawChart = function (responseText){
 			date.setDate(date.getDate()+1);
 		}
 	}
-	
 	function setDatas(){
 		for(var i=0; i<taskLogLists.length;i++){
 			var dataContents = makeDataContents(taskLogLists[i], i);		
 			data.datasets.push(dataContents);
-		}		
+		}
 	}
 	function makeDataContents(taskLogList, number){
 		var dataTemplete = {
@@ -182,7 +191,7 @@ HOME.methods.drawChart = function (responseText){
 
 		//먼저 리스트에 들어간 값이 그래프에 왼쪽으로 그려진다. 
 		//최신순으로 값을 받아왔으므로 뒤에서부터 dataTemplete에 넣는다. 		
-		for(var i=previousDayLength; i>0;i--){	
+		for(var i=dayOfTheWeek-1; i>0;i--){	
 			if(taskLogList[i]===undefined){
 				nullCount++;
 			}else{				
