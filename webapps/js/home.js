@@ -46,7 +46,7 @@ HOME.methods.addEvents = function() {
 	window.addEventListener('resize', HOME.chart.resizeCanvas);
 	elements.profilePic.addEventListener("click", nav.userCardToggle);
 	elements.btnLogout.addEventListener("click", nav.logout);
-	elements.goalSubmit.addEventListener("click", form.send);
+	elements.goalSubmit.addEventListener("click", form.check);
 	elements.taskInputAdd.addEventListener("click", form.makeNextInput);
 	elements.taskInput.addEventListener("click", form.clearInputValue);
 	elements.taskInput.addEventListener("keydown", form.makeNextInputWithEnter);
@@ -297,9 +297,16 @@ HOME.nav.makeNavGoal= function (value) {
 	return li;
 };
 HOME.nav.sectionChangeToggle = function(){
+	console.log("IN");
 	HOME.elements.flipContainer.classList.toggle('flip-container');
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//HOME.form.check = function(){
+//	//현재 있는 골들을 가져오고 그 골들의 갯수를 셈. 그 수가 3이면 더 이상 추가못하
+//	
+//	HOME.form.send();
+//}
 
 HOME.form = HOME.form || {};
 HOME.form.send = function () {
@@ -392,4 +399,3 @@ HOME.templates.showGoal = [ '<div class="goal-wrapper">',
 HOME.templates.taskInput = ['<input class="task-input" value="Task를 입력하세요." />',
                             '<div class=btn-delete-task></div>'
                            ].join("\n");
-
